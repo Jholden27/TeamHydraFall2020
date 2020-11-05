@@ -3,13 +3,17 @@ package grizzlyPunk;
 public class Items {
 	private String itemID;
 	private String itemName;
-	private String description;	
+	private String itemDescription;	
+	private String itemType;
+	private String itemNumericValue;
 	
-	public Item(String itemID, String itemName, String description) {
+	public Item(String itemID, String itemName, String itemDescription, String itemType, String itemNumericaValue) {
 		super();
 		this.itemID = itemID;
 		this.itemName = itemName;
-		this.description = description;
+		this.itemDescription = itemDescription;
+		this.itemType = itemType;
+		this.itemNumericaValue = itemNumericaValue;
 	}
 	
 public Items() {
@@ -28,10 +32,24 @@ public Items() {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public String getDescription() {
-		return description;
+	public String getItemDescription() {
+		return itemDescription;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setItemDescription(String itemDescription) {
+		this.itemDescription = itemDescription;
+	}
+	
+	public String getItemType() {
+		return itemType;
+	}
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+	
+	public String getItemNumericaValue() {
+		return itemNumericaValue;
+	}
+	public void setItemNumericaValue(String itemNumericaValue) {
+		this.itemNumericaValue = itemNumericaValue;
 	}
 }
