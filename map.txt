@@ -1,0 +1,20 @@
+1::Parking Lot::Memory Piece::0::false::2_0_7_0
+2::Your Car::Plasma Gun::0::false::0_0_1_0
+3::The Dorms::Memory Piece::P1::false::0_4_10_0
+4::The Infirmary::Health Potion::0::false::0_5_0_3
+5::The Zebra Fish Lab::Shield Potion::P2::false::0_0_6_4
+6::The Chem Lab::Flashlight::P3::false::5_0_6_20
+7::Track and Field::Grappling Hook::0::false::1_9_13_8
+8::Shed::Memory Piece, Body Armor::0::false::0_0_7_0
+9::The Board Room::Memory Piece::P4::false::10_11_0_7
+10::Honors Class Room::Plasma Short Bow::0::false::3_0_9_0
+11::The Auditorium::0::0::false::9_20_0_12
+12::The Grizzly Statue::Memory Piece, Health Potion::P5::false::0_11_0_0
+13::The Library 1st Floor::Memory Piece::0::false::7_0_14_0
+14::The Library 2nd Floor::0::0::false::13_0_15_0
+15::The Library 3rd Floor::Memory Piece::0::false::14_16_0_0
+16::The Coffee Shop::Memory Piece, Shield Potion::P6::false::0_19_0_15
+17::The Lobby::0::0::false::0_18_0_19
+18::The Helpdesk::0::P7::false::0_0_0_17
+19::The Hallway::Memory Piece::0::false::0_17_0_16
+20::The Walkway::Memory Piece, Head Armor::0::false::6_0_0_11
