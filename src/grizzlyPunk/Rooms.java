@@ -13,7 +13,7 @@ public class Rooms {
 	//This list will consist of the monsters in a room
 	private ArrayList<Monster> monsters = new ArrayList<>();
 	
-	//Constructer
+	//Constructor
 	public Rooms(String roomID, String roomDesc, ArrayList<String> roomConnections, ArrayList<Item> inventory,
 			ArrayList<Puzzles> puzzles, ArrayList<Monster> monsters) {
 		this.roomID = roomID;
