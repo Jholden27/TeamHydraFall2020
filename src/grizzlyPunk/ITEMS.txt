@@ -1,0 +1,10 @@
+itm1~Health Potion~Restore health points to the players health.~Consume~50
+itm2~Shield Potion~Restores shield of body armor and or head armor.~Consume~25
+itm3~Body armor~Protects the player health bar if equipped can be recharge by shield potion.~Equip~25
+itm4~Head armor~Protects the player health bar if equipped can be recharge by shield potion.~Equip~25
+itm5~Plasma gun~The plasma gun is futuristic weapon that is effective at media range. The gun is too heavy to be effective in short range.~Equip~35
+itm6~Plasma sword~The plasma sword is a melee weapon it is only effective in close quarter combat.~Equip~75
+itm7~Plasma bow & arrow~The plasma bow is the long-range weapon good for killing enemies that can fly.~Equip~100
+itm8~Flashlight~Flashlight helps the player see in dark rooms.~Equip~0
+itm9~Grappler~The grappler is tools that grasp and anker to surfaces such as walls or structures.~Equip~0
+itm10~Memory Piece~The memory piece item gives player story background.~Collect~0
