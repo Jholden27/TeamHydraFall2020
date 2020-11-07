@@ -47,9 +47,9 @@ public class Item {
 		this.itemNumericValue = itemNumericValue;
 	}
 	 
-	public String toString()
-	{
-		return "Item ID: " + itemID + "\n\tItem Name: " + itemName + "\n\tItem Description: " + itemDescription
-				+ "\n\tItem Type: " + itemType + "\n\tItem NumericValue: " + itemNumericValue;
+	@Override
+	public String toString() {
+		return "Item [itemID=" + itemID + ", itemName=" + itemName + ", itemDescription=" + itemDescription
+				+ ", itemType=" + itemType + ", itemNumericValue=" + itemNumericValue + "]";
 	}
 }
