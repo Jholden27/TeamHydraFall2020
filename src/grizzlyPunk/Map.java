@@ -34,7 +34,7 @@ public class Map {
 				}
 				// Room monsters
 				String holdMon = text[4];
-				ArrayList<Monster> monsters = roomMonster(holdMon);
+				ArrayList<Monster> monsters = roomMonsters(holdMon);
 
 				// Room items
 				String items = text[5];
@@ -74,30 +74,36 @@ public class Map {
 				while ((line = buffer.readLine()) != null) {
 					String[] text = line.split("~");
 					if ((monsterID.equals(text[0]))) {
-						// monster id
+						// Monster id
 						String holdID = text[0];
-						// Puzzle Question
-						String holdQuestion = text[1];
-						// Puzzle Answer
-						String holdAnswer = text[2];
-						// Puzzle choices = answer + text[3]
-						choices.add(holdAnswer);
-						String wrong = text[3];
-						String[] w = wrong.split(",");
-						// add the 2 wrong choices to arraylist
-						choices.add(w[0]);
-						choices.add(w[1]);
+						// Monster name
+						String holdName = text[1];
+						// Monster description
+						String holdDesc = text[2];
+						// Monster hp
+						int holdHP = Integer.parseInt(text[3]);
+						// Monster attack type
+						String holdAttack = text[4];
+						// Monster dp
+						int holdDP = Integer.parseInt(text[5]);
+						// Monster Weakness
+						String holdWeak = text[6];
+						// Monster inventory
+						String[] holdDrop = null;
+						holdDrop[0] = text[7];
+						ArrayList<Item> inventory = createInventory(holdDrop);
 
-						// Create puzzle
-						Puzzles puzzle = new Puzzles(holdID, holdQuestion, holdAnswer, choices);
 
-						// Add item to inventory
-						puzzles.add(puzzle);
+						// Create monster
+						Monster monster = new Monster(holdID, holdName, holdDesc, holdHP, holdAttack, holdDP, holdWeak, inventory);
+
+						// Add monster to arraylist
+						monsters.add(monster);
 
 						break;
 
-						// Check if puzzles are being read correctly
-						// System.out.println(puzzles);
+						// Check if monsters are being read correctly
+						// System.out.println(monsters);
 					}
 
 				}
@@ -105,7 +111,7 @@ public class Map {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return puzzles;
+			return monsters;
 		}
 
 	// Read from ITEMS.txt to create an arraylist of items for each room

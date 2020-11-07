@@ -9,7 +9,7 @@ public class Player {
 	private int sp;		//shield points
 	private int ap;		//attack points / damage done
 	private int memoryFragments;
-	private ArrayList<String> items = new ArrayList<String>();	
+	private ArrayList<Item> inventory = new ArrayList<Item>();	
 
 	public Player() {
 		currentRoom = "R1";
@@ -21,16 +21,17 @@ public class Player {
 	}
 
 	public Player(String currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
-			ArrayList<String> items) {
-		super();
+			ArrayList<Item> inventory) {
 		this.currentRoom = currentRoom;
 		this.maxHP = maxHP;
 		this.currentHP = currentHP;
 		this.sp = sp;
 		this.ap = ap;
 		this.memoryFragments = memoryFragments;
-		this.items = items;
+		this.inventory = inventory;
 	}
+
+
 
 	public String getCurrentRoom() {
 		return currentRoom;
@@ -80,17 +81,17 @@ public class Player {
 		this.memoryFragments = memoryFragments;
 	}
 
-	public ArrayList<String> getItems() {
-		return items;
+	public ArrayList<Item> getInventory() {
+		return inventory;
 	}
 
-	public void setItems(ArrayList<String> items) {
-		this.items = items;
+	public void setInventory(ArrayList<Item> inventory) {
+		this.inventory = inventory;
 	}
 
 	@Override
 	public String toString() {
 		return "Player [currentRoom=" + currentRoom + ", maxHP=" + maxHP + ", currentHP=" + currentHP + ", sp=" + sp
-				+ ", ap=" + ap + ", memoryFragments=" + memoryFragments + ", items=" + items + "]";
+				+ ", ap=" + ap + ", memoryFragments=" + memoryFragments + ", inventory=" + inventory + "]";
 	}
 }
