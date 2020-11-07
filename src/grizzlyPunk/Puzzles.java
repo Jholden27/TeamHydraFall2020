@@ -56,4 +56,9 @@ public class Puzzles {
 		return "Puzzles [puzzleID=" + puzzleID + ", description=" + description + ", answer=" + answer + ", choices="
 				+ choices + "]";
 	}
+	
+	//solve puzzle
+	//ignore puzzle
+	//exit puzzle
+	//win reward
 }
