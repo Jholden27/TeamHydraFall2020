@@ -1,7 +1,7 @@
 M1~Bulldog~200~Football Charge~25~legs~none~A short, muscular anamorphic bulldog mascot. He stands about 5'6" ft and is wearing broken shoulder pads that are covered in stains. He has metal wiring showing from his thighpads and glowing orange eyes.
 M2~Panther~150~Claw Strike~50~head~none~Long, tall, and lithe with a few scars around its black, piercing eyes. It has large, sharp claws on both his hands and feet.
 M3~Hawk~200~Claw Slash~40~arms~none~Huge, fast bird soaring through the air.
-M4~Buzz~200~String Missile~40~head~Health Potion~Car sized bumble bee flying around the library. Beware of its menacing stinger.
+M4~Buzz~200~String Missile~40~head~itm1~Car sized bumble bee flying around the library. Beware of its menacing stinger.
 M5~Wolf~150~Charge Bite~50~head~none~A large gray wolf about the size of a Tesla Cybertruck. Its fangs and claws are at least 6 inches long.
-M6~Owl~200~Eye Glare~40~arms~Health Potion~A white owl about twice the size of a person. Its eyes are as big as dinner plates and its claws the size of kitchen knives.
+M6~Owl~200~Eye Glare~40~arms~itm1~A white owl about twice the size of a person. Its eyes are as big as dinner plates and its claws the size of kitchen knives.
 M7~Grizzly Bear~250~Maul~75~none~none~He's still wearing the GGC jersey from earlier but has shown his true form of a large, menacing bear.
