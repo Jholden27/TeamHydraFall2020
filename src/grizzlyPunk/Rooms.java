@@ -7,14 +7,14 @@ public class Rooms {
 	//This list will consist of the roomIDs that are connected to a room
 	private ArrayList<String> roomConnections = new ArrayList<>();
 	//This list will consist of the item inventory in the room
-	private ArrayList<Items> inventory = new ArrayList<>();
+	private ArrayList<Item> inventory = new ArrayList<>();
 	//This list will consist of the puzzles in a room
 	private ArrayList<Puzzles> puzzles = new ArrayList<>();
 	//This list will consist of the monsters in a room
 	private ArrayList<Monster> monsters = new ArrayList<>();
 	
-	//Construster
-	public Rooms(String roomID, String roomDesc, ArrayList<String> roomConnections, ArrayList<Items> inventory,
+	//Constructer
+	public Rooms(String roomID, String roomDesc, ArrayList<String> roomConnections, ArrayList<Item> inventory,
 			ArrayList<Puzzles> puzzles, ArrayList<Monster> monsters) {
 		this.roomID = roomID;
 		this.roomDesc = roomDesc;
@@ -49,11 +49,11 @@ public class Rooms {
 		this.roomConnections = roomConnections;
 	}
 
-	public ArrayList<Items> getInventory() {
+	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(ArrayList<Items> inventory) {
+	public void setInventory(ArrayList<Item> inventory) {
 		this.inventory = inventory;
 	}
 

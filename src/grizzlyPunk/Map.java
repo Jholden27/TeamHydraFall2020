@@ -43,7 +43,7 @@ public class Map {
 						String holdItem = itm[i];
 					}
 					//keep working on this
-					ArrayList<Items> inventory = createInventory(holdInv);
+					ArrayList<Item> inventory = createInventory(holdInv);
 					
 					// Room puzzles
 					String holdPuzz = text[6];
