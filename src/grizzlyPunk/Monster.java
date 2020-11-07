@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Monster {
 	private String monsterID;
 	private String monsterName;
-	private String monsterDesc;
+  private String monsterDesc;
 	private int monsterHP;
 	private String monsterAttack;
 	private int monsterDP;
@@ -101,4 +101,5 @@ public class Monster {
 	//Monster encounter
 	//Attacking
 	//Monster being defeated
+
 }
