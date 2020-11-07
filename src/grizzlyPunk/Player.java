@@ -94,4 +94,16 @@ public class Player {
 		return "Player [currentRoom=" + currentRoom + ", maxHP=" + maxHP + ", currentHP=" + currentHP + ", sp=" + sp
 				+ ", ap=" + ap + ", memoryFragments=" + memoryFragments + ", inventory=" + inventory + "]";
 	}
+	
+	//Moving rooms
+	//Attacking monster
+	//Using item
+	//Equipping item
+	//Check stats
+	//Open inventory
+	//Close inventory
+	//Explore room
+	//Pick up item
+	//consume item
+	//add memory frag
 }

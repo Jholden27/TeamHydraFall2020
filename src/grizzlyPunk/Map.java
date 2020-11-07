@@ -89,7 +89,7 @@ public class Map {
 						// Monster Weakness
 						String holdWeak = text[6];
 						// Monster inventory
-						String[] holdDrop = null;
+						String[] holdDrop = null;//need to fix
 						holdDrop[0] = text[7];
 						ArrayList<Item> inventory = createInventory(holdDrop);
 
