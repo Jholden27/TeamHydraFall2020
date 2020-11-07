@@ -26,6 +26,10 @@ public class Player {						//Controls where the player is currently
 //		gamePuzzle = gameMap.getPuzzle("pizzapuzzle");
 	}
 	
+	public String getRoomName() {
+		return gameRoom.getName();
+	}
+	
 	public String getRoomDescription() {
 		return gameRoom.getDescription();
 	}

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 
 public class Room {
 	private String room;
+	private String name;
 	private String description;
 	private String item;
 	private boolean visited;
@@ -15,8 +16,9 @@ public class Room {
 	private String puzzleID;	//NEW
 	private ArrayList<String> items = new ArrayList<String>();	//NEW
 
-	public Room(String room, String description, String item, String puzzleID, boolean visited, String northRoom, String eastRoom, String southRoom, String westRoom) {		//pulls data from Map class
+	public Room(String room, String name, String description, String item, String puzzleID, boolean visited, String northRoom, String eastRoom, String southRoom, String westRoom) {		//pulls data from Map class
 		this.room = room;
+		this.name = name;
 		this.description = description;
 		this.setItem(item);
 		this.puzzleID = puzzleID;
@@ -40,10 +42,18 @@ public class Room {
 		this.visited = visited;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}

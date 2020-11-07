@@ -89,8 +89,8 @@ public class Map {
 			Scanner readFile = new Scanner(fileReader);
 			while (readFile.hasNextLine()) {										
 				String[] data = readFile.nextLine().split("::");
-				String[] roomData = data[5].split("_");
-				roomList.add(new Room(data[0], data[1], data[2], data[3], Boolean.parseBoolean(data[4]), roomData[0], roomData[1], roomData[2], roomData[3]));	
+				String[] roomData = data[6].split("_");
+				roomList.add(new Room(data[0], data[1], data[2], data[3], data[4], Boolean.parseBoolean(data[5]), roomData[0], roomData[1], roomData[2], roomData[3]) );	
 			}
 			readFile.close();
 			fileReader.close();	

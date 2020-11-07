@@ -17,9 +17,7 @@ public class Game {
 	private Map map;
 	
 	public static void main(String[] args) {
-		System.out.println("Welcome to the game! You are at the Pizza Restaurant.");			//Game Introduction
-		System.out.println("You are sitting in your car. To the North is the parking lot.");
-		
+		System.out.println("Welcome to the game! You are next to your car outside of the school.");			//Game Introduction		
 		Game play = new Game();
 		try {
 			play.gameRunning();
@@ -64,18 +62,18 @@ public class Game {
 //				System.out.println("PUZZLE TIME");
 //			}
 			if (none.equals(character.getRoomPuzzleID())) {
-				System.out.println(character.getRoomDescription());
+				System.out.println(character.getRoomName());
 			}
 			else {
-				character.startPuzzle(character.getRoomPuzzleID());
-				
+				//character.startPuzzle(character.getRoomPuzzleID());
 //				puzzle.getQuestion();
 				
 				
+				System.out.println("PUZZLE");
+
 				
 				
-				
-				System.out.println(character.getRoomDescription());
+				System.out.println(character.getRoomName());
 			}
 			
 			
@@ -105,8 +103,12 @@ public class Game {
 		
 		//ITEM SEARCH
 		else if (direction.equalsIgnoreCase("x")) {			//Explore
+			
+			//ROOM DESCRIPTION HOLDER
+			System.out.println("Looking around the room: " + character.getRoomDescription());
+			
 			if (none.equals(character.getRoomItem())) {
-				System.out.println("Nothing here...");
+				System.out.println("No items here...");
 			}
 			else {
 				System.out.println("You see: " + character.getRoomItem());	//Temp incorrect
