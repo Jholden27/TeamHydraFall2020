@@ -107,14 +107,14 @@ public class Player {
 		map.enterRoom(moveID);
 	}
 
-	// Explore room current room
+	// Explore current room
 	public void explore() {
 		ArrayList<String> itemNames = new ArrayList<>();
 		for (int i = 0; i < currentRoom.getInventory().size(); i++) {
 			itemNames.add(currentRoom.getInventory().get(i).getItemName());
 		}
-		// if there are no items in the room
-		if (itemNames.isEmpty()) {
+		// if there are no items in the room or in R19 and grappling hook not equipped
+		if (itemNames.isEmpty() || (getCurrentRoom() == map.getRoom("R19") && !isGrapplingEquipped())) {
 			System.out.println(
 					"You search the room for anything that could help you in your journey, but there is nothing.");
 		}
@@ -138,8 +138,8 @@ public class Player {
 					// memory fragments is increased
 					memoryFragments++;
 					// read memory frag description
-				} 
-				//adding item to inventory
+				}
+				// adding item to inventory
 				else {
 					// Item description is outputted
 					System.out.println(holdRoomInv.get(i).getItemDescription());
@@ -159,38 +159,213 @@ public class Player {
 			System.out.println("That item is not in this room.");
 		}
 	}
-	
-	// drop an item
-		public void dropItem(String itemName) {
-			for (int i = 0; i < inventory.size(); i++) {
-				// compare inventory with itemName player inputted
-				if (inventory.get(i).getItemName().equalsIgnoreCase(itemName)) {
-					// add to room inventory
-					currentRoom.getInventory().add(inventory.get(i));
 
-					// Remove from player inventory
-					inventory.remove(i);
+	// Drop an item
+	public void dropItem(String itemName) {
+		for (int i = 0; i < inventory.size(); i++) {
+			// compare inventory with itemName player inputted
+			if (inventory.get(i).getItemName().equalsIgnoreCase(itemName)) {
+				// add to room inventory
+				currentRoom.getInventory().add(inventory.get(i));
 
-					// tell user that item was added to inventory
-					System.out.println(itemName + " was successfully dropped from your inventory.");
-				}
-				// We are at the end of the list and there are still no matches
-				else if (inventory.get(i).getItemName()
-						.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
-						&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
-					System.out.println("There is no item with that name in your inventory");
-				}
+				// Remove from player inventory
+				inventory.remove(i);
+
+				// tell user that item was added to inventory
+				System.out.println(itemName + " was successfully dropped from your inventory.");
+			}
+			// We are at the end of the list and there are still no matches
+			else if (inventory.get(i).getItemName()
+					.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
+					&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
+				System.out.println("There is no item with that name in your inventory");
 			}
 		}
-		
-	//Equipping item
-	public void equipItem(String itemName) {
-		
 	}
-	
-	//Using/consuming item
+
+	// Equipping item
+	public void equipItem(String itemName) {
+		// find item in the inventory
+		for (int i = 0; i < inventory.size(); i++) {
+			// compare inventory with itemName player inputted
+			if (inventory.get(i).getItemName().equalsIgnoreCase(itemName)) {
+				// make sure the item is an equippable type
+				if (inventory.get(i).getItemType().equals("Equip")) {
+					// if the item is already equipped
+					if (inventory.get(i).isEquipped()) {
+						System.out.println("This item is equipped already.");
+					}
+					// item isn't equipped yet
+					else {
+						// if the item is armor
+						if (inventory.get(i).getItemID().equals("itm3")
+								|| inventory.get(i).getItemID().equals("itm4")) {
+							// add it sp
+							setSp(getSp() + inventory.get(i).getItemNumericValue());
+							// make item isEquipped equal true
+							inventory.get(i).setEquipped(true);
+						}
+						// if the item is a weapon
+						else if (inventory.get(i).getItemID().equals("itm5")
+								|| inventory.get(i).getItemID().equals("itm6")
+								|| inventory.get(i).getItemID().equals("itm7")) {
+							// if itm5
+							if (inventory.get(i).getItemID().equals("itm5")) {
+								// set ap to weapon value
+								setAp(inventory.get(i).getItemNumericValue());
+								// make item isEquipped true
+								inventory.get(i).setEquipped(true);
+
+							}
+							// if itm6
+							else if (inventory.get(i).getItemID().equals("itm6")) {
+								// set ap to weapon value
+								setAp(inventory.get(i).getItemNumericValue());
+								// make item isEquipped true
+								inventory.get(i).setEquipped(true);
+							}
+							// if itm7
+							else {
+								// set ap to weapon value
+								setAp(inventory.get(i).getItemNumericValue());
+								// make item isEquipped true
+								inventory.get(i).setEquipped(true);
+							}
+
+						}
+						// if the item is a flashlight
+						else if (inventory.get(i).getItemID().equals("itm8")) {
+							// if the player isn't in room R17
+							if (getCurrentRoom() != map.getRoom("R17")) {
+								System.out.println("This item is not useful in this room might want to try later.");
+							}
+							// the player is in room R17
+							else {
+								// item is set to equipped
+								inventory.get(i).setEquipped(true);
+								System.out.println("I can see now and get through the room.");
+
+							}
+
+						}
+						// if the item is a grappling hook
+						else if (inventory.get(i).getItemID().equals("itm9")) {
+							// if the player isn't in room R19
+							if (getCurrentRoom() != map.getRoom("R19")) {
+								System.out.println("This item is not useful in this room might want to try later.");
+
+							}
+							// the player is in room R19
+							else {
+								// item is set to equipped
+								inventory.get(i).setEquipped(true);
+								System.out.println(
+										"I will use this grapping hook to get to the other side of the hallway.");
+
+							}
+
+						}
+					}
+
+				}
+				// can't equip this item
+				else {
+					System.out.println("This item can not be used this way.");
+				}
+
+			}
+			// not in inventory
+			else if (inventory.get(i).getItemName()
+					.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
+					&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
+				System.out.println("There is no item with that name in your inventory.");
+			}
+
+		}
+
+	}
+
+	// Using/consuming item
 	public void useItem(String itemName) {
-		
+		// find the item in the inventory
+		for (int i = 0; i < inventory.size(); i++) {
+			// compare inventory with itemName player inputted
+			if (inventory.get(i).getItemName().equalsIgnoreCase(itemName)) {
+				// find out if it is itm1: health potion
+				if (inventory.get(i).getItemID().equals("itm1")) {
+					// check to see if hp is maxed (100hp)
+					if (getCurrentHP() == getMaxHP()) {
+						System.out.println("Your health is already maxed");
+					}
+					// if not maxed
+					else {
+						// if current health is 50 or above, then health becomes maxed
+						if (getCurrentHP() >= 50) {
+							setCurrentHP(getMaxHP());
+						}
+						// if current health is <50, then item numeric value is added to current health
+						else {
+							setCurrentHP(getCurrentHP() + inventory.get(i).getItemNumericValue());
+						}
+
+					}
+
+				}
+				// find out if it is itm2: shield potion
+				else if (inventory.get(i).getItemID().equals("itm2")) {
+					// check to see if sp is maxed (50 sp)
+					if (getSp() == 50) {
+						System.out.println("Your shield is already maxed.");
+					}
+					// if not maxed
+					else {
+						// if current sp is 25 or above, then sp becomes maxed (50sp)
+						if (getSp() >= 25) {
+							setSp(50);
+						}
+						// if current sp is <25, then 25 is added to current sp
+						else {
+							setSp(getSp() + inventory.get(i).getItemNumericValue());
+						}
+
+					}
+
+				}
+				// if neither, then they can't consume this item
+				else {
+					System.out.println("This item can not be used this way.");
+				}
+
+			}
+			// item name wasn't found in inventory
+			else if (inventory.get(i).getItemName()
+					.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
+					&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
+				System.out.println("There is no item with that name in your inventory.");
+			}
+
+		}
+
+	}
+
+	// Check if grappling hook is equipped
+	public boolean isGrapplingEquipped() {
+		for (int i = 0; i < inventory.size(); i++) {
+			// compare inventory with grappling hook
+			if (inventory.get(i).getItemID().equals("itm9")) {
+				if (inventory.get(i).isEquipped()) {
+					return true;
+				} else {
+					return false;
+				}
+			} 
+			// item wasn't found in inventory
+			else if (inventory.get(i).getItemID().equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemID()))
+					&& !(inventory.get(i).getItemID().equalsIgnoreCase("itm9"))) {
+				return false;
+			}
+		}
+		return false;//need to fix
 	}
 
 	// Attacking monster
