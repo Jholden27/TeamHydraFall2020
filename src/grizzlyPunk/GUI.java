@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
@@ -30,14 +33,30 @@ import javax.swing.JMenu;
 import javax.swing.JTree;
 import java.awt.Insets;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.DebugGraphics;
 
 public class GUI {
 
 	private JFrame frame;
 	private JTextField txtInventory;
 	private JTextField txtEquippedWeapon;
+	private JTextField txtShield;
+	private JTextField txtHp;
+	private final Component horizontalStrut_1_1 = Box.createHorizontalStrut(120);
+	private JTextField txtMemories;
+	private JLabel lblNewLabel;
+	
+	int getMemoryFragments = 5;
+	int getCurrentHP = 75;
+	int getSp = 50;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -67,15 +86,32 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setMinimumSize(new Dimension(960, 720));
-		frame.setSize(new Dimension(960, 720));
-		frame.getContentPane().setSize(new Dimension(960, 720));
-		frame.getContentPane().setMinimumSize(new Dimension(960, 720));
+		frame.setMinimumSize(new Dimension(1280, 1024));
+		frame.setSize(new Dimension(1280, 1024));
+		frame.getContentPane().setSize(new Dimension(1280, 1024));
+		frame.getContentPane().setMinimumSize(new Dimension(1280, 1024));
 		frame.setResizable(false);
-		frame.getContentPane().setPreferredSize(new Dimension(960, 720));
-		frame.setPreferredSize(new Dimension(960, 720));
+		frame.getContentPane().setPreferredSize(new Dimension(1280, 1024));
+		frame.setPreferredSize(new Dimension(1280, 1024));
 		frame.getContentPane().setBackground(Color.GRAY);
 		frame.getContentPane().setLayout(null);
+		
+		txtMemories = new JTextField();
+		txtMemories.setText("Memories");
+		txtMemories.setOpaque(false);
+		txtMemories.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 23));
+		txtMemories.setEditable(false);
+		txtMemories.setColumns(10);
+		txtMemories.setBorder(null);
+		txtMemories.setBounds(267, 290, 105, 20);
+		frame.getContentPane().add(txtMemories);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2_1.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1.setForeground(new Color(85, 107, 47));
+		lblNewLabel_2_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2_1.setBounds(62, 16, 300, 46);
+		frame.getContentPane().add(lblNewLabel_2_1);
 		
 		txtInventory = new JTextField();
 		txtInventory.setBorder(null);
@@ -83,7 +119,7 @@ public class GUI {
 		txtInventory.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
 		txtInventory.setOpaque(false);
 		txtInventory.setText("Inventory");
-		txtInventory.setBounds(746, 45, 75, 20);
+		txtInventory.setBounds(956, 44, 75, 20);
 		frame.getContentPane().add(txtInventory);
 		txtInventory.setColumns(10);
 		
@@ -91,39 +127,61 @@ public class GUI {
 		panel.setName("Map");
 		panel.setBackground(new Color(85, 107, 47));
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(85, 107, 47), 1, true), "", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(313, 18, 265, 318);
+		panel.setBounds(490, 0, 295, 367);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		Canvas canvas = new Canvas();
-		canvas.setBounds(6, 15, 253, 297);
+		canvas.setBounds(9, 10, 276, 347);
 		panel.add(canvas);
 		canvas.setBackground(new Color(255, 248, 220));
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new LineBorder(new Color(85, 107, 47), 5));
+		panel_2.setBorder(new LineBorder(new Color(85, 107, 47), 7));
 		panel_2.setBackground(new Color(255, 248, 220));
-		panel_2.setBounds(0, 340, 946, 60);
+		panel_2.setBounds(0, 362, 1271, 60);
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
+		txtHp = new JTextField();
+		txtHp.setText("Health:");
+		txtHp.setOpaque(false);
+		txtHp.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+		txtHp.setEditable(false);
+		txtHp.setColumns(10);
+		txtHp.setBorder(null);
+		txtHp.setBounds(560, 32, 75, 20);
+		panel_2.add(txtHp);
+		
+		txtShield = new JTextField();
+		txtShield.setText("Shield:");
+		txtShield.setOpaque(false);
+		txtShield.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+		txtShield.setEditable(false);
+		txtShield.setColumns(10);
+		txtShield.setBorder(null);
+		txtShield.setBounds(540, 7, 75, 20);
+		panel_2.add(txtShield);
+		
 		JProgressBar shieldBar = new JProgressBar();
-		shieldBar.setValue(100);
+		shieldBar.setMaximum(100);
+		shieldBar.setValue(getSp);
 		shieldBar.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		shieldBar.setName("Shield:");
-		shieldBar.setBounds(345, 10, 200, 15);
+		shieldBar.setBounds(533, 10, 200, 15);
 		panel_2.add(shieldBar);
 		shieldBar.setBackground(Color.GRAY);
 		shieldBar.setForeground(new Color(176, 224, 230));
 		
 		JProgressBar healthBar = new JProgressBar();
-		healthBar.setValue(100);
+		healthBar.setMaximum(100);
+		healthBar.setValue(getCurrentHP);
 		healthBar.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		healthBar.setName("HP:");
-		healthBar.setBounds(365, 35, 160, 15);
+		healthBar.setBounds(553, 35, 160, 15);
 		panel_2.add(healthBar);
 		healthBar.setBackground(Color.GRAY);
-		healthBar.setForeground(new Color(205, 92, 92));
+		healthBar.setForeground(new Color(240, 128, 128));
 		
 		txtEquippedWeapon = new JTextField();
 		txtEquippedWeapon.setText("Equipped Weapon:");
@@ -132,56 +190,68 @@ public class GUI {
 		txtEquippedWeapon.setEditable(false);
 		txtEquippedWeapon.setColumns(10);
 		txtEquippedWeapon.setBorder(null);
-		txtEquippedWeapon.setBounds(695, 15, 178, 23);
+		txtEquippedWeapon.setBounds(878, 10, 178, 23);
 		panel_2.add(txtEquippedWeapon);
 		
-		JLabel lblNewLabel_1 = new JLabel("\t\t\tMemories");
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblNewLabel_1.setToolTipText("Memories collected.");
-		lblNewLabel_1.setBounds(62, 138, 183, 192);
-		frame.getContentPane().add(lblNewLabel_1);
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setBorder(null);
+		lblNewLabel.setSize(new Dimension(225, 225));
+		lblNewLabel.setPreferredSize(new Dimension(225, 225));
+		lblNewLabel.setMinimumSize(new Dimension(225, 225));
+		lblNewLabel.setMaximumSize(new Dimension(225, 225));
+		Image mem = new ImageIcon (this.getClass().getResource("Mem" + getMemoryFragments + ".png")).getImage();
+		lblNewLabel.setIcon(new ImageIcon(mem));
+		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel.setToolTipText("Memories collected.");
+		lblNewLabel.setBounds(90, 119, 225, 225);
+		frame.getContentPane().add(lblNewLabel);
 		
 		JTextArea console = new JTextArea();
-		console.setBackground(Color.GRAY);
-		console.setBorder(new LineBorder(new Color(85, 107, 47), 9));
-		console.setBounds(0, 435, 946, 247);
+		console.setBackground(new Color(255, 248, 220));
+		console.setBorder(new MatteBorder(20, 1, 20, 1, (Color) new Color(85, 107, 47)));
+		console.setBounds(0, 482, 1266, 514);
 		frame.getContentPane().add(console);
 		
 		JToolBar toolBar = new JToolBar();
-		toolBar.setBounds(10, 399, 923, 34);
+		toolBar.setBackground(Color.LIGHT_GRAY);
+		toolBar.setForeground(Color.GRAY);
+		toolBar.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.RAISED, new Color(85, 107, 47), new Color(160, 160, 160)), "ActionBar", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		toolBar.setBounds(31, 427, 1213, 50);
 		frame.getContentPane().add(toolBar);
 		
-		Component horizontalStrut = Box.createHorizontalStrut(20);
+		Component horizontalStrut = Box.createHorizontalStrut(210);
 		toolBar.add(horizontalStrut);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBorder(new LineBorder(new Color(0, 0, 0)));
-		menuBar.setMargin(new Insets(0, 100, 0, 100));
+		menuBar.setLocation(new Point(0, 10));
+		menuBar.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
+		menuBar.setMargin(new Insets(0, 100, 10, 100));
 		toolBar.add(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Move");
-		mnNewMenu.setBackground(Color.GRAY);
+		JMenu mnNewMenu = new JMenu("Go To...");
+		mnNewMenu.setBorder(null);
+		mnNewMenu.setBackground(new Color(192, 192, 192));
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Move North");
+		JMenuItem mntmNewMenuItem = new JMenuItem("Room 1");
 		mnNewMenu.add(mntmNewMenuItem);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Move South");
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Room 2");
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Move East");
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Room 3");
 		mnNewMenu.add(mntmNewMenuItem_2);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Move West");
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Room 4");
 		mnNewMenu.add(mntmNewMenuItem_3);
 		
-		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		Component horizontalStrut_1 = Box.createHorizontalStrut(120);
 		toolBar.add(horizontalStrut_1);
 		
 		JMenuBar menuBar_1 = new JMenuBar();
 		menuBar_1.setAlignmentY(Component.CENTER_ALIGNMENT);
 		menuBar_1.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		menuBar_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		menuBar_1.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
 		menuBar_1.setMargin(new Insets(0, 100, 0, 100));
 		toolBar.add(menuBar_1);
 		
@@ -190,38 +260,104 @@ public class GUI {
 		mnAttack.setBackground(Color.GRAY);
 		menuBar_1.add(mnAttack);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Move North");
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Attack the head");
 		mnAttack.add(mntmNewMenuItem_4);
 		
-		JMenuItem mntmNewMenuItem_1_1 = new JMenuItem("Move South");
+		JMenuItem mntmNewMenuItem_1_1 = new JMenuItem("Attack the arms");
 		mnAttack.add(mntmNewMenuItem_1_1);
 		
-		JMenuItem mntmNewMenuItem_2_1 = new JMenuItem("Move East");
+		JMenuItem mntmNewMenuItem_2_1 = new JMenuItem("Attack the legs");
 		mnAttack.add(mntmNewMenuItem_2_1);
 		
-		JMenuItem mntmNewMenuItem_3_1 = new JMenuItem("Move West");
+		JMenuItem mntmNewMenuItem_3_1 = new JMenuItem("Flail wildly");
 		mnAttack.add(mntmNewMenuItem_3_1);
+		toolBar.add(horizontalStrut_1_1);
+		
+		JMenuBar menuBar_3 = new JMenuBar();
+		menuBar_3.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
+		toolBar.add(menuBar_3);
+		
+		JMenu mnNewMenu_2 = new JMenu("Explore");
+		mnNewMenu_2.setBorder(null);
+		menuBar_3.add(mnNewMenu_2);
+		
+		JMenuItem mntmNewMenuItem_7 = new JMenuItem("New menu item");
+		mnNewMenu_2.add(mntmNewMenuItem_7);
+		
+		Component horizontalStrut_1_1_1 = Box.createHorizontalStrut(120);
+		toolBar.add(horizontalStrut_1_1_1);
+		
+		JMenuBar menuBar_2 = new JMenuBar();
+		menuBar_2.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
+		toolBar.add(menuBar_2);
+		
+		JMenu mnNewMenu_1 = new JMenu("Help");
+		mnNewMenu_1.setBorder(null);
+		menuBar_2.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Command List");
+		mnNewMenu_1.add(mntmNewMenuItem_5);
+		
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("New menu item");
+		mnNewMenu_1.add(mntmNewMenuItem_6);
+		
+		Component horizontalStrut_1_1_2 = Box.createHorizontalStrut(120);
+		toolBar.add(horizontalStrut_1_1_2);
+		
+		JMenuBar menuBar_4 = new JMenuBar();
+		menuBar_4.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
+		toolBar.add(menuBar_4);
+		
+		JMenu mnNewMenu_4 = new JMenu("Game Options");
+		mnNewMenu_4.setBorder(null);
+		menuBar_4.add(mnNewMenu_4);
+		
+		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Save Game");
+		mnNewMenu_4.add(mntmNewMenuItem_8);
+		
+		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Load Game");
+		mnNewMenu_4.add(mntmNewMenuItem_9);
+		
+		JMenuItem mntmNewMenuItem_10 = new JMenuItem("New Game");
+		mnNewMenu_4.add(mntmNewMenuItem_10);
 		
 		JList list = new JList();
 		list.setBackground(new Color(255, 248, 220));
-		list.setBounds(679, 66, 205, 225);
+		list.setBounds(889, 65, 205, 225);
 		frame.getContentPane().add(list);
-		
-		JLabel lblNewLabel = new JLabel("GrizzlyPunk");
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setForeground(new Color(85, 107, 47));
-		lblNewLabel.setFont(new Font("OCR A Extended", Font.BOLD, 35));
-		lblNewLabel.setBounds(34, 18, 246, 84);
-		frame.getContentPane().add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(85, 107, 47));
-		panel_1.setBounds(679, 46, 205, 20);
+		panel_1.setBounds(889, 45, 205, 20);
 		frame.getContentPane().add(panel_1);
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setBackground(new Color(85, 107, 47));
-		panel_1_1.setBounds(679, 291, 205, 20);
+		panel_1_1.setBounds(889, 290, 205, 20);
 		frame.getContentPane().add(panel_1_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2.setForeground(Color.BLACK);
+		lblNewLabel_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2.setBounds(65, 18, 282, 46);
+		frame.getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1_1 = new JLabel("2070");
+		lblNewLabel_2_1_1.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1_1.setForeground(new Color(85, 107, 47));
+		lblNewLabel_2_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2_1_1.setBounds(149, 63, 300, 46);
+		frame.getContentPane().add(lblNewLabel_2_1_1);
+		
+		JLabel lblNewLabel_2_2 = new JLabel("2070");
+		lblNewLabel_2_2.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_2.setForeground(Color.BLACK);
+		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2_2.setBounds(152, 65, 282, 46);
+		frame.getContentPane().add(lblNewLabel_2_2);
+	}
+	protected JLabel getLblNewLabel_1() {
+		return lblNewLabel;
 	}
 }
