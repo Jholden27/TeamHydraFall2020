@@ -98,7 +98,6 @@ public class Monster {
 				+ ", weakness=" + weakness + ", inventory=" + inventory + "]";
 	}
 	
-	//Monster encounter
 	//Attacking
 	//Monster being defeated
 

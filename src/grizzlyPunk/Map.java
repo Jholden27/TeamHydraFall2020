@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class Map {
 	private HashMap<String, Rooms> map = new HashMap<>(); // String = roomID
 
@@ -61,59 +60,59 @@ public class Map {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Read from MONSTERS.txt to create an arraylist of monsters for each room
-		public ArrayList<Monster> roomMonsters(String monsterID) {
-			ArrayList<Monster> monsters = new ArrayList<>();
+	public ArrayList<Monster> roomMonsters(String monsterID) {
+		ArrayList<Monster> monsters = new ArrayList<>();
 
-			try {
-				BufferedReader buffer = new BufferedReader(
-						new InputStreamReader(Map.class.getResourceAsStream("MONSTERS.txt")));
+		try {
+			BufferedReader buffer = new BufferedReader(
+					new InputStreamReader(Map.class.getResourceAsStream("MONSTERS.txt")));
 
-				String line;
+			String line;
 
-				while ((line = buffer.readLine()) != null) {
-					String[] text = line.split("~");
-					if ((monsterID.equals(text[0]))) {
-						// Monster id
-						String holdID = text[0];
-						// Monster name
-						String holdName = text[1];
-						// Monster description
-						String holdDesc = text[2];
-						// Monster hp
-						int holdHP = Integer.parseInt(text[3]);
-						// Monster attack type
-						String holdAttack = text[4];
-						// Monster dp
-						int holdDP = Integer.parseInt(text[5]);
-						// Monster Weakness
-						String holdWeak = text[6];
-						// Monster inventory
-						String monInv = text[7];
-						String[] holdDrop = monInv.split(",");
-						ArrayList<Item> inventory = createInventory(holdDrop);
+			while ((line = buffer.readLine()) != null) {
+				String[] text = line.split("~");
+				if ((monsterID.equals(text[0]))) {
+					// Monster id
+					String holdID = text[0];
+					// Monster name
+					String holdName = text[1];
+					// Monster description
+					String holdDesc = text[2];
+					// Monster hp
+					int holdHP = Integer.parseInt(text[3]);
+					// Monster attack type
+					String holdAttack = text[4];
+					// Monster dp
+					int holdDP = Integer.parseInt(text[5]);
+					// Monster Weakness
+					String holdWeak = text[6];
+					// Monster inventory
+					String monInv = text[7];
+					String[] holdDrop = monInv.split(",");
+					ArrayList<Item> inventory = createInventory(holdDrop);
 
+					// Create monster
+					Monster monster = new Monster(holdID, holdName, holdDesc, holdHP, holdAttack, holdDP, holdWeak,
+							inventory);
 
-						// Create monster
-						Monster monster = new Monster(holdID, holdName, holdDesc, holdHP, holdAttack, holdDP, holdWeak, inventory);
+					// Add monster to arraylist
+					monsters.add(monster);
 
-						// Add monster to arraylist
-						monsters.add(monster);
+					break;
 
-						break;
-
-						// Check if monsters are being read correctly
-						// System.out.println(monsters);
-					}
-
+					// Check if monsters are being read correctly
+					// System.out.println(monsters);
 				}
-				buffer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+
 			}
-			return monsters;
+			buffer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return monsters;
+	}
 
 	// Read from ITEMS.txt to create an arraylist of items for each room
 	public ArrayList<Item> createInventory(String[] items) {
@@ -140,7 +139,7 @@ public class Map {
 						// Item numeric value
 						int holdValue = Integer.parseInt(text[4]);
 						// Create item
-						Item item = new Item(holdID, holdName, holdDesc, holdType, holdValue,false);
+						Item item = new Item(holdID, holdName, holdDesc, holdType, holdValue, false);
 
 						// Add item to inventory
 						inventory.add(item);
@@ -187,7 +186,7 @@ public class Map {
 					choices.add(w[1]);
 
 					// Create puzzle
-					Puzzles puzzle = new Puzzles(holdID, holdQuestion, holdAnswer, choices);
+					Puzzles puzzle = new Puzzles(holdID, holdQuestion, holdAnswer, choices, false);
 
 					// Add item to inventory
 					puzzles.add(puzzle);
@@ -205,16 +204,31 @@ public class Map {
 		}
 		return puzzles;
 	}
-	
-	//entering a room
+
+	// entering a room
 	public void enterRoom(String id) {
-		System.out.println(map.get(id).getRoomDesc());
-		System.out.println();
+		// for certain rooms, the player has to solve a puzzle to enter
+		// the room has a puzzle they have to solve before entering
+		if (!(map.get(id).getPuzzles().isEmpty()) && !(map.get(id).getPuzzles().get(0).isSolved())) {
+			// tell player there is a puzzle they need to solve
+			System.out.println("There seems to be a riddle or something, that's preventing the door from opening.");
+			System.out.println("You may choose to solve or ignore.");
+		} 
+		//there is not puzzle or puzzle is solved
+		else {
+			// Room description is displayed
+			System.out.println(map.get(id).getRoomDesc());
+			System.out.println();
+			// If there is a monster alive in the room
+			if (!(map.get(id).getMonsters().isEmpty()) && (map.get(id).getMonsters().get(0).getMonsterHP() != 0)) {
+				// Monster description is displayed
+				System.out.println(map.get(id).getMonsters().get(0).getMonsterDesc());
+			}
 		}
-	
+	}
+
 	public Rooms getRoom(String id) {
 		return map.get(id);
 	}
 
-	}
-
+}
