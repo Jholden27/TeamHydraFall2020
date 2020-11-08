@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import assignment1.Room;
 
 public class Map {
 	private HashMap<String, Rooms> map = new HashMap<>(); // String = roomID
@@ -139,9 +138,9 @@ public class Map {
 						// Item type
 						String holdType = text[3];
 						// Item numeric value
-						String holdValue = text[4];
+						int holdValue = Integer.parseInt(text[4]);
 						// Create item
-						Item item = new Item(holdID, holdName, holdDesc, holdType, holdValue);
+						Item item = new Item(holdID, holdName, holdDesc, holdType, holdValue,false);
 
 						// Add item to inventory
 						inventory.add(item);
