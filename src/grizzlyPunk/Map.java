@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import assignment1.Room;
+
 public class Map {
 	private HashMap<String, Rooms> map = new HashMap<>(); // String = roomID
 
@@ -89,8 +91,8 @@ public class Map {
 						// Monster Weakness
 						String holdWeak = text[6];
 						// Monster inventory
-						String[] holdDrop = null;//need to fix
-						holdDrop[0] = text[7];
+						String monInv = text[7];
+						String[] holdDrop = monInv.split(",");
 						ArrayList<Item> inventory = createInventory(holdDrop);
 
 
@@ -204,4 +206,16 @@ public class Map {
 		}
 		return puzzles;
 	}
-}
+	
+	//entering a room
+	public void enterRoom(String id) {
+		System.out.println(map.get(id).getRoomDesc());
+		System.out.println();
+		}
+	
+	public Rooms getRoom(String id) {
+		return map.get(id);
+	}
+
+	}
+
