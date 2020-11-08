@@ -63,14 +63,15 @@ public class GUI {
 	private final Component horizontalStrut_1_1 = Box.createHorizontalStrut(120);
 	private JTextField txtMemories;
 	private JLabel lblNewLabel;
+	public static PrintStream printStream;
 	
 	int getMemoryFragments = 5;
 	int getCurrentHP = 75;
 	int getSp = 50;
-	int getRoomID = 17;
+	static int getRoomID = 1;
 	ArrayList<String> getInventory = new ArrayList<String>();
 	private JList list;
-	private JTextArea console;
+	public static JTextArea console = new JTextArea();
 	
 	
 
@@ -227,27 +228,15 @@ public class GUI {
 		
 		
 		
-		console = new JTextArea();
+		
 		console.setBackground(new Color(255, 248, 220));
 		console.setBorder(new MatteBorder(20, 1, 20, 1, (Color) new Color(85, 107, 47)));
 		console.setBounds(0, 482, 1266, 514);
 		frame.getContentPane().add(console);
 		//testing
 				console.setEditable (false);
-				PrintStream oldOut = System.out;
-				PrintStream printStream = new PrintStream(new OutputStream()
-						{
-
-							@Override
-							public void write(int b) throws IOException {
-								console.append(String.valueOf((char)b));
-								console.setCaretPosition(console.getDocument().getLength());
-								
-							}
-					
-						});
-				System.setOut(printStream);
-				System.out.println("This is the console");
+				
+				
 				//testing
 		
 		JToolBar toolBar = new JToolBar();
@@ -273,7 +262,12 @@ public class GUI {
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Room 1");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent setRoomID) {
+			public void actionPerformed(ActionEvent e) {
+				getRoomID = 2;
+				System.out.println("Moving to room 2");
+				Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + getRoomID + ".png")).getImage();
+				Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
+				lblNewLabel_1.setIcon(new ImageIcon(scaled));
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
@@ -444,4 +438,8 @@ public class GUI {
 	public JTextArea getConsole() {
 		return console;
 	}
+	
+	
+		
+	
 }
