@@ -97,9 +97,5 @@ public class Monster {
 				+ ", monsterHP=" + monsterHP + ", monsterAttack=" + monsterAttack + ", monsterDP=" + monsterDP
 				+ ", weakness=" + weakness + ", inventory=" + inventory + "]";
 	}
-	
-	//Monster encounter
-	//Attacking
-	//Monster being defeated
 
 }

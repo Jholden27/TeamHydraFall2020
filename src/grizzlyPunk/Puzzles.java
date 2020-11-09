@@ -3,23 +3,30 @@ import java.util.*;
 
 public class Puzzles {
 	private String puzzleID;
+	private String puzzleName;
 	private String description;
 	private String answer;
 	//Answer choices placed in an arraylist
 	private ArrayList<String> choices = new ArrayList<>();
+	private boolean isSolved;
 	
 	//Constructor
-	public Puzzles(String puzzleID, String description, String answer, ArrayList<String> choices) {
+	public Puzzles(String puzzleID, String puzzleName, String description, String answer, ArrayList<String> choices,
+			boolean isSolved) {
+		super();
 		this.puzzleID = puzzleID;
+		this.puzzleName = puzzleName;
 		this.description = description;
 		this.answer = answer;
 		this.choices = choices;
+		this.isSolved = isSolved;
 	}
 	
 	//Getters and Setters
 	public String getPuzzleID() {
 		return puzzleID;
 	}
+
 
 	public void setPuzzleID(String puzzleID) {
 		this.puzzleID = puzzleID;
@@ -48,17 +55,44 @@ public class Puzzles {
 	public void setChoices(ArrayList<String> choices) {
 		this.choices = choices;
 	}
-
 	
+	public boolean isSolved() {
+		return isSolved;
+	}
+
+
+	public void setSolved(boolean isSolved) {
+		this.isSolved = isSolved;
+	}
+
+	public String getPuzzleName() {
+		return puzzleName;
+	}
+
+	public void setPuzzleName(String puzzleName) {
+		this.puzzleName = puzzleName;
+	}
+
 	//toString
 	@Override
 	public String toString() {
-		return "Puzzles [puzzleID=" + puzzleID + ", description=" + description + ", answer=" + answer + ", choices="
-				+ choices + "]";
+		return "Puzzles [puzzleID=" + puzzleID + ", puzzleName=" + puzzleName + ", description=" + description
+				+ ", answer=" + answer + ", choices=" + choices + ", isSolved=" + isSolved + "]";
 	}
+
 	
-	//solve puzzle
-	//ignore puzzle
-	//exit puzzle
+	//solve puzzle: the puzzle description and answer choices are displayed
+	public void solvePuzzle() {
+		System.out.println(description);
+		for(int i = 1; i <= choices.size(); i++) {
+			System.out.println(i + ". " + choices.get(i));
+		}
+		
+	}
+
 	//win reward
+	public void puzzleWin() {
+		//set isSolved to true
+		setSolved(true);
+	}
 }

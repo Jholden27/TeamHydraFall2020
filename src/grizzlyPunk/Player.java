@@ -1,19 +1,25 @@
 package grizzlyPunk;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player {
-	private Rooms currentRoom;
-	private int maxHP;
-	private int currentHP;
-	private int sp; // shield points
-	private int ap; // attack points / damage done
+	private static Rooms currentRoom;
+	static int maxHP;
+	static int currentHP;
+	static int sp; // shield points
+	static int ap; // attack points / damage done
 	private int memoryFragments;
-	private ArrayList<Item> inventory = new ArrayList<Item>();
-	private Map map;
+	static ArrayList<Item> inventory = new ArrayList<Item>();
+	private static Map map;
+	private Rooms previousRoom;
+	private HashMap<String, MemoryPieces> memories = new HashMap<>();
 
 	public Player(Rooms currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
-			ArrayList<Item> inventory, Map map) {
+			ArrayList<Item> inventory, Map map, Rooms previousRoom) {
 		super();
 		this.currentRoom = currentRoom;
 		this.maxHP = maxHP;
@@ -23,18 +29,19 @@ public class Player {
 		this.memoryFragments = memoryFragments;
 		this.inventory = inventory;
 		this.map = map;
+		this.previousRoom = previousRoom;
 	}
 
-	public Rooms getCurrentRoom() {
+	public static Rooms getCurrentRoom() {
 		return currentRoom;
 	}
 
-	public void setCurrentRoom(String id) {
+	public static void setCurrentRoom(String id) {
 		currentRoom = map.getRoom(id);
 
 	}
 
-	public int getMaxHP() {
+	public static int getMaxHP() {
 		return maxHP;
 	}
 
@@ -42,7 +49,7 @@ public class Player {
 		this.maxHP = maxHP;
 	}
 
-	public int getCurrentHP() {
+	public static int getCurrentHP() {
 		return currentHP;
 	}
 
@@ -50,7 +57,7 @@ public class Player {
 		this.currentHP = currentHP;
 	}
 
-	public int getSp() {
+	public static int getSp() {
 		return sp;
 	}
 
@@ -90,37 +97,52 @@ public class Player {
 		this.map = map;
 	}
 
+	public Rooms getPreviousRoom() {
+		return previousRoom;
+	}
+
+	public void setPreviousRoom(Rooms previousRoom) {
+		this.previousRoom = previousRoom;
+	}
+
 	@Override
 	public String toString() {
 		return "Player [currentRoom=" + currentRoom + ", maxHP=" + maxHP + ", currentHP=" + currentHP + ", sp=" + sp
 				+ ", ap=" + ap + ", memoryFragments=" + memoryFragments + ", inventory=" + inventory + ", map=" + map
-				+ "]";
+				+ ", previousRoom=" + previousRoom + "]";
 	}
 
 	// Moving rooms
-	public void move(String moveID) {
-
-		// Change current room location to where player moved
-		setCurrentRoom(moveID);
+	public static void move(String moveID) {
+		// set previous room to current room
+		//setPreviousRoom(currentRoom);
 
 		// move using map class method
 		map.enterRoom(moveID);
+
+		// Change current room location to where player moved (only if there is no
+		// puzzle to solve)
+		if (map.getRoom(moveID).getPuzzles().isEmpty() || map.getRoom(moveID).getPuzzles().get(0).isSolved()) {
+			setCurrentRoom(moveID);
+		}
 	}
 
 	// Explore current room
-	public void explore() {
+	public static void explore() {
 		ArrayList<String> itemNames = new ArrayList<>();
 		for (int i = 0; i < currentRoom.getInventory().size(); i++) {
 			itemNames.add(currentRoom.getInventory().get(i).getItemName());
 		}
-		// if there are no items in the room or in R19 and grappling hook not equipped
-		if (itemNames.isEmpty() || (getCurrentRoom() == map.getRoom("R19") && !isGrapplingEquipped())) {
+		// if there are no items in the room
+		if (itemNames.isEmpty()) {
 			System.out.println(
 					"You search the room for anything that could help you in your journey, but there is nothing.");
 		}
 		// there are items in the room
 		else {
-			System.out.println(itemNames);
+			for (int i = 0; i < itemNames.size(); i++) {
+				System.out.println(itemNames.get(i));
+			}
 			System.out.println("You can choose to pick up these items or not pick them up.");
 		}
 
@@ -138,6 +160,7 @@ public class Player {
 					// memory fragments is increased
 					memoryFragments++;
 					// read memory frag description
+					gainMemory(currentRoom.getRoomID());
 				}
 				// adding item to inventory
 				else {
@@ -211,6 +234,8 @@ public class Player {
 								|| inventory.get(i).getItemID().equals("itm7")) {
 							// if itm5
 							if (inventory.get(i).getItemID().equals("itm5")) {
+								// unequip already equipped item if necessary
+								unequipWeapon();
 								// set ap to weapon value
 								setAp(inventory.get(i).getItemNumericValue());
 								// make item isEquipped true
@@ -219,6 +244,8 @@ public class Player {
 							}
 							// if itm6
 							else if (inventory.get(i).getItemID().equals("itm6")) {
+								// unequip already equipped item if necessary
+								unequipWeapon();
 								// set ap to weapon value
 								setAp(inventory.get(i).getItemNumericValue());
 								// make item isEquipped true
@@ -226,6 +253,8 @@ public class Player {
 							}
 							// if itm7
 							else {
+								// unequip already equipped item if necessary
+								unequipWeapon();
 								// set ap to weapon value
 								setAp(inventory.get(i).getItemNumericValue());
 								// make item isEquipped true
@@ -358,19 +387,264 @@ public class Player {
 				} else {
 					return false;
 				}
-			} 
+			}
 			// item wasn't found in inventory
 			else if (inventory.get(i).getItemID().equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemID()))
 					&& !(inventory.get(i).getItemID().equalsIgnoreCase("itm9"))) {
 				return false;
 			}
 		}
-		return false;//need to fix
+		return false;// need to fix
+	}
+
+	// Check to see if a weapon is equipped already
+	public void unequipWeapon() {
+		for (int i = 0; i < inventory.size(); i++) {
+			// only 1 weapon can be equipped at a time
+			if (inventory.get(i).getItemID().equals("itm5")) {
+				// if equipped
+				if (inventory.get(i).isEquipped()) {
+					// unequip it
+					inventory.get(i).setEquipped(false);
+				}
+
+			} else if (inventory.get(i).getItemID().equals("itm6")) {
+				// if equipped
+				if (inventory.get(i).isEquipped()) {
+					// unequip it
+					inventory.get(i).setEquipped(false);
+				}
+
+			} else if (inventory.get(i).getItemID().equals("itm7")) {
+				// if equipped
+				if (inventory.get(i).isEquipped()) {
+					// unequip it
+					inventory.get(i).setEquipped(false);
+				}
+
+			}
+
+		}
+
+	}
+
+	// Check player stats
+	public void checkStats() {
+		System.out.println("Here are your stats:");
+		System.out.println("Health: " + getCurrentHP());
+		System.out.println("Shield: " + getSp());
+		System.out.println("Attack points: " + getAp());
+		System.out.println("Memory Fragments Collected: " + getMemoryFragments());
+
 	}
 
 	// Attacking monster
-	// Check stats
-	// Open inventory
-	// Close inventory
-	// Read frag memory description
+
+	public void combatMonster(String bodypart) {
+		// monster in room
+		Monster monster = currentRoom.getMonsters().get(0);
+		// monster hp
+		int monsterHP = monster.getMonsterHP();
+		// hit legs
+		if (bodypart.equalsIgnoreCase("legs")) {
+			// if it was a weakness (x3 damage)
+			if (monster.getWeakness().equalsIgnoreCase("legs")) {
+				monster.setMonsterHP(monsterHP - (getAp() * 3));
+				// monster attacks after
+				takeDamage();
+			} else {
+				monster.setMonsterHP(monsterHP - (getAp()));
+				// monster attacks after
+				takeDamage();
+			}
+
+		}
+		// hit arms
+		else if (bodypart.equalsIgnoreCase("arms")) {
+			// if it was a weakness (x3 damage)
+			if (monster.getWeakness().equalsIgnoreCase("arms")) {
+				monster.setMonsterHP(monsterHP - (getAp() * 3));
+				// monster attacks after
+				takeDamage();
+			} else {
+				monster.setMonsterHP(monsterHP - (getAp()));
+				// monster attacks after
+				takeDamage();
+			}
+
+		}
+		// hit head
+		else if (bodypart.equalsIgnoreCase("head")) {
+			// if it was a weakness (x3 damage)
+			if (monster.getWeakness().equalsIgnoreCase("head")) {
+				monster.setMonsterHP(monsterHP - (getAp() * 3));
+				// monster attacks after
+				takeDamage();
+			} else {
+				monster.setMonsterHP(monsterHP - (getAp()));
+				// monster attacks after
+				takeDamage();
+			}
+
+		}
+		// if monster has died
+		if (monsterHP <= 0) {
+			System.out.println("The monster has been defeated, you can now continue with your journey.");
+			// monster drop added to inventory
+			inventory.add(monster.getInventory().get(0));
+			// removed from monster inventory
+			monster.getInventory().clear();
+
+		}
+		// incorrect bodypart was told
+		else {
+			System.out.println("That was an incorrect body part. Please type 'arms', 'legs', or 'head'.");
+		}
+	}
+
+	// player taking monster damage
+	public void takeDamage() {
+		// monster in room
+		Monster monster = currentRoom.getMonsters().get(0);
+		// monster attack
+		int monsterDP = monster.getMonsterDP();
+		int monsterMaxHP = monster.getMonsterHP();
+		// if the sp isn't zero
+		if (getSp() > 0) {
+			setSp(getSp() - monsterDP);
+
+		}
+		// damage is take from hp until zero
+		else {
+			if (getCurrentHP() > 0) {
+				setCurrentHP(getCurrentHP() - monsterDP);
+			}
+			// player dies
+			else {
+				System.out.println("You have passed out. You have been kicked out of the room.");
+				// monster health reset
+				monster.setMonsterHP(monsterMaxHP);
+				// player health set to 50
+				setCurrentHP(50);
+				// player sent back to previous room
+				move(previousRoom.getRoomID());
+			}
+
+		}
+	}
+
+	// puzzle solving
+	public void solvePuzzle(String answer) {
+		// as long as there is a puzzle in the room and it hasn't been solved
+		if (!(currentRoom.getPuzzles().isEmpty()) && !(currentRoom.getPuzzles().get(0).isSolved())) {
+			// if the player answers correctly
+			if (currentRoom.getPuzzles().get(0).getAnswer().equalsIgnoreCase(answer)) {
+				System.out.println("That is correct!!");
+				// set that the puzzle has been solved
+				currentRoom.getPuzzles().get(0).setSolved(true);
+				// player is allowed to move to that room
+				move(currentRoom.getRoomID());
+			}
+			// if the player answers wrong
+			else {
+				System.out.println("That is incorrect!!");
+				// player looses health
+				if (getCurrentHP() > 10) {
+					// subtract 10 from health
+					setCurrentHP(getCurrentHP() - 10);
+				}
+				// player dies
+				else {
+					System.out.println("You passed out.");
+					// health set to 50
+					setCurrentHP(50);
+					// player sent back to previous room
+					move(previousRoom.getRoomID());
+				}
+			}
+		}
+
+	}
+
+	// create memory hashmap
+	public void collectingMemory() {
+		try {
+			BufferedReader buffer = new BufferedReader(
+					new InputStreamReader(Map.class.getResourceAsStream("MEMORYPIECES.txt")));
+
+			String line;
+
+			while ((line = buffer.readLine()) != null) {
+				String[] text = line.split("~");
+				// MemoryID
+				String holdID = text[0];
+				// Memory Description
+				String holdName = text[1];
+				// Memory Room
+				String memRoom = text[2];
+
+				MemoryPieces memo = new MemoryPieces(holdID, holdName, memRoom);
+				// put into map
+				memories.put(holdID, memo);
+
+				// Test whether it is reading every line
+				// System.out.println(line);
+				// System.out.println(r);
+
+			}
+			buffer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public MemoryPieces getMemory(String id) {
+		return memories.get(id);
+	}
+
+	// Read frag memory pieces
+	public void gainMemory(String roomID) {
+		if (roomID.equals("R1")) {
+			System.out.println(memories.get("Itm10-1"));
+
+		}
+		else if (roomID.equals("R3")) {
+			System.out.println(memories.get("Itm10-2"));
+
+		}
+		else if (roomID.equals("R8")) {
+			System.out.println(memories.get("Itm10-3"));
+
+		}
+		else if (roomID.equals("R9")) {
+			System.out.println(memories.get("Itm10-4"));
+
+		}
+		else if (roomID.equals("R12")) {
+			System.out.println(memories.get("Itm10-5"));
+
+		}
+		else if (roomID.equals("R13")) {
+			System.out.println(memories.get("Itm10-6"));
+
+		}
+		else if (roomID.equals("R15")) {
+			System.out.println(memories.get("Itm10-7"));
+
+		}
+		else if (roomID.equals("R16")) {
+			System.out.println(memories.get("Itm10-8"));
+
+		}
+		else if (roomID.equals("R19")) {
+			System.out.println(memories.get("Itm10-9"));
+
+		}
+		else if (roomID.equals("R20")) {
+			System.out.println(memories.get("Itm10-10"));
+
+		}
+
+	}
+
 }
