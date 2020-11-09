@@ -65,7 +65,9 @@ public class Game {
 			System.out.println("You should just take this as a sign to start over, theres not much left in these ruins for you to find.");
 			System.out.println("Insisting you recover your memories, the 'Bear' shrugs and goes back to scavenging through a burned out car.");
 			System.out.println();
-			System.out.println("Its getting dark as you hear howling not far off, better start looking!" + Player.getCurrentRoom());
+			System.out.println("Its getting dark as you hear howling not far off, better start looking!");
+			System.out.println(Player.getCurrentRoom().getRoomDesc());
+			System.out.println(Player.getCurrentRoom().getRoomID());
 				
 				
 				
