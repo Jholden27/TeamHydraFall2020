@@ -19,9 +19,18 @@ public class Game {
 			
 			
 			
-				
+			//LOADS UP MENU GUI
 			IntroMenu.main(args);
+			//LOADS DATA FROM TEXT FILES
+			Map.createMap();
+			//SETS INITIAL STATS
+			Player.maxHP = 100;
+			Player.currentHP = 100;
+			Player.sp = 0;
+			Player.ap = 0;
+
 			
+<<<<<<< HEAD
 			//Create map
 			Map map = new Map();
 			map.createMap();
@@ -32,6 +41,9 @@ public class Game {
 			
 			//PrintStream oldOut = System.out;
 			
+=======
+			//SETS GUI AS CONSOLE
+>>>>>>> f78f2ccbb265c7c9ee37be8f9b58b9491fbd619b
 			PrintStream oldOut = System.out;
 			PrintStream printStream = new PrintStream(new OutputStream()
 					{
@@ -45,6 +57,8 @@ public class Game {
 				
 					});
 			System.setOut(printStream);
+			
+			//NEW GAME STORY TEXT
 			System.out.println("Zap! A portal opens below you as you see the ground quickly approaching. You land with a thud in a pile of rocks and rusted metal.");
 			System.out.println("Out of the corner of your eye you see someone wearing a dingy, tattered bear costume walking towards you.");
 			System.out.println();
