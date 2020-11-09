@@ -3,11 +3,11 @@ package grizzlyPunk;
 import java.util.ArrayList;
 
 public class Player {
-	private Rooms currentRoom;
-	private int maxHP;
-	private int currentHP;
-	private int sp; // shield points
-	private int ap; // attack points / damage done
+	private static Rooms currentRoom;
+	static int maxHP;
+	static int currentHP;
+	static int sp; // shield points
+	static int ap; // attack points / damage done
 	private int memoryFragments;
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private Map map;
@@ -28,7 +28,7 @@ public class Player {
 		this.previousRoom = previousRoom;
 	}
 
-	public Rooms getCurrentRoom() {
+	public static Rooms getCurrentRoom() {
 		return currentRoom;
 	}
 
@@ -37,7 +37,7 @@ public class Player {
 
 	}
 
-	public int getMaxHP() {
+	public static int getMaxHP() {
 		return maxHP;
 	}
 
@@ -45,7 +45,7 @@ public class Player {
 		this.maxHP = maxHP;
 	}
 
-	public int getCurrentHP() {
+	public static int getCurrentHP() {
 		return currentHP;
 	}
 
@@ -53,7 +53,7 @@ public class Player {
 		this.currentHP = currentHP;
 	}
 
-	public int getSp() {
+	public static int getSp() {
 		return sp;
 	}
 
