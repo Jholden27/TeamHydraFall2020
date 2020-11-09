@@ -86,16 +86,6 @@ public class Player {
 		return inventory;
 	}
 	
-	public static void getInventory2() 
-	{
-		for (Item i: inventory)
-		{
-			String inventory2 = i.getItemName();
-		}
-		
-		
-		
-	}
 
 	public void setInventory(ArrayList<Item> inventory) {
 		this.inventory = inventory;
@@ -658,5 +648,15 @@ public class Player {
 		}
 
 	}
+	
+	// check inventory
+		public void checkInventory() {
+			ArrayList<String> itemNames = new ArrayList<>();
+			for (int i = 0; i < inventory.size(); i++) {
+				itemNames.add(inventory.get(i).getItemName());
+			}
+			//System.out.println(itemNames);
+
+		}
 
 }
