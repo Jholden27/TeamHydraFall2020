@@ -1,5 +1,6 @@
 package grizzlyPunk;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -80,6 +81,23 @@ public class Game {
 			
 				
 			}
+
+	public static void help() {
+		// TODO Auto-generated method stub
+		try {
+		      File myObj = new File("HELP.txt");
+		      Scanner myReader = new Scanner(myObj);
+		      while (myReader.hasNextLine()) {
+		        String data = myReader.nextLine();
+		        System.out.println(data);
+		      }
+		      myReader.close();
+		    } catch (FileNotFoundException eh) {
+		      System.out.println("An error occurred.");
+		      eh.printStackTrace();
+		    }
+		
+	}
 			
 			
 

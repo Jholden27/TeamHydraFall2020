@@ -347,10 +347,12 @@ public class GUI {
 		menuBar_2.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Command List");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Game.help();
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_5);
-		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("New menu item");
-		mnNewMenu_1.add(mntmNewMenuItem_6);
 		
 		Component horizontalStrut_1_1_2 = Box.createHorizontalStrut(120);
 		toolBar.add(horizontalStrut_1_1_2);
