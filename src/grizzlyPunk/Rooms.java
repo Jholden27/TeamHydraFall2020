@@ -6,7 +6,7 @@ public class Rooms {
 	private String roomName;
 	private String roomDesc;
 	//This list will consist of the roomIDs that are connected to a room
-	private ArrayList<String> roomConnections = new ArrayList<>();
+	ArrayList<String> roomConnections = new ArrayList<>();
 	//This list will consist of the item inventory in the room
 	private ArrayList<Item> inventory = new ArrayList<>();
 	//This list will consist of the puzzles in a room

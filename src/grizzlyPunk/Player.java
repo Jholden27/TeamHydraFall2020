@@ -13,8 +13,8 @@ public class Player {
 	static int sp; // shield points
 	static int ap; // attack points / damage done
 	private int memoryFragments;
-	private ArrayList<Item> inventory = new ArrayList<Item>();
-	private Map map;
+	static ArrayList<Item> inventory = new ArrayList<Item>();
+	private static Map map;
 	private Rooms previousRoom;
 	private HashMap<String, MemoryPieces> memories = new HashMap<>();
 
@@ -36,7 +36,7 @@ public class Player {
 		return currentRoom;
 	}
 
-	public void setCurrentRoom(String id) {
+	public static void setCurrentRoom(String id) {
 		currentRoom = map.getRoom(id);
 
 	}
@@ -113,9 +113,9 @@ public class Player {
 	}
 
 	// Moving rooms
-	public void move(String moveID) {
+	public static void move(String moveID) {
 		// set previous room to current room
-		setPreviousRoom(currentRoom);
+		//setPreviousRoom(currentRoom);
 
 		// move using map class method
 		map.enterRoom(moveID);
@@ -128,7 +128,7 @@ public class Player {
 	}
 
 	// Explore current room
-	public void explore() {
+	public static void explore() {
 		ArrayList<String> itemNames = new ArrayList<>();
 		for (int i = 0; i < currentRoom.getInventory().size(); i++) {
 			itemNames.add(currentRoom.getInventory().get(i).getItemName());
