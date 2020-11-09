@@ -54,7 +54,7 @@ public class Map {
 
 				// Test whether it is reading every line
 				// System.out.println(line);
-				// System.out.println(r);
+				 //System.out.println(r);
 
 			}
 			buffer.close();

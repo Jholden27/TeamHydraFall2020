@@ -1,6 +1,10 @@
 package grizzlyPunk;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player {
 	private static Rooms currentRoom;
@@ -12,7 +16,7 @@ public class Player {
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private Map map;
 	private Rooms previousRoom;
-
+	private static HashMap<String, MemoryPieces> memories = new HashMap<>();
 
 	public Player(Rooms currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
 			ArrayList<Item> inventory, Map map, Rooms previousRoom) {
@@ -101,7 +105,6 @@ public class Player {
 		this.previousRoom = previousRoom;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Player [currentRoom=" + currentRoom + ", maxHP=" + maxHP + ", currentHP=" + currentHP + ", sp=" + sp
@@ -111,7 +114,7 @@ public class Player {
 
 	// Moving rooms
 	public void move(String moveID) {
-		//set previous room to current room
+		// set previous room to current room
 		setPreviousRoom(currentRoom);
 
 		// move using map class method
@@ -155,6 +158,7 @@ public class Player {
 					// memory fragments is increased
 					memoryFragments++;
 					// read memory frag description
+					gainMemory(currentRoom.getRoomID());
 				}
 				// adding item to inventory
 				else {
@@ -444,11 +448,11 @@ public class Player {
 			// if it was a weakness (x3 damage)
 			if (monster.getWeakness().equalsIgnoreCase("legs")) {
 				monster.setMonsterHP(monsterHP - (getAp() * 3));
-				//monster attacks after
+				// monster attacks after
 				takeDamage();
 			} else {
 				monster.setMonsterHP(monsterHP - (getAp()));
-				//monster attacks after
+				// monster attacks after
 				takeDamage();
 			}
 
@@ -458,11 +462,11 @@ public class Player {
 			// if it was a weakness (x3 damage)
 			if (monster.getWeakness().equalsIgnoreCase("arms")) {
 				monster.setMonsterHP(monsterHP - (getAp() * 3));
-				//monster attacks after
+				// monster attacks after
 				takeDamage();
 			} else {
 				monster.setMonsterHP(monsterHP - (getAp()));
-				//monster attacks after
+				// monster attacks after
 				takeDamage();
 			}
 
@@ -472,89 +476,173 @@ public class Player {
 			// if it was a weakness (x3 damage)
 			if (monster.getWeakness().equalsIgnoreCase("head")) {
 				monster.setMonsterHP(monsterHP - (getAp() * 3));
-				//monster attacks after
+				// monster attacks after
 				takeDamage();
 			} else {
 				monster.setMonsterHP(monsterHP - (getAp()));
-				//monster attacks after
+				// monster attacks after
 				takeDamage();
 			}
 
 		}
-		//if monster has died
-		if(monsterHP <= 0) {
+		// if monster has died
+		if (monsterHP <= 0) {
 			System.out.println("The monster has been defeated, you can now continue with your journey.");
-			//monster drop added to inventory
+			// monster drop added to inventory
 			inventory.add(monster.getInventory().get(0));
-			//removed from monster inventory
+			// removed from monster inventory
 			monster.getInventory().clear();
-			
-			
+
 		}
 		// incorrect bodypart was told
 		else {
 			System.out.println("That was an incorrect body part. Please type 'arms', 'legs', or 'head'.");
 		}
 	}
-	
-	//player taking monster damage
+
+	// player taking monster damage
 	public void takeDamage() {
-		//monster in room
+		// monster in room
 		Monster monster = currentRoom.getMonsters().get(0);
-		//monster attack
+		// monster attack
 		int monsterDP = monster.getMonsterDP();
 		int monsterMaxHP = monster.getMonsterHP();
-		//if the sp isn't zero
-		if(getSp() > 0) {
+		// if the sp isn't zero
+		if (getSp() > 0) {
 			setSp(getSp() - monsterDP);
-			
+
 		}
-		//damage is take from hp until zero
+		// damage is take from hp until zero
 		else {
-			if(getCurrentHP() > 0) {
+			if (getCurrentHP() > 0) {
 				setCurrentHP(getCurrentHP() - monsterDP);
 			}
-			//player dies
+			// player dies
 			else {
 				System.out.println("You have passed out. You have been kicked out of the room.");
-				//monster health reset
+				// monster health reset
 				monster.setMonsterHP(monsterMaxHP);
-				//player health set to 50
+				// player health set to 50
 				setCurrentHP(50);
-				//player sent back to previous room
+				// player sent back to previous room
 				move(previousRoom.getRoomID());
 			}
-			
+
 		}
 	}
-	
-	//puzzle solving
-		public void solvePuzzle(String answer) {
-			//as long as there is a puzzle in the room and it hasn't been solved
-			if (!(currentRoom.getPuzzles().isEmpty()) && !(currentRoom.getPuzzles().get(0).isSolved())){
-				//if the player answers correctly
-				if(currentRoom.getPuzzles().get(0).getAnswer().equalsIgnoreCase(answer)) {
-					System.out.println("That is correct!!");
-					//set that the puzzle has been solved
-					currentRoom.getPuzzles().get(0).setSolved(true);
-					//player is allowed to move to that room
-					move(currentRoom.getRoomID());
+
+	// puzzle solving
+	public void solvePuzzle(String answer) {
+		// as long as there is a puzzle in the room and it hasn't been solved
+		if (!(currentRoom.getPuzzles().isEmpty()) && !(currentRoom.getPuzzles().get(0).isSolved())) {
+			// if the player answers correctly
+			if (currentRoom.getPuzzles().get(0).getAnswer().equalsIgnoreCase(answer)) {
+				System.out.println("That is correct!!");
+				// set that the puzzle has been solved
+				currentRoom.getPuzzles().get(0).setSolved(true);
+				// player is allowed to move to that room
+				move(currentRoom.getRoomID());
+			}
+			// if the player answers wrong
+			else {
+				System.out.println("That is incorrect!!");
+				// player looses health
+				if (getCurrentHP() > 10) {
+					// subtract 10 from health
+					setCurrentHP(getCurrentHP() - 10);
 				}
-				//if the player answers wrong
+				// player dies
 				else {
-					System.out.println("That is incorrect!!");
-					//subtract 1 from number of attempts
-					attempts--;
-					currentRoom.getPuzzles().get(0).setAttempts(attempts);
-					System.out.println("You still have " + attempts + " left.");
-				}
-				
-				//if attempts equals 0
-				if (attempts == 0) {
-					System.out.println("You have ran out of number of tries. Please exit room and come back to try again later.");
+					System.out.println("You passed out.");
+					// health set to 50
+					setCurrentHP(50);
+					// player sent back to previous room
+					move(previousRoom.getRoomID());
 				}
 			}
-			
 		}
-	// Read frag memory description
+
+	}
+
+	// create memory hashmap
+	public void collectingMemory() {
+		try {
+			BufferedReader buffer = new BufferedReader(
+					new InputStreamReader(Map.class.getResourceAsStream("MEMORYPIECES.txt")));
+
+			String line;
+
+			while ((line = buffer.readLine()) != null) {
+				String[] text = line.split("~");
+				// MemoryID
+				String holdID = text[0];
+				// Memory Description
+				String holdName = text[1];
+				// Memory Room
+				String memRoom = text[2];
+
+				MemoryPieces memo = new MemoryPieces(holdID, holdName, memRoom);
+				// put into map
+				memories.put(holdID, memo);
+
+				// Test whether it is reading every line
+				// System.out.println(line);
+				// System.out.println(r);
+
+			}
+			buffer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public MemoryPieces getMemory(String id) {
+		return memories.get(id);
+	}
+
+	// Read frag memory pieces
+	public void gainMemory(String roomID) {
+		if (roomID.equals("R1")) {
+			System.out.println(memories.get("Itm10-1"));
+
+		}
+		else if (roomID.equals("R3")) {
+			System.out.println(memories.get("Itm10-2"));
+
+		}
+		else if (roomID.equals("R8")) {
+			System.out.println(memories.get("Itm10-3"));
+
+		}
+		else if (roomID.equals("R9")) {
+			System.out.println(memories.get("Itm10-4"));
+
+		}
+		else if (roomID.equals("R12")) {
+			System.out.println(memories.get("Itm10-5"));
+
+		}
+		else if (roomID.equals("R13")) {
+			System.out.println(memories.get("Itm10-6"));
+
+		}
+		else if (roomID.equals("R15")) {
+			System.out.println(memories.get("Itm10-7"));
+
+		}
+		else if (roomID.equals("R16")) {
+			System.out.println(memories.get("Itm10-8"));
+
+		}
+		else if (roomID.equals("R19")) {
+			System.out.println(memories.get("Itm10-9"));
+
+		}
+		else if (roomID.equals("R20")) {
+			System.out.println(memories.get("Itm10-10"));
+
+		}
+
+	}
+
 }
