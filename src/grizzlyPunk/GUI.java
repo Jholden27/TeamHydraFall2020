@@ -67,11 +67,10 @@ public class GUI {
 	
 	//TEST 
 	int getMemoryFragments = 0;
-	static int getRoomID = 1;
-	ArrayList<String> getInventory = new ArrayList<String>();
 	String getWeapon = "Plasma Sword";
 	//TEST
 	private JList list;
+	private JList goList;
 	public static JTextArea console = new JTextArea();
 	
 	
@@ -153,7 +152,7 @@ public class GUI {
 		lblNewLabel_1.setBorder(new LineBorder(Color.LIGHT_GRAY, 5));
 		lblNewLabel_1.setBounds(10, 10, 400, 350);
 		panel.add(lblNewLabel_1);
-		Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + getRoomID + ".png")).getImage();
+		Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + Player.getCurrentRoom().getRoomID() + ".png")).getImage();
 		Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
 		lblNewLabel_1.setIcon(new ImageIcon(scaled));
 		
@@ -258,26 +257,22 @@ public class GUI {
 		mnNewMenu.setBackground(new Color(192, 192, 192));
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Room 1");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getRoomID = getRoomID + 1;
-				System.out.println("Moving to room "+ getRoomID);
-				Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + getRoomID + ".png")).getImage();
+		//JList goList = new JList();
+		goList = new JList(Player.currentRoom.roomConnections.toArray());
+		goList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Player.move((String) goList.getSelectedValue());
+				Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + (String) goList.getSelectedValue() + ".png")).getImage();
 				Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
 				lblNewLabel_1.setIcon(new ImageIcon(scaled));
+				System.out.println((String) goList.getSelectedValue());
 			}
 		});
-		mnNewMenu.add(mntmNewMenuItem);
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Room 2");
-		mnNewMenu.add(mntmNewMenuItem_1);
-		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Room 3");
-		mnNewMenu.add(mntmNewMenuItem_2);
-		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Room 4");
-		mnNewMenu.add(mntmNewMenuItem_3);
+		//list.setBackground(new Color(255, 248, 220));
+		//list.setBounds(889, 65, 205, 225);
+		//frame.getContentPane().add(list);
+		mnNewMenu.add(goList);
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(120);
 		toolBar.add(horizontalStrut_1);
@@ -320,6 +315,11 @@ public class GUI {
 		menuBar_3.add(mnNewMenu_2);
 		
 		JMenuItem explore1 = new JMenuItem("Explore Area");
+		explore1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Player.explore();
+			}
+		});
 		mnNewMenu_2.add(explore1);
 		
 		JMenuItem explore2 = new JMenuItem("Pickup Items in Area");
@@ -381,10 +381,7 @@ public class GUI {
 		mnNewMenu_4.add(mntmNewMenuItem_11);
 		
 		//INVENTORY TAB
-		getInventory.add("bow");
-		getInventory.add("Health Potion");
-		getInventory.add("Sword");
-		list = new JList(getInventory.toArray());
+		list = new JList(Player.inventory.toArray());
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -413,7 +410,6 @@ public class GUI {
 				}
 			}
 		});
-		
 		list.setBackground(new Color(255, 248, 220));
 		list.setBounds(889, 65, 205, 225);
 		frame.getContentPane().add(list);
