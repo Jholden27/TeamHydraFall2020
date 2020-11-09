@@ -65,7 +65,7 @@ public class GUI {
 	private JLabel lblNewLabel;
 	public static PrintStream printStream;
 	
-	int getMemoryFragments = 5;
+	int getMemoryFragments = 0;
 	int getCurrentHP = 75;
 	int getSp = 50;
 	static int getRoomID = 1;
@@ -225,6 +225,7 @@ public class GUI {
 		lblNewLabel.setToolTipText("Memories collected.");
 		lblNewLabel.setBounds(90, 119, 225, 225);
 		frame.getContentPane().add(lblNewLabel);
+		console.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		
 		
 		
@@ -233,12 +234,7 @@ public class GUI {
 		console.setBorder(new MatteBorder(20, 1, 20, 1, (Color) new Color(85, 107, 47)));
 		console.setBounds(0, 482, 1266, 514);
 		frame.getContentPane().add(console);
-		//testing
-				console.setEditable (false);
-				
-				
-				//testing
-		
+		console.setEditable (false);		
 		JToolBar toolBar = new JToolBar();
 		toolBar.setBackground(Color.LIGHT_GRAY);
 		toolBar.setForeground(Color.GRAY);
@@ -249,6 +245,7 @@ public class GUI {
 		Component horizontalStrut = Box.createHorizontalStrut(210);
 		toolBar.add(horizontalStrut);
 		
+		//GO TO MENU
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setLocation(new Point(0, 10));
 		menuBar.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
@@ -263,8 +260,8 @@ public class GUI {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Room 1");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getRoomID = 2;
-				System.out.println("Moving to room 2");
+				getRoomID = getRoomID + 1;
+				System.out.println("Moving to room "+ getRoomID);
 				Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + getRoomID + ".png")).getImage();
 				Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
 				lblNewLabel_1.setIcon(new ImageIcon(scaled));
@@ -284,6 +281,8 @@ public class GUI {
 		Component horizontalStrut_1 = Box.createHorizontalStrut(120);
 		toolBar.add(horizontalStrut_1);
 		
+		
+		//ATTACK MENU
 		JMenuBar menuBar_1 = new JMenuBar();
 		menuBar_1.setAlignmentY(Component.CENTER_ALIGNMENT);
 		menuBar_1.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -309,6 +308,8 @@ public class GUI {
 		mnAttack.add(mntmNewMenuItem_3_1);
 		toolBar.add(horizontalStrut_1_1);
 		
+		
+		//EXPLORE MENU
 		JMenuBar menuBar_3 = new JMenuBar();
 		menuBar_3.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
 		toolBar.add(menuBar_3);
@@ -317,12 +318,17 @@ public class GUI {
 		mnNewMenu_2.setBorder(null);
 		menuBar_3.add(mnNewMenu_2);
 		
-		JMenuItem mntmNewMenuItem_7 = new JMenuItem("New menu item");
-		mnNewMenu_2.add(mntmNewMenuItem_7);
+		JMenuItem explore1 = new JMenuItem("Explore Area");
+		mnNewMenu_2.add(explore1);
+		
+		JMenuItem explore2 = new JMenuItem("Pickup Items in Area");
+		mnNewMenu_2.add(explore2);
 		
 		Component horizontalStrut_1_1_1 = Box.createHorizontalStrut(120);
 		toolBar.add(horizontalStrut_1_1_1);
 		
+		
+		//HELP MENU
 		JMenuBar menuBar_2 = new JMenuBar();
 		menuBar_2.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
 		toolBar.add(menuBar_2);
@@ -340,6 +346,8 @@ public class GUI {
 		Component horizontalStrut_1_1_2 = Box.createHorizontalStrut(120);
 		toolBar.add(horizontalStrut_1_1_2);
 		
+		
+		//GAME OPTIONS MENU
 		JMenuBar menuBar_4 = new JMenuBar();
 		menuBar_4.setBorder(new MatteBorder(1, 5, 1, 5, (Color) new Color(85, 107, 47)));
 		toolBar.add(menuBar_4);
@@ -355,11 +363,26 @@ public class GUI {
 		mnNewMenu_4.add(mntmNewMenuItem_9);
 		
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("New Game");
+		mntmNewMenuItem_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispose();
+				GUI.main(null);
+			}
+		});
 		mnNewMenu_4.add(mntmNewMenuItem_10);
 		
+		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Exit Game");
+		mntmNewMenuItem_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		mnNewMenu_4.add(mntmNewMenuItem_11);
 		
+		//INVENTORY TAB
 		getInventory.add("bow");
 		getInventory.add("Health Potion");
+		getInventory.add("Sword");
 		list = new JList(getInventory.toArray());
 		list.addMouseListener(new MouseAdapter() {
 			@Override
