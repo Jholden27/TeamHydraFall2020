@@ -16,7 +16,7 @@ public class Player {
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private Map map;
 	private Rooms previousRoom;
-	private static HashMap<String, MemoryPieces> memories = new HashMap<>();
+	private HashMap<String, MemoryPieces> memories = new HashMap<>();
 
 	public Player(Rooms currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
 			ArrayList<Item> inventory, Map map, Rooms previousRoom) {
@@ -133,14 +133,16 @@ public class Player {
 		for (int i = 0; i < currentRoom.getInventory().size(); i++) {
 			itemNames.add(currentRoom.getInventory().get(i).getItemName());
 		}
-		// if there are no items in the room or in R19 and grappling hook not equipped
-		if (itemNames.isEmpty() || (getCurrentRoom() == map.getRoom("R19") && !isGrapplingEquipped())) {
+		// if there are no items in the room
+		if (itemNames.isEmpty()) {
 			System.out.println(
 					"You search the room for anything that could help you in your journey, but there is nothing.");
 		}
 		// there are items in the room
 		else {
-			System.out.println(itemNames);
+			for (int i = 0; i < itemNames.size(); i++) {
+				System.out.println(itemNames.get(i));
+			}
 			System.out.println("You can choose to pick up these items or not pick them up.");
 		}
 
