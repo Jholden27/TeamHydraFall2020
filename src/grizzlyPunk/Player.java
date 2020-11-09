@@ -11,9 +11,11 @@ public class Player {
 	private int memoryFragments;
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private Map map;
+	private Rooms previousRoom;
+
 
 	public Player(Rooms currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
-			ArrayList<Item> inventory, Map map) {
+			ArrayList<Item> inventory, Map map, Rooms previousRoom) {
 		super();
 		this.currentRoom = currentRoom;
 		this.maxHP = maxHP;
@@ -23,6 +25,7 @@ public class Player {
 		this.memoryFragments = memoryFragments;
 		this.inventory = inventory;
 		this.map = map;
+		this.previousRoom = previousRoom;
 	}
 
 	public Rooms getCurrentRoom() {
@@ -90,20 +93,32 @@ public class Player {
 		this.map = map;
 	}
 
+	public Rooms getPreviousRoom() {
+		return previousRoom;
+	}
+
+	public void setPreviousRoom(Rooms previousRoom) {
+		this.previousRoom = previousRoom;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Player [currentRoom=" + currentRoom + ", maxHP=" + maxHP + ", currentHP=" + currentHP + ", sp=" + sp
 				+ ", ap=" + ap + ", memoryFragments=" + memoryFragments + ", inventory=" + inventory + ", map=" + map
-				+ "]";
+				+ ", previousRoom=" + previousRoom + "]";
 	}
 
 	// Moving rooms
 	public void move(String moveID) {
+		//set previous room to current room
+		setPreviousRoom(currentRoom);
 
 		// move using map class method
 		map.enterRoom(moveID);
 
-		// Change current room location to where player moved (only if there is no puzzle to solve)
+		// Change current room location to where player moved (only if there is no
+		// puzzle to solve)
 		if (map.getRoom(moveID).getPuzzles().isEmpty() || map.getRoom(moveID).getPuzzles().get(0).isSolved()) {
 			setCurrentRoom(moveID);
 		}
@@ -416,9 +431,103 @@ public class Player {
 		System.out.println("Memory Fragments Collected: " + getMemoryFragments());
 
 	}
-	
-
 
 	// Attacking monster
+
+	public void combatMonster(String bodypart) {
+		// monster in room
+		Monster monster = currentRoom.getMonsters().get(0);
+		// monster hp
+		int monsterHP = monster.getMonsterHP();
+		// hit legs
+		if (bodypart.equalsIgnoreCase("legs")) {
+			// if it was a weakness (x3 damage)
+			if (monster.getWeakness().equalsIgnoreCase("legs")) {
+				monster.setMonsterHP(monsterHP - (getAp() * 3));
+				//monster attacks after
+				takeDamage();
+			} else {
+				monster.setMonsterHP(monsterHP - (getAp()));
+				//monster attacks after
+				takeDamage();
+			}
+
+		}
+		// hit arms
+		else if (bodypart.equalsIgnoreCase("arms")) {
+			// if it was a weakness (x3 damage)
+			if (monster.getWeakness().equalsIgnoreCase("arms")) {
+				monster.setMonsterHP(monsterHP - (getAp() * 3));
+				//monster attacks after
+				takeDamage();
+			} else {
+				monster.setMonsterHP(monsterHP - (getAp()));
+				//monster attacks after
+				takeDamage();
+			}
+
+		}
+		// hit head
+		else if (bodypart.equalsIgnoreCase("head")) {
+			// if it was a weakness (x3 damage)
+			if (monster.getWeakness().equalsIgnoreCase("head")) {
+				monster.setMonsterHP(monsterHP - (getAp() * 3));
+				//monster attacks after
+				takeDamage();
+			} else {
+				monster.setMonsterHP(monsterHP - (getAp()));
+				//monster attacks after
+				takeDamage();
+			}
+
+		}
+		//if monster has died
+		if(monsterHP <= 0) {
+			System.out.println("The monster has been defeated, you can now continue with your journey.");
+			//monster drop added to inventory
+			inventory.add(monster.getInventory().get(0));
+			//removed from monster inventory
+			monster.getInventory().clear();
+			
+			
+		}
+		// incorrect bodypart was told
+		else {
+			System.out.println("That was an incorrect body part. Please type 'arms', 'legs', or 'head'.");
+		}
+	}
+	
+	//player taking monster damage
+	public void takeDamage() {
+		//monster in room
+		Monster monster = currentRoom.getMonsters().get(0);
+		//monster attack
+		int monsterDP = monster.getMonsterDP();
+		int monsterMaxHP = monster.getMonsterHP();
+		//if the sp isn't zero
+		if(getSp() > 0) {
+			setSp(getSp() - monsterDP);
+			
+		}
+		//damage is take from hp until zero
+		else {
+			if(getCurrentHP() > 0) {
+				setCurrentHP(getCurrentHP() - monsterDP);
+			}
+			//player dies
+			else {
+				System.out.println("You have passed out. You have been kicked out of the room.");
+				//monster health reset
+				monster.setMonsterHP(monsterMaxHP);
+				//player health set to 50
+				setCurrentHP(50);
+				//player sent back to previous room
+				move(previousRoom.getRoomID());
+			}
+			
+		}
+	}
+	
+	//puzzle solving
 	// Read frag memory description
 }
