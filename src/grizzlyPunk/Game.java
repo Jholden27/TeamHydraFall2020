@@ -7,8 +7,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import assignment1.Items;
-import assignment1.Player;
 
 public class Game {	
 	public static void main(String[] args) {
