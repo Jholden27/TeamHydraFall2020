@@ -12,11 +12,12 @@ public class Player {
 	static int currentHP;
 	static int sp; // shield points
 	static int ap; // attack points / damage done
-	private int memoryFragments;
+	private static int memoryFragments;
 	static ArrayList<Item> inventory = new ArrayList<Item>();
+	protected static String inventory2 = " ";
 	private static Map map;
 	private Rooms previousRoom;
-	private HashMap<String, MemoryPieces> memories = new HashMap<>();
+	private static HashMap<String, MemoryPieces> memories = new HashMap<>();
 
 	public Player(Rooms currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
 			ArrayList<Item> inventory, Map map, Rooms previousRoom) {
@@ -81,8 +82,19 @@ public class Player {
 		this.memoryFragments = memoryFragments;
 	}
 
-	public ArrayList<Item> getInventory() {
+	public static ArrayList<Item> getInventory() {
 		return inventory;
+	}
+	
+	public static void getInventory2() 
+	{
+		for (Item i: inventory)
+		{
+			String inventory2 = i.getItemName();
+		}
+		
+		
+		
 	}
 
 	public void setInventory(ArrayList<Item> inventory) {
@@ -113,9 +125,9 @@ public class Player {
 	}
 
 	// Moving rooms
-	public void move(String moveID) {
+	public static void move(String moveID) {
 		// set previous room to current room
-		setPreviousRoom(currentRoom);
+		//setPreviousRoom(currentRoom);
 
 		// move using map class method
 		map.enterRoom(moveID);
@@ -149,7 +161,7 @@ public class Player {
 	}
 
 	// Pick up item
-	public void pickupItem(String itemName) {
+	public static void pickupItem(String itemName) {
 		// get room inventory
 		ArrayList<Item> holdRoomInv = currentRoom.getInventory();
 		for (int i = 0; i < holdRoomInv.size(); i++) {
@@ -603,7 +615,7 @@ public class Player {
 	}
 
 	// Read frag memory pieces
-	public void gainMemory(String roomID) {
+	public static void gainMemory(String roomID) {
 		if (roomID.equals("R1")) {
 			System.out.println(memories.get("Itm10-1"));
 

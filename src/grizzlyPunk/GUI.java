@@ -55,6 +55,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
+import javax.swing.event.CaretListener;
+
+import holdenIndividual.Item;
+
+import javax.swing.event.CaretEvent;
 
 public class GUI {
 	public static String readFile(String path) throws IOException {
@@ -75,10 +82,12 @@ public class GUI {
 	//TEST 
 	int getMemoryFragments = 0;
 	String getWeapon = "Plasma Sword";
+	static ArrayList<String> inventory2 = new ArrayList<String>();
 	//TEST
 	private JList list;
 	private JList goList;
 	public static JTextArea console = new JTextArea();
+	private JTextField textField;
 	
 	
 
@@ -121,37 +130,37 @@ public class GUI {
 		frame.getContentPane().setLayout(null);
 		
 		txtMemories = new JTextField();
+		txtMemories.setBounds(267, 290, 105, 20);
 		txtMemories.setText("Memories");
 		txtMemories.setOpaque(false);
 		txtMemories.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 23));
 		txtMemories.setEditable(false);
 		txtMemories.setColumns(10);
 		txtMemories.setBorder(null);
-		txtMemories.setBounds(267, 290, 105, 20);
 		frame.getContentPane().add(txtMemories);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2_1.setBounds(62, 16, 300, 46);
 		lblNewLabel_2_1.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2_1.setForeground(new Color(85, 107, 47));
 		lblNewLabel_2_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2_1.setBounds(62, 16, 300, 46);
 		frame.getContentPane().add(lblNewLabel_2_1);
 		
 		txtInventory = new JTextField();
+		txtInventory.setBounds(956, 44, 75, 20);
 		txtInventory.setBorder(null);
 		txtInventory.setEditable(false);
 		txtInventory.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
 		txtInventory.setOpaque(false);
 		txtInventory.setText("Inventory");
-		txtInventory.setBounds(956, 44, 75, 20);
 		frame.getContentPane().add(txtInventory);
 		txtInventory.setColumns(10);
 		
 		JPanel panel = new JPanel();
+		panel.setBounds(433, 0, 420, 367);
 		panel.setName("Map");
 		panel.setBackground(new Color(85, 107, 47));
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(85, 107, 47), 1, true), "", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(433, 0, 420, 367);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -164,9 +173,9 @@ public class GUI {
 		lblNewLabel_1.setIcon(new ImageIcon(scaled));
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(0, 362, 1271, 60);
 		panel_2.setBorder(new LineBorder(new Color(85, 107, 47), 7));
 		panel_2.setBackground(new Color(255, 248, 220));
-		panel_2.setBounds(0, 362, 1271, 60);
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -221,8 +230,8 @@ public class GUI {
 		panel_2.add(txtEquippedWeapon);
 		
 		lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(90, 119, 225, 225);
 		lblNewLabel.setBorder(null);
-		lblNewLabel.setSize(new Dimension(225, 225));
 		lblNewLabel.setPreferredSize(new Dimension(225, 225));
 		lblNewLabel.setMinimumSize(new Dimension(225, 225));
 		lblNewLabel.setMaximumSize(new Dimension(225, 225));
@@ -230,24 +239,37 @@ public class GUI {
 		lblNewLabel.setIcon(new ImageIcon(mem));
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel.setToolTipText("Memories collected.");
-		lblNewLabel.setBounds(90, 119, 225, 225);
 		frame.getContentPane().add(lblNewLabel);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 482, 1266, 514);
+		scrollPane.setAutoscrolls(true);
+		frame.getContentPane().add(scrollPane);
+		scrollPane.setViewportView(console);
+		console.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent arg0) {
+			}
+		});
+		
+		
+		
 		console.setLineWrap(true);
 		console.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		
-		
-		
-		
 		console.setBackground(new Color(255, 248, 220));
 		console.setBorder(new MatteBorder(20, 1, 20, 1, (Color) new Color(85, 107, 47)));
-		console.setBounds(0, 482, 1266, 514);
-		frame.getContentPane().add(console);
-		console.setEditable (false);		
+		console.setEditable (false);
+		
+		textField = new JTextField();
+		scrollPane.setColumnHeaderView(textField);
+		textField.setColumns(10);
+		
+		
 		JToolBar toolBar = new JToolBar();
+		toolBar.setBounds(31, 427, 1213, 50);
 		toolBar.setBackground(Color.LIGHT_GRAY);
 		toolBar.setForeground(Color.GRAY);
 		toolBar.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.RAISED, new Color(85, 107, 47), new Color(160, 160, 160)), "ActionBar", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		toolBar.setBounds(31, 427, 1213, 50);
 		frame.getContentPane().add(toolBar);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(210);
@@ -331,6 +353,17 @@ public class GUI {
 		mnNewMenu_2.add(explore1);
 		
 		JMenuItem explore2 = new JMenuItem("Pickup Items in Area");
+		explore2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Player.pickupItem(textField.getText());
+				inventory2.add(Player.inventory2);
+				inventory2.add("item");
+				System.out.println(inventory2);
+				list = new JList(inventory2.toArray());
+				
+				
+			}
+		});
 		mnNewMenu_2.add(explore2);
 		
 		Component horizontalStrut_1_1_1 = Box.createHorizontalStrut(120);
@@ -457,7 +490,9 @@ public class GUI {
 		mnNewMenu_4.add(mntmNewMenuItem_11);
 		
 		//INVENTORY TAB
-		list = new JList(Player.inventory.toArray());
+		inventory2.add("item");
+		list = new JList(inventory2.toArray());
+		list.setBounds(889, 65, 205, 225);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -487,40 +522,39 @@ public class GUI {
 			}
 		});
 		list.setBackground(new Color(255, 248, 220));
-		list.setBounds(889, 65, 205, 225);
 		frame.getContentPane().add(list);
 		
 		
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(85, 107, 47));
 		panel_1.setBounds(889, 45, 205, 20);
+		panel_1.setBackground(new Color(85, 107, 47));
 		frame.getContentPane().add(panel_1);
 		
 		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBackground(new Color(85, 107, 47));
 		panel_1_1.setBounds(889, 290, 205, 20);
+		panel_1_1.setBackground(new Color(85, 107, 47));
 		frame.getContentPane().add(panel_1_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2.setBounds(65, 18, 282, 46);
 		lblNewLabel_2.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2.setForeground(Color.BLACK);
 		lblNewLabel_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2.setBounds(65, 18, 282, 46);
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("2070");
+		lblNewLabel_2_1_1.setBounds(149, 63, 300, 46);
 		lblNewLabel_2_1_1.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2_1_1.setForeground(new Color(85, 107, 47));
 		lblNewLabel_2_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2_1_1.setBounds(149, 63, 300, 46);
 		frame.getContentPane().add(lblNewLabel_2_1_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("2070");
+		lblNewLabel_2_2.setBounds(152, 65, 282, 46);
 		lblNewLabel_2_2.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2_2.setForeground(Color.BLACK);
 		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2_2.setBounds(152, 65, 282, 46);
 		frame.getContentPane().add(lblNewLabel_2_2);
 		
 		
@@ -534,8 +568,4 @@ public class GUI {
 	public JTextArea getConsole() {
 		return console;
 	}
-	
-	
-		
-	
 }

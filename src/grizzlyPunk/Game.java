@@ -8,6 +8,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JScrollPane;
+import javax.swing.text.DefaultCaret;
+
 
 public class Game {	
 	public static void main(String[] args) {
@@ -52,7 +55,9 @@ public class Game {
 							GUI.console.append(String.valueOf((char)b));
 							GUI.console.setCaretPosition(GUI.console.getDocument().getLength());
 							
+							
 						}
+						
 				
 					});
 			System.setOut(printStream);
@@ -69,7 +74,7 @@ public class Game {
 			System.out.println();
 			System.out.println("Its getting dark as you hear howling not far off, better start looking!");
 			System.out.println(Player.getCurrentRoom().getRoomDesc());
-			System.out.println(Player.getCurrentRoom().getRoomID());
+			//System.out.println(Player.getCurrentRoom().getRoomID());
 				
 				
 				
