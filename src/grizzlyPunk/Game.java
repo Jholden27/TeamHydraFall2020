@@ -4,8 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import assignment1.Items;
+import assignment1.Player;
 
 public class Game {	
 	public static void main(String[] args) {
@@ -19,8 +22,13 @@ public class Game {
 				
 			IntroMenu.main(args);
 			
+			//Create map
 			Map map = new Map();
 			map.createMap();
+			
+			//Create player: player starts out in room R1 with empty inventory
+			ArrayList<Item> inventory = new ArrayList<>();
+			Player player = new Player(map.getRoom("R1"), 100, 100, 0, 0, 0, inventory, map, map.getRoom("R1"));
 			
 			//PrintStream oldOut = System.out;
 			

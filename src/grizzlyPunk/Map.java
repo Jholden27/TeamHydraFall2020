@@ -219,7 +219,7 @@ public class Map {
 			System.out.println("There seems to be a riddle or something, that's preventing the door from opening.");
 			System.out.println("You may choose to solve or ignore.");
 		} 
-		//there is not puzzle or puzzle is solved
+		//a normal room or puzzle is solved
 		else {
 			// Room description is displayed
 			System.out.println(map.get(id).getRoomDesc());
