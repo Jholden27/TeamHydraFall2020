@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Puzzles {
 	private String puzzleID;
+	private String puzzleName;
 	private String description;
 	private String answer;
 	//Answer choices placed in an arraylist
@@ -10,20 +11,22 @@ public class Puzzles {
 	private boolean isSolved;
 	
 	//Constructor
-	public Puzzles(String puzzleID, String description, String answer, ArrayList<String> choices, boolean isSolved) {
+	public Puzzles(String puzzleID, String puzzleName, String description, String answer, ArrayList<String> choices,
+			boolean isSolved) {
 		super();
 		this.puzzleID = puzzleID;
+		this.puzzleName = puzzleName;
 		this.description = description;
 		this.answer = answer;
 		this.choices = choices;
 		this.isSolved = isSolved;
 	}
-
 	
 	//Getters and Setters
 	public String getPuzzleID() {
 		return puzzleID;
 	}
+
 
 	public void setPuzzleID(String puzzleID) {
 		this.puzzleID = puzzleID;
@@ -62,11 +65,19 @@ public class Puzzles {
 		this.isSolved = isSolved;
 	}
 
+	public String getPuzzleName() {
+		return puzzleName;
+	}
+
+	public void setPuzzleName(String puzzleName) {
+		this.puzzleName = puzzleName;
+	}
+
 	//toString
 	@Override
 	public String toString() {
-		return "Puzzles [puzzleID=" + puzzleID + ", description=" + description + ", answer=" + answer + ", choices="
-				+ choices + ", isSolved=" + isSolved + "]";
+		return "Puzzles [puzzleID=" + puzzleID + ", puzzleName=" + puzzleName + ", description=" + description
+				+ ", answer=" + answer + ", choices=" + choices + ", isSolved=" + isSolved + "]";
 	}
 
 	

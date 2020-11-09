@@ -19,7 +19,8 @@ public class Game {
 				
 			IntroMenu.main(args);
 			
-			//Map.createMap();
+			Map map = new Map();
+			map.createMap();
 			
 			//PrintStream oldOut = System.out;
 			

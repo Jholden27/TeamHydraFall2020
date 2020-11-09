@@ -67,7 +67,7 @@ public class Map {
 
 		try {
 			BufferedReader buffer = new BufferedReader(
-					new InputStreamReader(Map.class.getResourceAsStream("MONSTERS.txt")));
+					new InputStreamReader(Map.class.getResourceAsStream("MONSTER.txt")));
 
 			String line;
 
@@ -99,11 +99,12 @@ public class Map {
 
 					// Add monster to arraylist
 					monsters.add(monster);
+					
+					// Check if monsters are being read correctly
+					//System.out.println(monsters);
 
 					break;
 
-					// Check if monsters are being read correctly
-					// System.out.println(monsters);
 				}
 
 			}
@@ -173,28 +174,32 @@ public class Map {
 				if ((puzzleID.equals(text[0]))) {
 					// Puzzle id
 					String holdID = text[0];
+					// Puzzle name
+					String holdName = text[1];
 					// Puzzle Question
-					String holdQuestion = text[1];
+					String holdQuestion = text[2];
 					// Puzzle Answer
-					String holdAnswer = text[2];
+					String holdAnswer = text[3];
 					// Puzzle choices = answer + text[3]
 					choices.add(holdAnswer);
-					String wrong = text[3];
+					String wrong = text[4];
 					String[] w = wrong.split(",");
 					// add the 2 wrong choices to arraylist
 					choices.add(w[0]);
 					choices.add(w[1]);
 
 					// Create puzzle
-					Puzzles puzzle = new Puzzles(holdID, holdQuestion, holdAnswer, choices, false);
+					Puzzles puzzle = new Puzzles(holdID, holdName, holdQuestion, holdAnswer, choices, false);
 
 					// Add item to inventory
 					puzzles.add(puzzle);
-
+					
+					// Check if puzzles are being read correctly
+					 //System.out.println(puzzles);
+					
 					break;
 
-					// Check if puzzles are being read correctly
-					// System.out.println(puzzles);
+					
 				}
 
 			}
