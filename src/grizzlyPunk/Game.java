@@ -22,13 +22,13 @@ public class Game {
 			//LOADS DATA FROM TEXT FILES
 			Map.createMap();
 			//SETS INITIAL STATS
-			Player.maxHP = 100;
-			Player.currentHP = 100;
-			Player.sp = 0;
-			Player.ap = 0;
+			//Player.maxHP = 100;
+			//Player.currentHP = 100;
+			//Player.sp = 0;
+			//Player.ap = 0;
 
 			
-<<<<<<< HEAD
+
 			//Create map
 			Map map = new Map();
 			map.createMap();
@@ -39,9 +39,8 @@ public class Game {
 			
 			//PrintStream oldOut = System.out;
 			
-=======
+
 			//SETS GUI AS CONSOLE
->>>>>>> f78f2ccbb265c7c9ee37be8f9b58b9491fbd619b
 			PrintStream oldOut = System.out;
 			PrintStream printStream = new PrintStream(new OutputStream()
 					{
@@ -66,7 +65,7 @@ public class Game {
 			System.out.println("You should just take this as a sign to start over, theres not much left in these ruins for you to find.");
 			System.out.println("Insisting you recover your memories, the 'Bear' shrugs and goes back to scavenging through a burned out car.");
 			System.out.println();
-			System.out.println("Its getting dark as you hear howling not far off, better start looking! ");
+			System.out.println("Its getting dark as you hear howling not far off, better start looking!" + Player.getCurrentRoom());
 				
 				
 				

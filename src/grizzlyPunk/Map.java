@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Map {
-	private HashMap<String, Rooms> map = new HashMap<>(); // String = roomID
+	private static HashMap<String, Rooms> map = new HashMap<>(); // String = roomID
 
 	// Read from ROOMS.txt to create the map
-	public void createMap() {
+	public static void createMap() {
 		try {
 			BufferedReader buffer = new BufferedReader(
 					new InputStreamReader(Map.class.getResourceAsStream("ROOMS.txt")));
@@ -62,7 +62,7 @@ public class Map {
 	}
 
 	// Read from MONSTERS.txt to create an arraylist of monsters for each room
-	public ArrayList<Monster> roomMonsters(String monsterID) {
+	public static ArrayList<Monster> roomMonsters(String monsterID) {
 		ArrayList<Monster> monsters = new ArrayList<>();
 
 		try {
@@ -116,7 +116,7 @@ public class Map {
 	}
 
 	// Read from ITEMS.txt to create an arraylist of items for each room
-	public ArrayList<Item> createInventory(String[] items) {
+	public static ArrayList<Item> createInventory(String[] items) {
 		ArrayList<Item> inventory = new ArrayList<>();
 
 		try {
@@ -159,7 +159,7 @@ public class Map {
 	}
 
 	// Read from PUZZLES.txt to create an arraylist of puzzles for each room
-	public ArrayList<Puzzles> roomPuzzles(String puzzleID) {
+	public static ArrayList<Puzzles> roomPuzzles(String puzzleID) {
 		ArrayList<Puzzles> puzzles = new ArrayList<>();
 		ArrayList<String> choices = new ArrayList<>();
 
