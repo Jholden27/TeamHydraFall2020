@@ -21,10 +21,12 @@ public class Map {
 				String[] text = line.split("~");
 				// Room id
 				String holdID = text[0];
-				// Room description
-				String holdDesc = text[1];
+				// Room name
+				String holdName = text[1];
+			// Room description
+				String holdDesc = text[2];
 				// Room connections
-				String connections = text[2];
+				String connections = text[3];
 				String[] c = connections.split(",");
 				// Room connections will be placed in an arraylist
 				ArrayList<String> holdConn = new ArrayList<>();
@@ -46,7 +48,7 @@ public class Map {
 				String holdPuzz = text[6];
 				ArrayList<Puzzles> puzzles = roomPuzzles(holdPuzz);
 
-				Rooms r = new Rooms(holdID, holdDesc, holdConn, inventory, puzzles, monsters);
+				Rooms r = new Rooms(holdID, holdName, holdDesc, holdConn, inventory, puzzles, monsters);
 				// put into map
 				map.put(holdID, r);
 

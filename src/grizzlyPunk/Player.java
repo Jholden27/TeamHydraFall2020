@@ -529,5 +529,32 @@ public class Player {
 	}
 	
 	//puzzle solving
+		public void solvePuzzle(String answer) {
+			//as long as there is a puzzle in the room and it hasn't been solved
+			if (!(currentRoom.getPuzzles().isEmpty()) && !(currentRoom.getPuzzles().get(0).isSolved())){
+				//if the player answers correctly
+				if(currentRoom.getPuzzles().get(0).getAnswer().equalsIgnoreCase(answer)) {
+					System.out.println("That is correct!!");
+					//set that the puzzle has been solved
+					currentRoom.getPuzzles().get(0).setSolved(true);
+					//player is allowed to move to that room
+					move(currentRoom.getRoomID());
+				}
+				//if the player answers wrong
+				else {
+					System.out.println("That is incorrect!!");
+					//subtract 1 from number of attempts
+					attempts--;
+					currentRoom.getPuzzles().get(0).setAttempts(attempts);
+					System.out.println("You still have " + attempts + " left.");
+				}
+				
+				//if attempts equals 0
+				if (attempts == 0) {
+					System.out.println("You have ran out of number of tries. Please exit room and come back to try again later.");
+				}
+			}
+			
+		}
 	// Read frag memory description
 }
