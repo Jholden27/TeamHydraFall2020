@@ -1,0 +1,6 @@
+List of commands in the action bar
+Go to...: Select a room you want to move your character to, provided the room is available.
+Attack: Choose which area of the enemy you want to attack. Strike the enemy weak spot for increased damage.
+Explore: Use to search a room for items 
+Help: Get help for the game options. 
+Game Options: Use to save your current progress, load a previous game, or start a new game.
