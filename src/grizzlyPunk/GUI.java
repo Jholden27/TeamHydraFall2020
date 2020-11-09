@@ -16,7 +16,9 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -33,13 +35,23 @@ import javax.swing.JMenu;
 import javax.swing.JTree;
 import java.awt.Insets;
 import java.awt.Point;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.awt.Component;
+import java.awt.Container;
+
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.DebugGraphics;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
 
 public class GUI {
 
@@ -51,10 +63,15 @@ public class GUI {
 	private final Component horizontalStrut_1_1 = Box.createHorizontalStrut(120);
 	private JTextField txtMemories;
 	private JLabel lblNewLabel;
+	public static PrintStream printStream;
 	
 	int getMemoryFragments = 5;
 	int getCurrentHP = 75;
 	int getSp = 50;
+	static int getRoomID = 1;
+	ArrayList<String> getInventory = new ArrayList<String>();
+	private JList list;
+	public static JTextArea console = new JTextArea();
 	
 	
 
@@ -127,14 +144,17 @@ public class GUI {
 		panel.setName("Map");
 		panel.setBackground(new Color(85, 107, 47));
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(85, 107, 47), 1, true), "", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(490, 0, 295, 367);
+		panel.setBounds(433, 0, 420, 367);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		Canvas canvas = new Canvas();
-		canvas.setBounds(9, 10, 276, 347);
-		panel.add(canvas);
-		canvas.setBackground(new Color(255, 248, 220));
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBorder(new LineBorder(Color.LIGHT_GRAY, 5));
+		lblNewLabel_1.setBounds(10, 10, 400, 350);
+		panel.add(lblNewLabel_1);
+		Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + getRoomID + ".png")).getImage();
+		Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
+		lblNewLabel_1.setIcon(new ImageIcon(scaled));
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(new Color(85, 107, 47), 7));
@@ -206,11 +226,18 @@ public class GUI {
 		lblNewLabel.setBounds(90, 119, 225, 225);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JTextArea console = new JTextArea();
+		
+		
+		
 		console.setBackground(new Color(255, 248, 220));
 		console.setBorder(new MatteBorder(20, 1, 20, 1, (Color) new Color(85, 107, 47)));
 		console.setBounds(0, 482, 1266, 514);
 		frame.getContentPane().add(console);
+		//testing
+				console.setEditable (false);
+				
+				
+				//testing
 		
 		JToolBar toolBar = new JToolBar();
 		toolBar.setBackground(Color.LIGHT_GRAY);
@@ -234,6 +261,15 @@ public class GUI {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Room 1");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getRoomID = 2;
+				System.out.println("Moving to room 2");
+				Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + getRoomID + ".png")).getImage();
+				Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
+				lblNewLabel_1.setIcon(new ImageIcon(scaled));
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Room 2");
@@ -321,10 +357,44 @@ public class GUI {
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("New Game");
 		mnNewMenu_4.add(mntmNewMenuItem_10);
 		
-		JList list = new JList();
+		
+		getInventory.add("bow");
+		getInventory.add("Health Potion");
+		list = new JList(getInventory.toArray());
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					list.setSelectedIndex(list.locationToIndex(e.getPoint()));
+				
+					JPopupMenu popupMenu = new JPopupMenu();
+					//popupMenu.setBounds(0, 0, 200, 50);
+					JMenuItem itemDrop = new JMenuItem("Drop Item");
+					JMenuItem lookAt = new JMenuItem("Look at Item");
+					itemDrop.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("Remove the element in position " + list.getSelectedValue());
+					}	
+			
+				});
+					lookAt.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("Look at the element in position " + list.getSelectedValue());
+						}	
+				
+					});
+				popupMenu.add(itemDrop);
+				popupMenu.add(lookAt);
+				popupMenu.show(list, e.getPoint().x, e.getPoint().y);
+				}
+			}
+		});
+		
 		list.setBackground(new Color(255, 248, 220));
 		list.setBounds(889, 65, 205, 225);
 		frame.getContentPane().add(list);
+		
+		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(85, 107, 47));
@@ -356,8 +426,20 @@ public class GUI {
 		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblNewLabel_2_2.setBounds(152, 65, 282, 46);
 		frame.getContentPane().add(lblNewLabel_2_2);
+		
+		
 	}
 	protected JLabel getLblNewLabel_1() {
 		return lblNewLabel;
 	}
+	public JList getList() {
+		return list;
+	}
+	public JTextArea getConsole() {
+		return console;
+	}
+	
+	
+		
+	
 }

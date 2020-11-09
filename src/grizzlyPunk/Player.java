@@ -100,11 +100,13 @@ public class Player {
 	// Moving rooms
 	public void move(String moveID) {
 
-		// Change current room location to where player moved
-		setCurrentRoom(moveID);
-
 		// move using map class method
 		map.enterRoom(moveID);
+
+		// Change current room location to where player moved (only if there is no puzzle to solve)
+		if (map.getRoom(moveID).getPuzzles().isEmpty() || map.getRoom(moveID).getPuzzles().get(0).isSolved()) {
+			setCurrentRoom(moveID);
+		}
 	}
 
 	// Explore current room
@@ -211,6 +213,8 @@ public class Player {
 								|| inventory.get(i).getItemID().equals("itm7")) {
 							// if itm5
 							if (inventory.get(i).getItemID().equals("itm5")) {
+								// unequip already equipped item if necessary
+								unequipWeapon();
 								// set ap to weapon value
 								setAp(inventory.get(i).getItemNumericValue());
 								// make item isEquipped true
@@ -219,6 +223,8 @@ public class Player {
 							}
 							// if itm6
 							else if (inventory.get(i).getItemID().equals("itm6")) {
+								// unequip already equipped item if necessary
+								unequipWeapon();
 								// set ap to weapon value
 								setAp(inventory.get(i).getItemNumericValue());
 								// make item isEquipped true
@@ -226,6 +232,8 @@ public class Player {
 							}
 							// if itm7
 							else {
+								// unequip already equipped item if necessary
+								unequipWeapon();
 								// set ap to weapon value
 								setAp(inventory.get(i).getItemNumericValue());
 								// make item isEquipped true
@@ -358,19 +366,59 @@ public class Player {
 				} else {
 					return false;
 				}
-			} 
+			}
 			// item wasn't found in inventory
 			else if (inventory.get(i).getItemID().equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemID()))
 					&& !(inventory.get(i).getItemID().equalsIgnoreCase("itm9"))) {
 				return false;
 			}
 		}
-		return false;//need to fix
+		return false;// need to fix
 	}
 
+	// Check to see if a weapon is equipped already
+	public void unequipWeapon() {
+		for (int i = 0; i < inventory.size(); i++) {
+			// only 1 weapon can be equipped at a time
+			if (inventory.get(i).getItemID().equals("itm5")) {
+				// if equipped
+				if (inventory.get(i).isEquipped()) {
+					// unequip it
+					inventory.get(i).setEquipped(false);
+				}
+
+			} else if (inventory.get(i).getItemID().equals("itm6")) {
+				// if equipped
+				if (inventory.get(i).isEquipped()) {
+					// unequip it
+					inventory.get(i).setEquipped(false);
+				}
+
+			} else if (inventory.get(i).getItemID().equals("itm7")) {
+				// if equipped
+				if (inventory.get(i).isEquipped()) {
+					// unequip it
+					inventory.get(i).setEquipped(false);
+				}
+
+			}
+
+		}
+
+	}
+
+	// Check player stats
+	public void checkStats() {
+		System.out.println("Here are your stats:");
+		System.out.println("Health: " + getCurrentHP());
+		System.out.println("Shield: " + getSp());
+		System.out.println("Attack points: " + getAp());
+		System.out.println("Memory Fragments Collected: " + getMemoryFragments());
+
+	}
+	
+
+
 	// Attacking monster
-	// Check stats
-	// Open inventory
-	// Close inventory
 	// Read frag memory description
 }
