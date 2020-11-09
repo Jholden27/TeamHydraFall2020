@@ -65,11 +65,14 @@ public class GUI {
 	private JLabel lblNewLabel;
 	public static PrintStream printStream;
 	
+	//TEST 
 	int getMemoryFragments = 0;
 	int getCurrentHP = 75;
 	int getSp = 50;
 	static int getRoomID = 1;
 	ArrayList<String> getInventory = new ArrayList<String>();
+	String getWeapon = "Plasma Sword";
+	//TEST
 	private JList list;
 	public static JTextArea console = new JTextArea();
 	
@@ -204,13 +207,13 @@ public class GUI {
 		healthBar.setForeground(new Color(240, 128, 128));
 		
 		txtEquippedWeapon = new JTextField();
-		txtEquippedWeapon.setText("Equipped Weapon:");
+		txtEquippedWeapon.setText("Equipped Weapon: " + getWeapon);
 		txtEquippedWeapon.setOpaque(false);
 		txtEquippedWeapon.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 17));
 		txtEquippedWeapon.setEditable(false);
 		txtEquippedWeapon.setColumns(10);
 		txtEquippedWeapon.setBorder(null);
-		txtEquippedWeapon.setBounds(878, 10, 178, 23);
+		txtEquippedWeapon.setBounds(878, 10, 250, 23);
 		panel_2.add(txtEquippedWeapon);
 		
 		lblNewLabel = new JLabel("");

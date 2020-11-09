@@ -16,11 +16,10 @@ public class Game {
 			
 			
 			
-				
+			//Loads UP Menu GUI
 			IntroMenu.main(args);
 			
-			Map map = new Map();
-			map.createMap();
+			Map.createMap();
 			
 			//PrintStream oldOut = System.out;
 			
