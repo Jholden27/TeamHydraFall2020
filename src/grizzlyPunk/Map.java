@@ -104,7 +104,7 @@ public class Map {
 					monsters.add(monster);
 
 					// Check if monsters are being read correctly
-					// System.out.println(monsters);
+					 //System.out.println(monsters);
 
 					break;
 
