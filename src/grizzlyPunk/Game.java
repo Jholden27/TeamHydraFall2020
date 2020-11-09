@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -16,13 +17,18 @@ public class Game {
 			
 			
 			
-			//Loads UP Menu GUI
+			//LOADS UP MENU GUI
 			IntroMenu.main(args);
-			
+			//LOADS DATA FROM TEXT FILES
 			Map.createMap();
+			//SETS INITIAL STATS
+			Player.maxHP = 100;
+			Player.currentHP = 100;
+			Player.sp = 0;
+			Player.ap = 0;
+
 			
-			//PrintStream oldOut = System.out;
-			
+			//SETS GUI AS CONSOLE
 			PrintStream oldOut = System.out;
 			PrintStream printStream = new PrintStream(new OutputStream()
 					{
@@ -36,6 +42,8 @@ public class Game {
 				
 					});
 			System.setOut(printStream);
+			
+			//NEW GAME STORY TEXT
 			System.out.println("Zap! A portal opens below you as you see the ground quickly approaching. You land with a thud in a pile of rocks and rusted metal.");
 			System.out.println("Out of the corner of your eye you see someone wearing a dingy, tattered bear costume walking towards you.");
 			System.out.println();

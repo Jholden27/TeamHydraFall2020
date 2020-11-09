@@ -67,8 +67,6 @@ public class GUI {
 	
 	//TEST 
 	int getMemoryFragments = 0;
-	int getCurrentHP = 75;
-	int getSp = 50;
 	static int getRoomID = 1;
 	ArrayList<String> getInventory = new ArrayList<String>();
 	String getWeapon = "Plasma Sword";
@@ -167,17 +165,17 @@ public class GUI {
 		panel_2.setLayout(null);
 		
 		txtHp = new JTextField();
-		txtHp.setText("Health:");
+		txtHp.setText("Health: " + Player.getCurrentHP());
 		txtHp.setOpaque(false);
 		txtHp.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		txtHp.setEditable(false);
 		txtHp.setColumns(10);
 		txtHp.setBorder(null);
-		txtHp.setBounds(560, 32, 75, 20);
+		txtHp.setBounds(560, 32, 125, 20);
 		panel_2.add(txtHp);
 		
 		txtShield = new JTextField();
-		txtShield.setText("Shield:");
+		txtShield.setText("Shield: " + Player.getSp());
 		txtShield.setOpaque(false);
 		txtShield.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
 		txtShield.setEditable(false);
@@ -187,8 +185,8 @@ public class GUI {
 		panel_2.add(txtShield);
 		
 		JProgressBar shieldBar = new JProgressBar();
-		shieldBar.setMaximum(100);
-		shieldBar.setValue(getSp);
+		shieldBar.setMaximum(50);
+		shieldBar.setValue(Player.getSp());
 		shieldBar.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		shieldBar.setName("Shield:");
 		shieldBar.setBounds(533, 10, 200, 15);
@@ -197,8 +195,8 @@ public class GUI {
 		shieldBar.setForeground(new Color(176, 224, 230));
 		
 		JProgressBar healthBar = new JProgressBar();
-		healthBar.setMaximum(100);
-		healthBar.setValue(getCurrentHP);
+		healthBar.setMaximum(Player.getMaxHP());
+		healthBar.setValue(Player.getCurrentHP());
 		healthBar.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		healthBar.setName("HP:");
 		healthBar.setBounds(553, 35, 160, 15);
