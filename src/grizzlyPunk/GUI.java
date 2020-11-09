@@ -258,7 +258,7 @@ public class GUI {
 		menuBar.add(mnNewMenu);
 		
 		//JList goList = new JList();
-		goList = new JList(Player.currentRoom.roomConnections.toArray());
+		goList = new JList(Player.getCurrentRoom().roomConnections.toArray());
 		goList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
