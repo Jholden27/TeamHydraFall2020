@@ -35,9 +35,12 @@ import javax.swing.JMenu;
 import javax.swing.JTree;
 import java.awt.Insets;
 import java.awt.Point;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.awt.Component;
 import java.awt.Container;
@@ -54,6 +57,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 
 public class GUI {
+	public static String readFile(String path) throws IOException {
+        return Files.readString(Paths.get(path));
+    }
+
 
 	private JFrame frame;
 	private JTextField txtInventory;
@@ -225,6 +232,7 @@ public class GUI {
 		lblNewLabel.setToolTipText("Memories collected.");
 		lblNewLabel.setBounds(90, 119, 225, 225);
 		frame.getContentPane().add(lblNewLabel);
+		console.setLineWrap(true);
 		console.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		
 		
@@ -360,7 +368,73 @@ public class GUI {
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Save Game");
 		mnNewMenu_4.add(mntmNewMenuItem_8);
 		
-		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Load Game");
+		//SAVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		
+				mntmNewMenuItem_8.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {				
+						try {
+						      FileWriter myWriter = new FileWriter("SAVEDGAME.txt");
+						      myWriter.write("" + Player.getCurrentRoom().getRoomID());
+						      myWriter.close();
+						      System.out.println("Game Saved.");
+						    } catch (IOException e2) {
+						      System.out.println("An error occurred.");
+						      e2.printStackTrace();
+						    }	
+					}
+				});
+
+				
+				//SAVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+				
+				mnNewMenu_4.add(mntmNewMenuItem_8);
+				
+				JMenuItem mntmNewMenuItem_9 = new JMenuItem("Load Game");
+				
+				// ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+//		        String filePath = "SAVEDGAME.txt";
+//		        
+//		        String content = null;
+//		        try {
+//		            content = readFile(filePath);
+//		        } catch (IOException e) {
+//		            e.printStackTrace();
+//		        }
+		// 
+//		        System.out.println(content);
+		        System.out.println(Player.getCurrentRoom().getRoomID());
+		        
+				mntmNewMenuItem_9.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {				
+				        String filePath = "SAVEDGAME.txt";
+				        
+				        String loadRoom = null;
+				        try {
+				            loadRoom = readFile(filePath);
+				        } catch (IOException e5) {
+				            e5.printStackTrace();
+				        }
+				 
+				        
+				        Player.setCurrentRoom(loadRoom);
+						System.out.println("Moving to room "+ Player.getCurrentRoom().getRoomID());
+						Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + Player.getCurrentRoom().getRoomID() + ".png")).getImage();
+						Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
+						lblNewLabel_1.setIcon(new ImageIcon(scaled));
+				        
+				        
+				        
+				        
+				        System.out.println(loadRoom);
+					}
+				});
+
+				
+				//LOAD ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		
+		
 		mnNewMenu_4.add(mntmNewMenuItem_9);
 		
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("New Game");

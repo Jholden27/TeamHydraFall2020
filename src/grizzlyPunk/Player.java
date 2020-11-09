@@ -115,7 +115,7 @@ public class Player {
 	// Moving rooms
 	public static void move(String moveID) {
 		// set previous room to current room
-		setPreviousRoom(currentRoom);
+		//setPreviousRoom(currentRoom);
 
 		// move using map class method
 		map.enterRoom(moveID);
