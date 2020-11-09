@@ -16,8 +16,10 @@ public class Game {
 			
 			
 			
-				//Map.createMap();
-			GUI.main(args);
+				
+			IntroMenu.main(args);
+			
+			//Map.createMap();
 			
 			//PrintStream oldOut = System.out;
 			
@@ -34,16 +36,17 @@ public class Game {
 				
 					});
 			System.setOut(printStream);
-			System.out.println("This is the console");
-			
+			System.out.println("Zap! A portal opens below you as you see the ground quickly approaching. You land with a thud in a pile of rocks and rusted metal.");
+			System.out.println("Out of the corner of your eye you see someone wearing a dingy, tattered bear costume walking towards you.");
+			System.out.println();
+			System.out.println("oh. Wasnt expecting to see you again! ");
+			System.out.println();
+			System.out.println("After a brief conversation, the 'Bear' realizes you've lost your memories. ");
+			System.out.println("You should just take this as a sign to start over, theres not much left in these ruins for you to find.");
+			System.out.println("Insisting you recover your memories, the 'Bear' shrugs and goes back to scavenging through a burned out car.");
+			System.out.println();
+			System.out.println("Its getting dark as you hear howling not far off, better start looking! ");
 				
-			
-			//Player.playerLoc = 1;
-			
-			
-				System.out.println("Which direction do you want to go? (N,S,E,W)");
-				//String input = scanner.nextLine();
-				//char typedDigit = scanner.next().charAt(0);
 				
 				
 				
@@ -53,7 +56,7 @@ public class Game {
 				System.out.println();
 				
 			
-				//scanner.close();
+				
 			}
 			
 			
