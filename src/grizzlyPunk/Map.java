@@ -23,7 +23,7 @@ public class Map {
 				String holdID = text[0];
 				// Room name
 				String holdName = text[1];
-			// Room description
+				// Room description
 				String holdDesc = text[2];
 				// Room connections
 				String connections = text[3];
@@ -41,8 +41,10 @@ public class Map {
 				// Room items
 				String items = text[5];
 				String[] itm = items.split(",");
-				// There can be more than item in the room, so send array to create inventory
 				ArrayList<Item> inventory = createInventory(itm);
+
+				// There can be more than item in the room, so send array to create inventory
+				// ArrayList<Item> inventory = createInventory(itm);
 
 				// Room puzzles
 				String holdPuzz = text[6];
@@ -54,7 +56,7 @@ public class Map {
 
 				// Test whether it is reading every line
 				// System.out.println(line);
-				 //System.out.println(r);
+				// System.out.println(r);
 
 			}
 			buffer.close();
@@ -91,9 +93,8 @@ public class Map {
 					// Monster Weakness
 					String holdWeak = text[6];
 					// Monster inventory
-					String monInv = text[7];
-					String[] holdDrop = monInv.split(",");
-					ArrayList<Item> inventory = createInventory(holdDrop);
+					String[] monInv = line.split(",");
+					ArrayList<Item> inventory = createInventory(monInv);
 
 					// Create monster
 					Monster monster = new Monster(holdID, holdName, holdDesc, holdHP, holdAttack, holdDP, holdWeak,
@@ -101,9 +102,9 @@ public class Map {
 
 					// Add monster to arraylist
 					monsters.add(monster);
-					
+
 					// Check if monsters are being read correctly
-					//System.out.println(monsters);
+					// System.out.println(monsters);
 
 					break;
 
@@ -126,7 +127,6 @@ public class Map {
 					new InputStreamReader(Map.class.getResourceAsStream("ITEMS.txt")));
 
 			String line;
-
 			while ((line = buffer.readLine()) != null) {
 				String[] text = line.split("~");
 				for (int i = 0; i < items.length; i++) {
@@ -137,22 +137,24 @@ public class Map {
 						String holdName = text[1];
 						// Item description
 						String holdDesc = text[2];
-						// Item type
+						// Item description
 						String holdType = text[3];
-						// Item numeric value
+						// Item description
 						int holdValue = Integer.parseInt(text[4]);
+
 						// Create item
 						Item item = new Item(holdID, holdName, holdDesc, holdType, holdValue, false);
 
 						// Add item to inventory
 						inventory.add(item);
+
+						// break;
 					}
-					// break;
-					// check to see if the inventory is being read properly
-					// System.out.println(inventory);
+
 				}
 
 			}
+			// System.out.println(inventory);
 			buffer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -195,13 +197,12 @@ public class Map {
 
 					// Add item to inventory
 					puzzles.add(puzzle);
-					
+
 					// Check if puzzles are being read correctly
-					 //System.out.println(puzzles);
-					
+					// System.out.println(puzzles);
+
 					break;
 
-					
 				}
 
 			}
@@ -220,8 +221,8 @@ public class Map {
 			// tell player there is a puzzle they need to solve
 			System.out.println("There seems to be a riddle or something, that's preventing the door from opening.");
 			System.out.println("You may choose to solve or ignore.");
-		} 
-		//a normal room or puzzle is solved
+		}
+		// a normal room or puzzle is solved
 		else {
 			// Room description is displayed
 			System.out.println(map.get(id).getRoomDesc());

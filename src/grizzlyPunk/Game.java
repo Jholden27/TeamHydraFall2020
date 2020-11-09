@@ -37,6 +37,7 @@ public class Game {
 			ArrayList<Item> inventory = new ArrayList<>();
 			Player player = new Player(map.getRoom("R1"), 100, 100, 0, 0, 0, inventory, map, map.getRoom("R1"));
 			
+			
 			//PrintStream oldOut = System.out;
 			
 
