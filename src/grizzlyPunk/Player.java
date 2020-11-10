@@ -12,9 +12,9 @@ public class Player {
 	static int currentHP;
 	static int sp; // shield points
 	static int ap; // attack points / damage done
-	private static int memoryFragments;
+	static int memoryFragments;
 	static ArrayList<Item> inventory = new ArrayList<Item>();
-	protected static String inventory2 = " ";
+	static ArrayList<String> itemNames = new ArrayList<>();
 	private static Map map;
 	private Rooms previousRoom;
 	private static HashMap<String, MemoryPieces> memories = new HashMap<>();
@@ -650,8 +650,8 @@ public class Player {
 	}
 	
 	// check inventory
-		public void checkInventory() {
-			ArrayList<String> itemNames = new ArrayList<>();
+		public static void checkInventory() {
+			itemNames = new ArrayList<>();
 			for (int i = 0; i < inventory.size(); i++) {
 				itemNames.add(inventory.get(i).getItemName());
 			}

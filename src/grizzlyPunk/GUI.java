@@ -80,9 +80,7 @@ public class GUI {
 	public static PrintStream printStream;
 	
 	//TEST 
-	int getMemoryFragments = 0;
 	String getWeapon = "Plasma Sword";
-	static ArrayList<String> inventory2 = new ArrayList<String>();
 	//TEST
 	private JList list;
 	private JList goList;
@@ -235,7 +233,7 @@ public class GUI {
 		lblNewLabel.setPreferredSize(new Dimension(225, 225));
 		lblNewLabel.setMinimumSize(new Dimension(225, 225));
 		lblNewLabel.setMaximumSize(new Dimension(225, 225));
-		Image mem = new ImageIcon (this.getClass().getResource("Mem" + getMemoryFragments + ".png")).getImage();
+		Image mem = new ImageIcon (this.getClass().getResource("Mem" + Player.memoryFragments + ".png")).getImage();
 		lblNewLabel.setIcon(new ImageIcon(mem));
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel.setToolTipText("Memories collected.");
@@ -297,6 +295,9 @@ public class GUI {
 				Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
 				lblNewLabel_1.setIcon(new ImageIcon(scaled));
 				System.out.println((String) goList.getSelectedValue());
+				GUI.main(null);
+				frame.dispose();
+				
 			}
 		});
 		//list.setBackground(new Color(255, 248, 220));
@@ -356,10 +357,8 @@ public class GUI {
 		explore2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Player.pickupItem(textField.getText());
-				inventory2.add(Player.inventory2);
-				inventory2.add("item");
-				System.out.println(inventory2);
-				list = new JList(inventory2.toArray());
+				GUI.main(null);
+				frame.dispose();
 				
 				
 			}
@@ -490,8 +489,8 @@ public class GUI {
 		mnNewMenu_4.add(mntmNewMenuItem_11);
 		
 		//INVENTORY TAB
-		inventory2.add("item");
-		list = new JList(inventory2.toArray());
+		Player.checkInventory();
+		list = new JList(Player.itemNames.toArray());
 		list.setBounds(889, 65, 205, 225);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
