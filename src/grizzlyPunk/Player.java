@@ -85,7 +85,6 @@ public class Player {
 	public static ArrayList<Item> getInventory() {
 		return inventory;
 	}
-	
 
 	public void setInventory(ArrayList<Item> inventory) {
 		this.inventory = inventory;
@@ -117,7 +116,7 @@ public class Player {
 	// Moving rooms
 	public static void move(String moveID) {
 		// set previous room to current room
-		//setPreviousRoom(currentRoom);
+		// setPreviousRoom(currentRoom);
 
 		// move using map class method
 		map.enterRoom(moveID);
@@ -163,7 +162,7 @@ public class Player {
 					memoryFragments++;
 					// read memory frag description
 					gainMemory(currentRoom.getRoomID());
-					//remove memory frag from room
+					// remove memory frag from room
 					currentRoom.getInventory().remove(i);
 				}
 				// adding item to inventory
@@ -449,48 +448,23 @@ public class Player {
 		Monster monster = currentRoom.getMonsters().get(0);
 		// monster hp
 		int monsterHP = monster.getMonsterHP();
-		// hit legs
-		if (bodypart.equalsIgnoreCase("legs")) {
-			// if it was a weakness (x3 damage)
-			if (monster.getWeakness().equalsIgnoreCase("legs")) {
-				monster.setMonsterHP(monsterHP - (getAp() * 3));
-				// monster attacks after
-				takeDamage();
-			} else {
-				monster.setMonsterHP(monsterHP - (getAp()));
-				// monster attacks after
-				takeDamage();
-			}
-
+		//If player attacked weakness
+		if (bodypart.equalsIgnoreCase(monster.getWeakness())) {
+			// monster takes x3 damage
+			int damageTaken = monsterHP - (getAp()*3);
+			System.out.println(damageTaken);
+			monster.setMonsterHP(damageTaken);
+			// monster attacks after
+			takeDamage();	
 		}
-		// hit arms
-		else if (bodypart.equalsIgnoreCase("arms")) {
-			// if it was a weakness (x3 damage)
-			if (monster.getWeakness().equalsIgnoreCase("arms")) {
-				monster.setMonsterHP(monsterHP - (getAp() * 3));
-				// monster attacks after
-				takeDamage();
-			} else {
-				monster.setMonsterHP(monsterHP - (getAp()));
-				// monster attacks after
-				takeDamage();
-			}
-
+		//player didn't attack weakness
+		else {
+			monster.setMonsterHP(monsterHP - (getAp()));
+			// monster attacks after
+			takeDamage();
+			//System.out.println(monsterHP);
 		}
-		// hit head
-		else if (bodypart.equalsIgnoreCase("head")) {
-			// if it was a weakness (x3 damage)
-			if (monster.getWeakness().equalsIgnoreCase("head")) {
-				monster.setMonsterHP(monsterHP - (getAp() * 3));
-				// monster attacks after
-				takeDamage();
-			} else {
-				monster.setMonsterHP(monsterHP - (getAp()));
-				// monster attacks after
-				takeDamage();
-			}
 
-		}
 		// if monster has died
 		if (monsterHP <= 0) {
 			System.out.println("The monster has been defeated, you can now continue with your journey.");
@@ -498,11 +472,6 @@ public class Player {
 			inventory.add(monster.getInventory().get(0));
 			// removed from monster inventory
 			monster.getInventory().clear();
-
-		}
-		// incorrect bodypart was told
-		else {
-			System.out.println("That was an incorrect body part. Please type 'arms', 'legs', or 'head'.");
 		}
 	}
 
@@ -611,54 +580,45 @@ public class Player {
 		if (roomID.equals("R1")) {
 			System.out.println(memories.get("Itm10-1").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R3")) {
+		} else if (roomID.equals("R3")) {
 			System.out.println(memories.get("Itm10-2").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R8")) {
+		} else if (roomID.equals("R8")) {
 			System.out.println(memories.get("Itm10-3").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R9")) {
+		} else if (roomID.equals("R9")) {
 			System.out.println(memories.get("Itm10-4").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R12")) {
+		} else if (roomID.equals("R12")) {
 			System.out.println(memories.get("Itm10-5").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R13")) {
+		} else if (roomID.equals("R13")) {
 			System.out.println(memories.get("Itm10-6").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R15")) {
+		} else if (roomID.equals("R15")) {
 			System.out.println(memories.get("Itm10-7").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R16")) {
+		} else if (roomID.equals("R16")) {
 			System.out.println(memories.get("Itm10-8").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R19")) {
+		} else if (roomID.equals("R19")) {
 			System.out.println(memories.get("Itm10-9").getMemoryDesc());
 
-		}
-		else if (roomID.equals("R20")) {
+		} else if (roomID.equals("R20")) {
 			System.out.println(memories.get("Itm10-10").getMemoryDesc());
 
 		}
 
 	}
-	
-	// check inventory
-		public static void checkInventory() {
-			itemNames = new ArrayList<>();
-			for (int i = 0; i < inventory.size(); i++) {
-				itemNames.add(inventory.get(i).getItemName());
-			}
-			//System.out.println(itemNames);
 
+	// check inventory
+	public static void checkInventory() {
+		itemNames = new ArrayList<>();
+		for (int i = 0; i < inventory.size(); i++) {
+			itemNames.add(inventory.get(i).getItemName());
 		}
+		// System.out.println(itemNames);
+
+	}
 
 }
