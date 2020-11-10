@@ -40,6 +40,8 @@ public class Game {
 			//Create player: player starts out in room R1 with empty inventory
 			ArrayList<Item> inventory = new ArrayList<>();
 			Player player = new Player(map.getRoom("R1"), 100, 100, 0, 0, 0, inventory, map, map.getRoom("R1"));
+			//So the player can collect memories
+			player.collectingMemory();
 			
 			
 			//PrintStream oldOut = System.out;

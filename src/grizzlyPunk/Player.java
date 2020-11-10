@@ -163,6 +163,8 @@ public class Player {
 					memoryFragments++;
 					// read memory frag description
 					gainMemory(currentRoom.getRoomID());
+					//remove memory frag from room
+					currentRoom.getInventory().remove(i);
 				}
 				// adding item to inventory
 				else {
@@ -591,7 +593,7 @@ public class Player {
 
 				// Test whether it is reading every line
 				// System.out.println(line);
-				// System.out.println(r);
+				// System.out.println(memories);
 
 			}
 			buffer.close();
@@ -607,43 +609,43 @@ public class Player {
 	// Read frag memory pieces
 	public static void gainMemory(String roomID) {
 		if (roomID.equals("R1")) {
-			System.out.println(memories.get("Itm10-1"));
+			System.out.println(memories.get("Itm10-1").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R3")) {
-			System.out.println(memories.get("Itm10-2"));
+			System.out.println(memories.get("Itm10-2").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R8")) {
-			System.out.println(memories.get("Itm10-3"));
+			System.out.println(memories.get("Itm10-3").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R9")) {
-			System.out.println(memories.get("Itm10-4"));
+			System.out.println(memories.get("Itm10-4").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R12")) {
-			System.out.println(memories.get("Itm10-5"));
+			System.out.println(memories.get("Itm10-5").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R13")) {
-			System.out.println(memories.get("Itm10-6"));
+			System.out.println(memories.get("Itm10-6").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R15")) {
-			System.out.println(memories.get("Itm10-7"));
+			System.out.println(memories.get("Itm10-7").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R16")) {
-			System.out.println(memories.get("Itm10-8"));
+			System.out.println(memories.get("Itm10-8").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R19")) {
-			System.out.println(memories.get("Itm10-9"));
+			System.out.println(memories.get("Itm10-9").getMemoryDesc());
 
 		}
 		else if (roomID.equals("R20")) {
-			System.out.println(memories.get("Itm10-10"));
+			System.out.println(memories.get("Itm10-10").getMemoryDesc());
 
 		}
 
