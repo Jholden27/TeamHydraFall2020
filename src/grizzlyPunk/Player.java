@@ -414,15 +414,22 @@ public class Player {
 			int healthLeft = monsterHP - (getAp() * 3);
 			System.out.println();
 			System.out.println("You attack the " + monster.getMonsterName() + " dealing " + (getAp() * 3) + " damage!");
-			System.out.println(monster.getMonsterName() + " has " + healthLeft + " health remaining.");
+			if(healthLeft > 0) {
+				System.out.println(monster.getMonsterName() + " has " + healthLeft + " health remaining.");
+			}
 			monster.setMonsterHP(healthLeft);
 			// if monster has died
 			if (healthLeft <= 0) {
 				System.out.println("The monster has been defeated, you can now continue with your journey.");
-				// monster drop added to inventory
-				//inventory.add(monster.getInventory().get(0));
-				// removed from monster inventory
-				monster.getInventory().clear();
+				//if monster has inventory
+				if(!(monster.getInventory().isEmpty())) {
+					// monster drop added to inventory
+					inventory.add(monster.getInventory().get(0));
+					// removed from monster inventory
+					monster.getInventory().clear();
+				}
+				//monster is taken out of the room
+				currentRoom.getMonsters().clear();
 			}
 			else
 				// monster attacks after

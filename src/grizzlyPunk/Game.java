@@ -42,8 +42,6 @@ public class Game {
 			player.collectingMemory();
 			
 			
-			
-			
 			//PrintStream oldOut = System.out;
 			
 
