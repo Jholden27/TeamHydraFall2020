@@ -65,6 +65,7 @@ import java.awt.SystemColor;
 import javax.swing.border.CompoundBorder;
 import java.awt.Toolkit;
 import java.awt.Window.Type;
+import javax.swing.border.SoftBevelBorder;
 
 public class GUI {
 	public static String readFile(String path) throws IOException {
@@ -121,7 +122,7 @@ public class GUI {
 	 */
 	private void initialize() {
 		frmGrizzlyPunk = new JFrame();
-		frmGrizzlyPunk.setIconImage(Toolkit.getDefaultToolkit().getImage("N:\\Users\\Jason\\Desktop\\TeamHydraFall2020\\src\\grizzlyPunk\\Mem10.png"));
+		frmGrizzlyPunk.setIconImage(Toolkit.getDefaultToolkit().getImage("\\src\\grizzlyPunk\\Mem10.png"));
 		frmGrizzlyPunk.setTitle("Grizzly Punk 2070");
 		frmGrizzlyPunk.setMinimumSize(new Dimension(1280, 1024));
 		frmGrizzlyPunk.setSize(new Dimension(1280, 1024));
@@ -137,7 +138,7 @@ public class GUI {
 		txtMemories = new JTextField();
 		txtMemories.setDisabledTextColor(Color.BLACK);
 		txtMemories.setForeground(Color.BLACK);
-		txtMemories.setBounds(267, 290, 105, 20);
+		txtMemories.setBounds(267, 283, 105, 20);
 		txtMemories.setText("Memories");
 		txtMemories.setOpaque(false);
 		txtMemories.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
@@ -147,10 +148,11 @@ public class GUI {
 		frmGrizzlyPunk.getContentPane().add(txtMemories);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("GrizzlyPunk");
-		lblNewLabel_2_1.setBounds(62, 16, 300, 46);
+		lblNewLabel_2_1.setBorder(null);
+		lblNewLabel_2_1.setBounds(51, 1, 321, 46);
 		lblNewLabel_2_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2_1.setForeground(new Color(85, 107, 47));
-		lblNewLabel_2_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_2_1.setFont(new Font("OCR A Extended", Font.BOLD, 45));
 		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_1);
 		
 		txtInventory = new JTextField();
@@ -168,13 +170,13 @@ public class GUI {
 		JPanel panel = new JPanel();
 		panel.setBounds(433, 0, 420, 367);
 		panel.setName("Map");
-		panel.setBackground(new Color(85, 107, 47));
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(85, 107, 47), 1, true), "", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setBorder(new LineBorder(new Color(85, 107, 47), 5));
 		frmGrizzlyPunk.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBorder(new LineBorder(Color.LIGHT_GRAY, 5));
+		lblNewLabel_1.setBorder(new LineBorder(Color.DARK_GRAY, 5));
 		lblNewLabel_1.setBounds(10, 10, 400, 350);
 		panel.add(lblNewLabel_1);
 		Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + Player.getCurrentRoom().getRoomID() + ".png")).getImage();
@@ -191,21 +193,21 @@ public class GUI {
 		txtHp = new JTextField();
 		txtHp.setText("Health: " + Player.getCurrentHP());
 		txtHp.setOpaque(false);
-		txtHp.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+		txtHp.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
 		txtHp.setEditable(false);
 		txtHp.setColumns(10);
 		txtHp.setBorder(null);
-		txtHp.setBounds(560, 32, 125, 20);
+		txtHp.setBounds(553, 37, 125, 17);
 		panel_2.add(txtHp);
 		
 		txtShield = new JTextField();
 		txtShield.setText("Shield: " + Player.getSp());
 		txtShield.setOpaque(false);
-		txtShield.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 15));
+		txtShield.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 18));
 		txtShield.setEditable(false);
 		txtShield.setColumns(10);
 		txtShield.setBorder(null);
-		txtShield.setBounds(540, 7, 75, 20);
+		txtShield.setBounds(515, 14, 75, 14);
 		panel_2.add(txtShield);
 		
 		JProgressBar shieldBar = new JProgressBar();
@@ -213,7 +215,7 @@ public class GUI {
 		shieldBar.setValue(Player.getSp());
 		shieldBar.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		shieldBar.setName("Shield:");
-		shieldBar.setBounds(533, 10, 200, 15);
+		shieldBar.setBounds(510, 9, 250, 20);
 		panel_2.add(shieldBar);
 		shieldBar.setBackground(Color.GRAY);
 		shieldBar.setForeground(new Color(176, 224, 230));
@@ -223,7 +225,7 @@ public class GUI {
 		healthBar.setValue(Player.getCurrentHP());
 		healthBar.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		healthBar.setName("HP:");
-		healthBar.setBounds(553, 35, 160, 15);
+		healthBar.setBounds(548, 33, 175, 20);
 		panel_2.add(healthBar);
 		healthBar.setBackground(Color.GRAY);
 		healthBar.setForeground(new Color(240, 128, 128));
@@ -250,7 +252,8 @@ public class GUI {
 		panel_2.add(textFieldAP);
 		
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(90, 119, 225, 225);
+		lblNewLabel.setBackground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(75, 102, 250, 250);
 		lblNewLabel.setBorder(null);
 		lblNewLabel.setPreferredSize(new Dimension(225, 225));
 		lblNewLabel.setMinimumSize(new Dimension(225, 225));
@@ -534,6 +537,7 @@ public class GUI {
 		//INVENTORY TAB
 		Player.checkInventory();
 		list = new JList(Player.itemNames.toArray());
+		list.setBorder(new MatteBorder(3, 0, 3, 0, (Color) Color.LIGHT_GRAY));
 		list.setBounds(889, 65, 205, 225);
 		list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -549,9 +553,7 @@ public class GUI {
 					JMenuItem itemDrop = new JMenuItem("Drop Item");
 					equipW.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							System.out.print("Attack power has gone from: " + Player.ap);
 							Player.equipWeapon(list.getSelectedValue().toString());
-							System.out.println(" to " + Player.ap);
 							GUI.main(null);
 							frmGrizzlyPunk.dispose();
 						}	
@@ -591,6 +593,7 @@ public class GUI {
 		
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(null);
 		panel_1.setBounds(889, 45, 205, 20);
 		panel_1.setBackground(new Color(85, 107, 47));
 		frmGrizzlyPunk.getContentPane().add(panel_1);
@@ -601,25 +604,39 @@ public class GUI {
 		frmGrizzlyPunk.getContentPane().add(panel_1_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("GrizzlyPunk");
-		lblNewLabel_2.setBounds(65, 18, 282, 46);
+		lblNewLabel_2.setBounds(54, 3, 318, 46);
 		lblNewLabel_2.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2.setForeground(Color.BLACK);
-		lblNewLabel_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2.setForeground(new Color(85, 107, 47));
+		lblNewLabel_2.setFont(new Font("OCR A Extended", Font.BOLD, 45));
 		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("2070");
-		lblNewLabel_2_1_1.setBounds(149, 63, 300, 46);
+		lblNewLabel_2_1_1.setBounds(143, 45, 121, 46);
 		lblNewLabel_2_1_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2_1_1.setForeground(new Color(85, 107, 47));
-		lblNewLabel_2_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2_1_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_2_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 45));
 		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_1_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("2070");
-		lblNewLabel_2_2.setBounds(152, 65, 282, 46);
+		lblNewLabel_2_2.setBounds(146, 47, 118, 46);
 		lblNewLabel_2_2.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2_2.setForeground(Color.BLACK);
-		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNewLabel_2_2.setForeground(new Color(85, 107, 47));
+		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 45));
 		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_2);
+		
+		JLabel lblNewLabel_2_1_2 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2_1_2.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1_2.setForeground(new Color(240, 255, 240));
+		lblNewLabel_2_1_2.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2_1_2.setBounds(50, 0, 322, 46);
+		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_1_2);
+		
+		JLabel lblNewLabel_2_1_1_1 = new JLabel("2070");
+		lblNewLabel_2_1_1_1.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1_1_1.setForeground(new Color(240, 255, 240));
+		lblNewLabel_2_1_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2_1_1_1.setBounds(142, 44, 122, 46);
+		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_1_1_1);
 		
 		
 	}

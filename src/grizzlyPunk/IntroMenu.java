@@ -43,34 +43,6 @@ public class IntroMenu extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("GrizzlyPunk");
-		lblNewLabel_2_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2_1.setForeground(new Color(85, 107, 47));
-		lblNewLabel_2_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2_1.setBounds(74, 25, 288, 46);
-		contentPanel.add(lblNewLabel_2_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("GrizzlyPunk");
-		lblNewLabel_2.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2.setForeground(Color.BLACK);
-		lblNewLabel_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2.setBounds(75, 27, 285, 46);
-		contentPanel.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_2_1_1 = new JLabel("2070");
-		lblNewLabel_2_1_1.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2_1_1.setForeground(new Color(85, 107, 47));
-		lblNewLabel_2_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2_1_1.setBounds(164, 81, 107, 46);
-		contentPanel.add(lblNewLabel_2_1_1);
-		
-		JLabel lblNewLabel_2_2 = new JLabel("2070");
-		lblNewLabel_2_2.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_2_2.setForeground(Color.BLACK);
-		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNewLabel_2_2.setBounds(166, 83, 104, 46);
-		contentPanel.add(lblNewLabel_2_2);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBounds(150, 149, 135, 104);
@@ -105,5 +77,47 @@ public class IntroMenu extends JDialog {
 				buttonPane.add(exitButton);
 			}
 		}
+		
+		JLabel lblNewLabel_2_1 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2_1.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_2_1.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2_1.setBounds(57, 24, 321, 46);
+		contentPanel.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2.setForeground(new Color(85, 107, 47));
+		lblNewLabel_2.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2.setBounds(59, 26, 318, 46);
+		contentPanel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1_1 = new JLabel("2070");
+		lblNewLabel_2_1_1.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_2_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2_1_1.setBounds(156, 71, 124, 46);
+		contentPanel.add(lblNewLabel_2_1_1);
+		
+		JLabel lblNewLabel_2_2 = new JLabel("2070");
+		lblNewLabel_2_2.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_2.setForeground(new Color(85, 107, 47));
+		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2_2.setBounds(156, 73, 123, 46);
+		contentPanel.add(lblNewLabel_2_2);
+		
+		JLabel lblNewLabel_2_1_2 = new JLabel("GrizzlyPunk");
+		lblNewLabel_2_1_2.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1_2.setForeground(new Color(154, 205, 50));
+		lblNewLabel_2_1_2.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2_1_2.setBounds(55, 22, 322, 46);
+		contentPanel.add(lblNewLabel_2_1_2);
+		
+		JLabel lblNewLabel_2_1_1_1 = new JLabel("2070");
+		lblNewLabel_2_1_1_1.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel_2_1_1_1.setForeground(new Color(154, 205, 50));
+		lblNewLabel_2_1_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 45));
+		lblNewLabel_2_1_1_1.setBounds(154, 69, 125, 46);
+		contentPanel.add(lblNewLabel_2_1_1_1);
 	}
 }
