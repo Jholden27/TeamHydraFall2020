@@ -15,9 +15,7 @@ import javax.swing.text.DefaultCaret;
 public class Game {	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-			boolean loop = true;//creates main loop
-			//Scanner scanner = new Scanner(System.in);
-			boolean combat = true;
+		
 			
 			
 			

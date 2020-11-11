@@ -59,9 +59,12 @@ import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
 import javax.swing.event.CaretListener;
 
-import holdenIndividual.Item;
 
 import javax.swing.event.CaretEvent;
+import java.awt.SystemColor;
+import javax.swing.border.CompoundBorder;
+import java.awt.Toolkit;
+import java.awt.Window.Type;
 
 public class GUI {
 	public static String readFile(String path) throws IOException {
@@ -69,7 +72,7 @@ public class GUI {
     }
 
 
-	private JFrame frame;
+	private JFrame frmGrizzlyPunk;
 	private JTextField txtInventory;
 	private JTextField txtEquippedWeapon;
 	private JTextField txtShield;
@@ -85,7 +88,8 @@ public class GUI {
 	private JList list;
 	private JList goList;
 	public static JTextArea console = new JTextArea();
-	private JTextField textField;
+	private JTextField txtTypeInputHere;
+	private JTextField textFieldAP;
 	
 	
 
@@ -97,7 +101,7 @@ public class GUI {
 			public void run() {
 				try {
 					GUI window = new GUI();
-					window.frame.setVisible(true);
+					window.frmGrizzlyPunk.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -116,42 +120,49 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setMinimumSize(new Dimension(1280, 1024));
-		frame.setSize(new Dimension(1280, 1024));
-		frame.getContentPane().setSize(new Dimension(1280, 1024));
-		frame.getContentPane().setMinimumSize(new Dimension(1280, 1024));
-		frame.setResizable(false);
-		frame.getContentPane().setPreferredSize(new Dimension(1280, 1024));
-		frame.setPreferredSize(new Dimension(1280, 1024));
-		frame.getContentPane().setBackground(Color.GRAY);
-		frame.getContentPane().setLayout(null);
+		frmGrizzlyPunk = new JFrame();
+		frmGrizzlyPunk.setIconImage(Toolkit.getDefaultToolkit().getImage("N:\\Users\\Jason\\Desktop\\TeamHydraFall2020\\src\\grizzlyPunk\\Mem10.png"));
+		frmGrizzlyPunk.setTitle("Grizzly Punk 2070");
+		frmGrizzlyPunk.setMinimumSize(new Dimension(1280, 1024));
+		frmGrizzlyPunk.setSize(new Dimension(1280, 1024));
+		frmGrizzlyPunk.getContentPane().setSize(new Dimension(1280, 1024));
+		frmGrizzlyPunk.getContentPane().setMinimumSize(new Dimension(1280, 1024));
+		frmGrizzlyPunk.setResizable(false);
+		frmGrizzlyPunk.getContentPane().setPreferredSize(new Dimension(1280, 1024));
+		frmGrizzlyPunk.setPreferredSize(new Dimension(1280, 1024));
+		frmGrizzlyPunk.getContentPane().setBackground(Color.GRAY);
+		frmGrizzlyPunk.getContentPane().setLayout(null);
+		frmGrizzlyPunk.setLocationRelativeTo(null);
 		
 		txtMemories = new JTextField();
+		txtMemories.setDisabledTextColor(Color.BLACK);
+		txtMemories.setForeground(Color.BLACK);
 		txtMemories.setBounds(267, 290, 105, 20);
 		txtMemories.setText("Memories");
 		txtMemories.setOpaque(false);
-		txtMemories.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 23));
+		txtMemories.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
 		txtMemories.setEditable(false);
 		txtMemories.setColumns(10);
 		txtMemories.setBorder(null);
-		frame.getContentPane().add(txtMemories);
+		frmGrizzlyPunk.getContentPane().add(txtMemories);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("GrizzlyPunk");
 		lblNewLabel_2_1.setBounds(62, 16, 300, 46);
 		lblNewLabel_2_1.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2_1.setForeground(new Color(85, 107, 47));
 		lblNewLabel_2_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		frame.getContentPane().add(lblNewLabel_2_1);
+		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_1);
 		
 		txtInventory = new JTextField();
+		txtInventory.setDisabledTextColor(Color.BLACK);
+		txtInventory.setForeground(Color.BLACK);
 		txtInventory.setBounds(956, 44, 75, 20);
 		txtInventory.setBorder(null);
 		txtInventory.setEditable(false);
 		txtInventory.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 20));
 		txtInventory.setOpaque(false);
 		txtInventory.setText("Inventory");
-		frame.getContentPane().add(txtInventory);
+		frmGrizzlyPunk.getContentPane().add(txtInventory);
 		txtInventory.setColumns(10);
 		
 		JPanel panel = new JPanel();
@@ -159,7 +170,7 @@ public class GUI {
 		panel.setName("Map");
 		panel.setBackground(new Color(85, 107, 47));
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(85, 107, 47), 1, true), "", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		frame.getContentPane().add(panel);
+		frmGrizzlyPunk.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
@@ -174,7 +185,7 @@ public class GUI {
 		panel_2.setBounds(0, 362, 1271, 60);
 		panel_2.setBorder(new LineBorder(new Color(85, 107, 47), 7));
 		panel_2.setBackground(new Color(255, 248, 220));
-		frame.getContentPane().add(panel_2);
+		frmGrizzlyPunk.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
 		txtHp = new JTextField();
@@ -217,8 +228,9 @@ public class GUI {
 		healthBar.setBackground(Color.GRAY);
 		healthBar.setForeground(new Color(240, 128, 128));
 		
+		//EQUIPPED WEAPON
 		txtEquippedWeapon = new JTextField();
-		txtEquippedWeapon.setText("Equipped Weapon: " + getWeapon);
+		txtEquippedWeapon.setText("Equipped Weapon: " );
 		txtEquippedWeapon.setOpaque(false);
 		txtEquippedWeapon.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 17));
 		txtEquippedWeapon.setEditable(false);
@@ -226,6 +238,16 @@ public class GUI {
 		txtEquippedWeapon.setBorder(null);
 		txtEquippedWeapon.setBounds(878, 10, 250, 23);
 		panel_2.add(txtEquippedWeapon);
+		
+		textFieldAP = new JTextField();
+		textFieldAP.setText("Attack Power: " + Player.getAp());
+		textFieldAP.setOpaque(false);
+		textFieldAP.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 17));
+		textFieldAP.setEditable(false);
+		textFieldAP.setColumns(10);
+		textFieldAP.setBorder(null);
+		textFieldAP.setBounds(908, 30, 250, 23);
+		panel_2.add(textFieldAP);
 		
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(90, 119, 225, 225);
@@ -237,12 +259,12 @@ public class GUI {
 		lblNewLabel.setIcon(new ImageIcon(mem));
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel.setToolTipText("Memories collected.");
-		frame.getContentPane().add(lblNewLabel);
+		frmGrizzlyPunk.getContentPane().add(lblNewLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 482, 1266, 514);
 		scrollPane.setAutoscrolls(true);
-		frame.getContentPane().add(scrollPane);
+		frmGrizzlyPunk.getContentPane().add(scrollPane);
 		scrollPane.setViewportView(console);
 		console.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
@@ -255,20 +277,23 @@ public class GUI {
 		console.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		
 		console.setBackground(new Color(255, 248, 220));
-		console.setBorder(new MatteBorder(20, 1, 20, 1, (Color) new Color(85, 107, 47)));
+		console.setBorder(new CompoundBorder(new MatteBorder(15, 1, 20, 1, (Color) new Color(85, 107, 47)), new BevelBorder(BevelBorder.LOWERED, null, null, null, null)));
 		console.setEditable (false);
 		
-		textField = new JTextField();
-		scrollPane.setColumnHeaderView(textField);
-		textField.setColumns(10);
+		txtTypeInputHere = new JTextField();
+		txtTypeInputHere.setBackground(new Color(255, 248, 220));
+		txtTypeInputHere.setBorder(new CompoundBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(85, 107, 47)), new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Type Input Here:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))));
+		txtTypeInputHere.setToolTipText("");
+		scrollPane.setColumnHeaderView(txtTypeInputHere);
+		txtTypeInputHere.setColumns(10);
 		
 		
 		JToolBar toolBar = new JToolBar();
 		toolBar.setBounds(31, 427, 1213, 50);
 		toolBar.setBackground(Color.LIGHT_GRAY);
 		toolBar.setForeground(Color.GRAY);
-		toolBar.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.RAISED, new Color(85, 107, 47), new Color(160, 160, 160)), "ActionBar", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		frame.getContentPane().add(toolBar);
+		toolBar.setBorder(new CompoundBorder(new MatteBorder(5, 1, 5, 1, (Color) new Color(64, 64, 64)), new TitledBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(64, 64, 64)), "Action Bar", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0))));
+		frmGrizzlyPunk.getContentPane().add(toolBar);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(210);
 		toolBar.add(horizontalStrut);
@@ -287,6 +312,7 @@ public class GUI {
 		
 		//JList goList = new JList();
 		goList = new JList(Player.getCurrentRoom().roomConnections.toArray());
+		//goList = new JList(Player.getCurrentRoom().getRoomConnections().toArray());
 		goList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -294,9 +320,8 @@ public class GUI {
 				Image gpMap = new ImageIcon (this.getClass().getResource("GP-" + (String) goList.getSelectedValue() + ".png")).getImage();
 				Image scaled = gpMap.getScaledInstance(lblNewLabel_1.getWidth(), lblNewLabel_1.getHeight(),Image.SCALE_SMOOTH);
 				lblNewLabel_1.setIcon(new ImageIcon(scaled));
-				System.out.println((String) goList.getSelectedValue());
 				GUI.main(null);
-				frame.dispose();
+				frmGrizzlyPunk.dispose();
 				
 			}
 		});
@@ -323,12 +348,28 @@ public class GUI {
 		menuBar_1.add(mnAttack);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Attack the head");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String attack = "head";
+				//Player.combatMonster(attack);
+			}
+		});
 		mnAttack.add(mntmNewMenuItem_4);
 		
 		JMenuItem mntmNewMenuItem_1_1 = new JMenuItem("Attack the arms");
+		mntmNewMenuItem_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		mnAttack.add(mntmNewMenuItem_1_1);
 		
 		JMenuItem mntmNewMenuItem_2_1 = new JMenuItem("Attack the legs");
+		mntmNewMenuItem_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String attack = "legs";
+				//Player.combatMonster(attack);
+			}
+		});
 		mnAttack.add(mntmNewMenuItem_2_1);
 		
 		JMenuItem mntmNewMenuItem_3_1 = new JMenuItem("Flail wildly");
@@ -349,6 +390,8 @@ public class GUI {
 		explore1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Player.explore();
+				Player.getCurrentRoom().getPuzzles().toString();
+				//Puzzles.solvePuzzle();
 			}
 		});
 		mnNewMenu_2.add(explore1);
@@ -356,9 +399,9 @@ public class GUI {
 		JMenuItem explore2 = new JMenuItem("Pickup Items in Area");
 		explore2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Player.pickupItem(textField.getText());
+				Player.pickupItem(txtTypeInputHere.getText());
 				GUI.main(null);
-				frame.dispose();
+				frmGrizzlyPunk.dispose();
 				
 				
 			}
@@ -438,7 +481,7 @@ public class GUI {
 //		        }
 		// 
 //		        System.out.println(content);
-		        System.out.println(Player.getCurrentRoom().getRoomID());
+		        
 		        
 				mntmNewMenuItem_9.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {				
@@ -474,7 +517,7 @@ public class GUI {
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("New Game");
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
+				frmGrizzlyPunk.dispose();
 				GUI.main(null);
 			}
 		});
@@ -500,61 +543,83 @@ public class GUI {
 				
 					JPopupMenu popupMenu = new JPopupMenu();
 					//popupMenu.setBounds(0, 0, 200, 50);
-					JMenuItem itemDrop = new JMenuItem("Drop Item");
+					JMenuItem equipW = new JMenuItem("Equip Weapon");
+					JMenuItem equipI = new JMenuItem("Equip Item");
 					JMenuItem lookAt = new JMenuItem("Look at Item");
+					JMenuItem itemDrop = new JMenuItem("Drop Item");
+					equipW.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							System.out.print("Attack power has gone from: " + Player.ap);
+							Player.equipWeapon(list.getSelectedValue().toString());
+							System.out.println(" to " + Player.ap);
+							GUI.main(null);
+							frmGrizzlyPunk.dispose();
+						}	
+				
+						});
+					equipI.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							Player.equipItem(list.getSelectedValue().toString());
+							GUI.main(null);
+							frmGrizzlyPunk.dispose();
+						}	
+				
+						});
 					itemDrop.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						System.out.println("Remove the element in position " + list.getSelectedValue());
+						System.out.println("Remove the item in position " + list.getSelectedValue());
 					}	
 			
-				});
+					});
 					lookAt.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							System.out.println("Look at the element in position " + list.getSelectedValue());
+							System.out.println("Look at the item in position " + list.getSelectedValue());
 						}	
 				
 					});
-				popupMenu.add(itemDrop);
+				popupMenu.add(equipW);
+				popupMenu.add(equipI);
 				popupMenu.add(lookAt);
+				popupMenu.add(itemDrop);
 				popupMenu.show(list, e.getPoint().x, e.getPoint().y);
 				}
 			}
 		});
 		list.setBackground(new Color(255, 248, 220));
-		frame.getContentPane().add(list);
+		frmGrizzlyPunk.getContentPane().add(list);
 		
 		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(889, 45, 205, 20);
 		panel_1.setBackground(new Color(85, 107, 47));
-		frame.getContentPane().add(panel_1);
+		frmGrizzlyPunk.getContentPane().add(panel_1);
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setBounds(889, 290, 205, 20);
 		panel_1_1.setBackground(new Color(85, 107, 47));
-		frame.getContentPane().add(panel_1_1);
+		frmGrizzlyPunk.getContentPane().add(panel_1_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("GrizzlyPunk");
 		lblNewLabel_2.setBounds(65, 18, 282, 46);
 		lblNewLabel_2.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2.setForeground(Color.BLACK);
 		lblNewLabel_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		frame.getContentPane().add(lblNewLabel_2);
+		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("2070");
 		lblNewLabel_2_1_1.setBounds(149, 63, 300, 46);
 		lblNewLabel_2_1_1.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2_1_1.setForeground(new Color(85, 107, 47));
 		lblNewLabel_2_1_1.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		frame.getContentPane().add(lblNewLabel_2_1_1);
+		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_1_1);
 		
 		JLabel lblNewLabel_2_2 = new JLabel("2070");
 		lblNewLabel_2_2.setBounds(152, 65, 282, 46);
 		lblNewLabel_2_2.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel_2_2.setForeground(Color.BLACK);
 		lblNewLabel_2_2.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		frame.getContentPane().add(lblNewLabel_2_2);
+		frmGrizzlyPunk.getContentPane().add(lblNewLabel_2_2);
 		
 		
 	}

@@ -18,6 +18,8 @@ public class Player {
 	private static Map map;
 	private Rooms previousRoom;
 	private static HashMap<String, MemoryPieces> memories = new HashMap<>();
+	static boolean armor1 = false;
+	static boolean armor2 = false;
 
 	public Player(Rooms currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
 			ArrayList<Item> inventory, Map map, Rooms previousRoom) {
@@ -66,12 +68,12 @@ public class Player {
 		this.sp = sp;
 	}
 
-	public int getAp() {
+	public static int getAp() {
 		return ap;
 	}
 
-	public void setAp(int ap) {
-		this.ap = ap;
+	public static void setAp(int ap) {
+		ap = ap;
 	}
 
 	public int getMemoryFragments() {
@@ -210,7 +212,7 @@ public class Player {
 	}
 
 	// Equipping weapon
-	public void equipWeapon(String itemName) {
+	public static void equipWeapon(String itemName) {
 		// loop through inventory to find item
 		Item weapon;
 		for (int i = 0; i < inventory.size(); i++) {
@@ -223,7 +225,7 @@ public class Player {
 					// equip item
 					weapon.setEquipped(true);
 					// add to ap
-					setAp(weapon.getItemNumericValue());
+					ap = (weapon.getItemNumericValue());
 					System.out.println(weapon.getItemName() + " is now equipped.");
 				}
 				if (weapon.getItemID().equalsIgnoreCase("Itm6")) {
@@ -232,7 +234,7 @@ public class Player {
 					// equip item
 					weapon.setEquipped(true);
 					// add to ap
-					setAp(weapon.getItemNumericValue());
+					ap = (weapon.getItemNumericValue());
 					System.out.println(weapon.getItemName() + " is now equipped.");
 				}
 				if (weapon.getItemID().equalsIgnoreCase("Itm7")) {
@@ -241,7 +243,7 @@ public class Player {
 					// equip item
 					weapon.setEquipped(true);
 					// add to ap
-					setAp(weapon.getItemNumericValue());
+					ap = (weapon.getItemNumericValue());
 					System.out.println(weapon.getItemName() + " is now equipped.");
 				}
 				else {
@@ -252,25 +254,27 @@ public class Player {
 	}
 
 	// Equipping item
-	public void equipItem(String itemName) {
+	public static void equipItem(String itemName) {
 		// loop through inventory to find item
 		Item equipping;
 		for (int i = 0; i < inventory.size(); i++) {
 			if (inventory.get(i).getItemName().equals(itemName)) {
 				equipping = inventory.get(i);
 				// for armor
-				if (equipping.getItemID().equalsIgnoreCase("Itm3")) {
+				if (equipping.getItemID().equalsIgnoreCase("Itm3") && armor1 == false) {
 					//set equipped
 					equipping.setEquipped(true);
+					armor1 = true;
 					//change sp
-					setSp(getSp() + equipping.getItemNumericValue());
+					sp = (getSp() + equipping.getItemNumericValue());
 					System.out.println(equipping.getItemName() + " is now equipped.");
 				}
-				if (equipping.getItemID().equalsIgnoreCase("Itm4")) {
+				if (equipping.getItemID().equalsIgnoreCase("Itm4") && armor2 == false) {
 					//set equipped
 					equipping.setEquipped(true);
+					armor2 = true;
 					//change sp
-					setSp(getSp() + equipping.getItemNumericValue());
+					sp = (getSp() + equipping.getItemNumericValue());
 					System.out.println(equipping.getItemName() + " is now equipped.");
 				}
 				
@@ -357,7 +361,7 @@ public class Player {
 	}
 
 	// Check to see if a weapon is equipped already
-	public void unequipWeapon() {
+	public static void unequipWeapon() {
 		for (int i = 0; i < inventory.size(); i++) {
 			// only 1 weapon can be equipped at a time
 			if (inventory.get(i).getItemID().equals("itm5")) {
