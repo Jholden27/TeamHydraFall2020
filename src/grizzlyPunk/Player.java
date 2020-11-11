@@ -209,112 +209,88 @@ public class Player {
 		}
 	}
 
+	// Equipping weapon
+	public void equipWeapon(String itemName) {
+		// loop through inventory to find item
+		Item weapon;
+		for (int i = 0; i < inventory.size(); i++) {
+			if (inventory.get(i).getItemName().equals(itemName)) {
+				weapon = inventory.get(i);
+				// for weapons
+				if (weapon.getItemID().equalsIgnoreCase("Itm5")) {
+					// unequip if necessary
+					unequipWeapon();
+					// equip item
+					weapon.setEquipped(true);
+					// add to ap
+					setAp(weapon.getItemNumericValue());
+					System.out.println(weapon.getItemName() + " is now equipped.");
+				}
+				if (weapon.getItemID().equalsIgnoreCase("Itm6")) {
+					// unequip if necessary
+					unequipWeapon();
+					// equip item
+					weapon.setEquipped(true);
+					// add to ap
+					setAp(weapon.getItemNumericValue());
+					System.out.println(weapon.getItemName() + " is now equipped.");
+				}
+				if (weapon.getItemID().equalsIgnoreCase("Itm7")) {
+					// unequip if necessary
+					unequipWeapon();
+					// equip item
+					weapon.setEquipped(true);
+					// add to ap
+					setAp(weapon.getItemNumericValue());
+					System.out.println(weapon.getItemName() + " is now equipped.");
+				}
+				else {
+					System.out.println("This item can't be equipped.");
+				}
+			}
+		}
+	}
+
 	// Equipping item
 	public void equipItem(String itemName) {
-		// find item in the inventory
+		// loop through inventory to find item
+		Item equipping;
 		for (int i = 0; i < inventory.size(); i++) {
-			// compare inventory with itemName player inputted
-			if (inventory.get(i).getItemName().equalsIgnoreCase(itemName)) {
-				// make sure the item is an equippable type
-				if (inventory.get(i).getItemType().equals("Equip")) {
-					// if the item is already equipped
-					if (inventory.get(i).isEquipped()) {
-						System.out.println("This item is equipped already.");
-					}
-					// item isn't equipped yet
-					else {
-						// if the item is armor
-						if (inventory.get(i).getItemID().equals("itm3")
-								|| inventory.get(i).getItemID().equals("itm4")) {
-							// add it sp
-							setSp(getSp() + inventory.get(i).getItemNumericValue());
-							// make item isEquipped equal true
-							inventory.get(i).setEquipped(true);
-						}
-						// if the item is a weapon
-						else if (inventory.get(i).getItemID().equals("itm5")
-								|| inventory.get(i).getItemID().equals("itm6")
-								|| inventory.get(i).getItemID().equals("itm7")) {
-							// if itm5
-							if (inventory.get(i).getItemID().equals("itm5")) {
-								// unequip already equipped item if necessary
-								unequipWeapon();
-								// set ap to weapon value
-								setAp(inventory.get(i).getItemNumericValue());
-								// make item isEquipped true
-								inventory.get(i).setEquipped(true);
-
-							}
-							// if itm6
-							else if (inventory.get(i).getItemID().equals("itm6")) {
-								// unequip already equipped item if necessary
-								unequipWeapon();
-								// set ap to weapon value
-								setAp(inventory.get(i).getItemNumericValue());
-								// make item isEquipped true
-								inventory.get(i).setEquipped(true);
-							}
-							// if itm7
-							else {
-								// unequip already equipped item if necessary
-								unequipWeapon();
-								// set ap to weapon value
-								setAp(inventory.get(i).getItemNumericValue());
-								// make item isEquipped true
-								inventory.get(i).setEquipped(true);
-							}
-
-						}
-						// if the item is a flashlight
-						else if (inventory.get(i).getItemID().equals("itm8")) {
-							// if the player isn't in room R17
-							if (getCurrentRoom() != map.getRoom("R17")) {
-								System.out.println("This item is not useful in this room might want to try later.");
-							}
-							// the player is in room R17
-							else {
-								// item is set to equipped
-								inventory.get(i).setEquipped(true);
-								System.out.println("I can see now and get through the room.");
-
-							}
-
-						}
-						// if the item is a grappling hook
-						else if (inventory.get(i).getItemID().equals("itm9")) {
-							// if the player isn't in room R19
-							if (getCurrentRoom() != map.getRoom("R19")) {
-								System.out.println("This item is not useful in this room might want to try later.");
-
-							}
-							// the player is in room R19
-							else {
-								// item is set to equipped
-								inventory.get(i).setEquipped(true);
-								System.out.println(
-										"I will use this grapping hook to get to the other side of the hallway.");
-
-							}
-
-						}
-					}
-
+			if (inventory.get(i).getItemName().equals(itemName)) {
+				equipping = inventory.get(i);
+				// for armor
+				if (equipping.getItemID().equalsIgnoreCase("Itm3")) {
+					//set equipped
+					equipping.setEquipped(true);
+					//change sp
+					setSp(getSp() + equipping.getItemNumericValue());
+					System.out.println(equipping.getItemName() + " is now equipped.");
 				}
-				// can't equip this item
+				if (equipping.getItemID().equalsIgnoreCase("Itm4")) {
+					//set equipped
+					equipping.setEquipped(true);
+					//change sp
+					setSp(getSp() + equipping.getItemNumericValue());
+					System.out.println(equipping.getItemName() + " is now equipped.");
+				}
+				
+				// for flashlight
+				if (equipping.getItemID().equalsIgnoreCase("Itm8")) {
+					//set equipped
+					equipping.setEquipped(true);
+					System.out.println(equipping.getItemName() + " is now equipped.");
+				}
+				// for grappling hook
+				if (equipping.getItemID().equalsIgnoreCase("Itm9")) {
+					//set equipped
+					equipping.setEquipped(true);
+					System.out.println(equipping.getItemName() + " is now equipped.");
+				}
 				else {
-					System.out.println("This item can not be used this way.");
+					System.out.println("This item can't be equipped.");
 				}
-
 			}
-			// not in inventory
-			else if (inventory.get(i).getItemName()
-					.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
-					&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
-				System.out.println("There is no item with that name in your inventory.");
-			}
-
 		}
-
 	}
 
 	// Using/consuming item
@@ -380,26 +356,6 @@ public class Player {
 
 	}
 
-	// Check if grappling hook is equipped
-	public boolean isGrapplingEquipped() {
-		for (int i = 0; i < inventory.size(); i++) {
-			// compare inventory with grappling hook
-			if (inventory.get(i).getItemID().equals("itm9")) {
-				if (inventory.get(i).isEquipped()) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-			// item wasn't found in inventory
-			else if (inventory.get(i).getItemID().equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemID()))
-					&& !(inventory.get(i).getItemID().equalsIgnoreCase("itm9"))) {
-				return false;
-			}
-		}
-		return false;// need to fix
-	}
-
 	// Check to see if a weapon is equipped already
 	public void unequipWeapon() {
 		for (int i = 0; i < inventory.size(); i++) {
@@ -448,21 +404,21 @@ public class Player {
 		Monster monster = currentRoom.getMonsters().get(0);
 		// monster hp
 		int monsterHP = monster.getMonsterHP();
-		//If player attacked weakness
+		// If player attacked weakness
 		if (bodypart.equalsIgnoreCase(monster.getWeakness())) {
 			// monster takes x3 damage
-			int damageTaken = monsterHP - (getAp()*3);
+			int damageTaken = monsterHP - (getAp() * 3);
 			System.out.println(damageTaken);
 			monster.setMonsterHP(damageTaken);
 			// monster attacks after
-			takeDamage();	
+			takeDamage();
 		}
-		//player didn't attack weakness
+		// player didn't attack weakness
 		else {
 			monster.setMonsterHP(monsterHP - (getAp()));
 			// monster attacks after
 			takeDamage();
-			//System.out.println(monsterHP);
+			// System.out.println(monsterHP);
 		}
 
 		// if monster has died
@@ -484,13 +440,12 @@ public class Player {
 		int monsterMaxHP = monster.getMonsterHP();
 		// if the sp isn't zero
 		if (getSp() > 0) {
-			if(monsterDP < getSp()) {
+			if (monsterDP < getSp()) {
 				setSp(getSp() - monsterDP);
-			}
-			else {
-				//hp = dp - sp
-				setCurrentHP(getCurrentHP() - (monsterDP-getSp()));
-				//set SP to 0
+			} else {
+				// hp = dp - sp
+				setCurrentHP(getCurrentHP() - (monsterDP - getSp()));
+				// set SP to 0
 				setSp(0);
 			}
 		}
