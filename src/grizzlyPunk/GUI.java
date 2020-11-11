@@ -353,8 +353,9 @@ public class GUI {
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Attack the head");
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String attack = "head";
-				//Player.combatMonster(attack);
+				Player.combatMonster("head");
+				GUI.main(null);
+				frmGrizzlyPunk.dispose();
 			}
 		});
 		mnAttack.add(mntmNewMenuItem_4);
@@ -362,6 +363,9 @@ public class GUI {
 		JMenuItem mntmNewMenuItem_1_1 = new JMenuItem("Attack the arms");
 		mntmNewMenuItem_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Player.combatMonster("arms");
+				GUI.main(null);
+				frmGrizzlyPunk.dispose();
 			}
 		});
 		mnAttack.add(mntmNewMenuItem_1_1);
@@ -369,8 +373,9 @@ public class GUI {
 		JMenuItem mntmNewMenuItem_2_1 = new JMenuItem("Attack the legs");
 		mntmNewMenuItem_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String attack = "legs";
-				//Player.combatMonster(attack);
+				Player.combatMonster("legs");
+				GUI.main(null);
+				frmGrizzlyPunk.dispose();
 			}
 		});
 		mnAttack.add(mntmNewMenuItem_2_1);

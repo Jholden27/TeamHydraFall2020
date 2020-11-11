@@ -16,7 +16,7 @@ public class Player {
 	static ArrayList<Item> inventory = new ArrayList<Item>();
 	static ArrayList<String> itemNames = new ArrayList<>();
 	private static Map map;
-	private Rooms previousRoom;
+	private static Rooms previousRoom;
 	private static HashMap<String, MemoryPieces> memories = new HashMap<>();
 	static boolean armor1 = false;
 	static boolean armor2 = false;
@@ -403,7 +403,7 @@ public class Player {
 
 	// Attacking monster
 
-	public void combatMonster(String bodypart) {
+	public static void combatMonster(String bodypart) {
 		// monster in room
 		Monster monster = currentRoom.getMonsters().get(0);
 		// monster hp
@@ -411,32 +411,48 @@ public class Player {
 		// If player attacked weakness
 		if (bodypart.equalsIgnoreCase(monster.getWeakness())) {
 			// monster takes x3 damage
-			int damageTaken = monsterHP - (getAp() * 3);
-			System.out.println(damageTaken);
-			monster.setMonsterHP(damageTaken);
-			// monster attacks after
-			takeDamage();
+			int healthLeft = monsterHP - (getAp() * 3);
+			System.out.println();
+			System.out.println("You attack the " + monster.getMonsterName() + " dealing " + (getAp() * 3) + " damage!");
+			System.out.println(monster.getMonsterName() + " has " + healthLeft + " health remaining.");
+			monster.setMonsterHP(healthLeft);
+			// if monster has died
+			if (healthLeft <= 0) {
+				System.out.println("The monster has been defeated, you can now continue with your journey.");
+				// monster drop added to inventory
+				//inventory.add(monster.getInventory().get(0));
+				// removed from monster inventory
+				monster.getInventory().clear();
+			}
+			else
+				// monster attacks after
+				takeDamage();
 		}
 		// player didn't attack weakness
 		else {
-			monster.setMonsterHP(monsterHP - (getAp()));
-			// monster attacks after
-			takeDamage();
+			int healthLeft = (monsterHP - (getAp()));
+			monster.setMonsterHP(healthLeft);
+			System.out.println();
+			System.out.println("You attack the " + monster.getMonsterName() + " dealing " + (getAp()) + " damage!");
+			System.out.println(monster.getMonsterName() + " has " + healthLeft + " health remaining.");
+			// if monster has died
+			if (healthLeft <= 0) {
+				System.out.println("The monster has been defeated, you can now continue with your journey.");
+				// monster drop added to inventory
+				//inventory.add(monster.getInventory().get(0));
+				// removed from monster inventory
+				monster.getInventory().clear();
+				}
+			
+			else
+				// monster attacks after
+				takeDamage();
 			// System.out.println(monsterHP);
-		}
-
-		// if monster has died
-		if (monsterHP <= 0) {
-			System.out.println("The monster has been defeated, you can now continue with your journey.");
-			// monster drop added to inventory
-			inventory.add(monster.getInventory().get(0));
-			// removed from monster inventory
-			monster.getInventory().clear();
 		}
 	}
 
 	// player taking monster damage
-	public void takeDamage() {
+	public static void takeDamage() {
 		// monster in room
 		Monster monster = currentRoom.getMonsters().get(0);
 		// monster attack
@@ -445,18 +461,25 @@ public class Player {
 		// if the sp isn't zero
 		if (getSp() > 0) {
 			if (monsterDP < getSp()) {
-				setSp(getSp() - monsterDP);
+				sp = (getSp() - monsterDP);
+				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + monsterDP + " damage to your shield!");
 			} else {
 				// hp = dp - sp
-				setCurrentHP(getCurrentHP() - (monsterDP - getSp()));
+				currentHP = (getCurrentHP() - (monsterDP - getSp()));
+				if(getSp() > 0)
+				{
+					System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + getSp() + " damage to your shield!");
+				}
+				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + (monsterDP - getSp()) + " damage to your health!");
 				// set SP to 0
-				setSp(0);
+				sp = (0);
 			}
 		}
 		// damage is take from hp until zero
 		else {
 			if (getCurrentHP() > 0) {
-				setCurrentHP(getCurrentHP() - monsterDP);
+				currentHP = (getCurrentHP() - monsterDP);
+				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + monsterDP + " damage to your health!");
 			}
 			// player dies
 			if (getCurrentHP() <= 0) {
@@ -464,7 +487,7 @@ public class Player {
 				// monster health reset
 				monster.setMonsterHP(monsterMaxHP);
 				// player health set to 50
-				setCurrentHP(50);
+				currentHP = (50);
 				// player sent back to previous room
 				move(previousRoom.getRoomID());
 			}
