@@ -83,9 +83,7 @@ public class GUI {
 	private JLabel lblNewLabel;
 	public static PrintStream printStream;
 	
-	//TEST 
-	String getWeapon = "Plasma Sword";
-	//TEST
+	
 	private JList list;
 	private JList goList;
 	public static JTextArea console = new JTextArea();
@@ -232,13 +230,13 @@ public class GUI {
 		
 		//EQUIPPED WEAPON
 		txtEquippedWeapon = new JTextField();
-		txtEquippedWeapon.setText("Equipped Weapon: " );
+		txtEquippedWeapon.setText("Equipped Weapon: " + Player.equippedWeapon);
 		txtEquippedWeapon.setOpaque(false);
 		txtEquippedWeapon.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 17));
 		txtEquippedWeapon.setEditable(false);
 		txtEquippedWeapon.setColumns(10);
 		txtEquippedWeapon.setBorder(null);
-		txtEquippedWeapon.setBounds(878, 10, 250, 23);
+		txtEquippedWeapon.setBounds(878, 10, 275, 23);
 		panel_2.add(txtEquippedWeapon);
 		
 		textFieldAP = new JTextField();
@@ -346,42 +344,55 @@ public class GUI {
 		toolBar.add(menuBar_1);
 		
 		JMenu mnAttack = new JMenu("Attack");
+		mnAttack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(Player.currentRoom.getMonsters().isEmpty())
+				{
+					System.out.println("Theres nothing here to attack.");
+				}
+			}
+		});
+		mnAttack.setVisible(true);		
 		mnAttack.setBorder(null);
 		mnAttack.setBackground(Color.GRAY);
 		menuBar_1.add(mnAttack);
+		if(!Player.currentRoom.getMonsters().isEmpty())
+		{
+			JMenuItem mntmNewMenuItem_4 = new JMenuItem("Attack the head");
+			mntmNewMenuItem_4.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					Player.combatMonster("head");
+					GUI.main(null);
+					frmGrizzlyPunk.dispose();
+				}
+			});
+			mnAttack.add(mntmNewMenuItem_4);
+			
+			JMenuItem mntmNewMenuItem_1_1 = new JMenuItem("Attack the arms");
+			mntmNewMenuItem_1_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					Player.combatMonster("arms");
+					GUI.main(null);
+					frmGrizzlyPunk.dispose();
+				}
+			});
+			mnAttack.add(mntmNewMenuItem_1_1);
+			
+			JMenuItem mntmNewMenuItem_2_1 = new JMenuItem("Attack the legs");
+			mntmNewMenuItem_2_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					Player.combatMonster("legs");
+					GUI.main(null);
+					frmGrizzlyPunk.dispose();
+				}
+			});
+			mnAttack.add(mntmNewMenuItem_2_1);
+
+		}
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Attack the head");
-		mntmNewMenuItem_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Player.combatMonster("head");
-				GUI.main(null);
-				frmGrizzlyPunk.dispose();
-			}
-		});
-		mnAttack.add(mntmNewMenuItem_4);
+				
 		
-		JMenuItem mntmNewMenuItem_1_1 = new JMenuItem("Attack the arms");
-		mntmNewMenuItem_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Player.combatMonster("arms");
-				GUI.main(null);
-				frmGrizzlyPunk.dispose();
-			}
-		});
-		mnAttack.add(mntmNewMenuItem_1_1);
-		
-		JMenuItem mntmNewMenuItem_2_1 = new JMenuItem("Attack the legs");
-		mntmNewMenuItem_2_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Player.combatMonster("legs");
-				GUI.main(null);
-				frmGrizzlyPunk.dispose();
-			}
-		});
-		mnAttack.add(mntmNewMenuItem_2_1);
-		
-		JMenuItem mntmNewMenuItem_3_1 = new JMenuItem("Flail wildly");
-		mnAttack.add(mntmNewMenuItem_3_1);
 		toolBar.add(horizontalStrut_1_1);
 		
 		

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player {
-	private static Rooms currentRoom;
+	static Rooms currentRoom;
 	static int maxHP;
 	static int currentHP;
 	static int sp; // shield points
@@ -20,6 +20,7 @@ public class Player {
 	private static HashMap<String, MemoryPieces> memories = new HashMap<>();
 	static boolean armor1 = false;
 	static boolean armor2 = false;
+	static String equippedWeapon = "un-armed";
 
 	public Player(Rooms currentRoom, int maxHP, int currentHP, int sp, int ap, int memoryFragments,
 			ArrayList<Item> inventory, Map map, Rooms previousRoom) {
@@ -227,6 +228,7 @@ public class Player {
 					// add to ap
 					ap = (weapon.getItemNumericValue());
 					System.out.println(weapon.getItemName() + " is now equipped.");
+					equippedWeapon = weapon.getItemName();
 				}
 				if (weapon.getItemID().equalsIgnoreCase("Itm6")) {
 					// unequip if necessary
@@ -236,6 +238,7 @@ public class Player {
 					// add to ap
 					ap = (weapon.getItemNumericValue());
 					System.out.println(weapon.getItemName() + " is now equipped.");
+					equippedWeapon = weapon.getItemName();
 				}
 				if (weapon.getItemID().equalsIgnoreCase("Itm7")) {
 					// unequip if necessary
@@ -245,6 +248,7 @@ public class Player {
 					// add to ap
 					ap = (weapon.getItemNumericValue());
 					System.out.println(weapon.getItemName() + " is now equipped.");
+					equippedWeapon = weapon.getItemName();
 				}
 				else {
 					System.out.println("This item can't be equipped.");
@@ -424,7 +428,8 @@ public class Player {
 				//if monster has inventory
 				if(!(monster.getInventory().isEmpty())) {
 					// monster drop added to inventory
-					inventory.add(monster.getInventory().get(0));
+					//inventory.add(monster.getInventory().get(0));
+					System.out.println(monster.getInventory() + " added to your inventory.");
 					// removed from monster inventory
 					monster.getInventory().clear();
 				}
@@ -445,12 +450,17 @@ public class Player {
 			// if monster has died
 			if (healthLeft <= 0) {
 				System.out.println("The monster has been defeated, you can now continue with your journey.");
-				// monster drop added to inventory
-				//inventory.add(monster.getInventory().get(0));
-				// removed from monster inventory
-				monster.getInventory().clear();
+				//if monster has inventory
+				if(!(monster.getInventory().isEmpty())) {
+					// monster drop added to inventory
+					//inventory.add(monster.getInventory().get(0));
+					System.out.println(monster.getInventory() + " added to your inventory.");
+					// removed from monster inventory
+					monster.getInventory().clear();
 				}
-			
+				//monster is taken out of the room
+				currentRoom.getMonsters().clear();
+			}
 			else
 				// monster attacks after
 				takeDamage();
@@ -490,7 +500,8 @@ public class Player {
 			}
 			// player dies
 			if (getCurrentHP() <= 0) {
-				System.out.println("You have passed out. You have been kicked out of the room.");
+				System.out.println("");
+				System.out.println("You have passed out. Zap! A portal opens below you as you see the ground quickly approaching. You land with a thud in a pile of rocks and rusted metal...Again.");
 				// monster health reset
 				monster.setMonsterHP(monsterMaxHP);
 				// player health set to 50
