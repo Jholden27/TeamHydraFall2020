@@ -484,8 +484,15 @@ public class Player {
 		int monsterMaxHP = monster.getMonsterHP();
 		// if the sp isn't zero
 		if (getSp() > 0) {
-			setSp(getSp() - monsterDP);
-
+			if(monsterDP < getSp()) {
+				setSp(getSp() - monsterDP);
+			}
+			else {
+				//hp = dp - sp
+				setCurrentHP(getCurrentHP() - (monsterDP-getSp()));
+				//set SP to 0
+				setSp(0);
+			}
 		}
 		// damage is take from hp until zero
 		else {
@@ -493,7 +500,7 @@ public class Player {
 				setCurrentHP(getCurrentHP() - monsterDP);
 			}
 			// player dies
-			else {
+			if (getCurrentHP() <= 0) {
 				System.out.println("You have passed out. You have been kicked out of the room.");
 				// monster health reset
 				monster.setMonsterHP(monsterMaxHP);
