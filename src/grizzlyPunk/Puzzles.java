@@ -80,15 +80,6 @@ public class Puzzles {
 				+ ", answer=" + answer + ", choices=" + choices + ", isSolved=" + isSolved + "]";
 	}
 
-	
-	//solve puzzle: the puzzle description and answer choices are displayed
-	public void solvePuzzle() {
-		System.out.println(description);
-		for(int i = 1; i <= choices.size(); i++) {
-			System.out.println(i + ". " + choices.get(i));
-		}
-		
-	}
 
 	//win reward
 	public void puzzleWin() {

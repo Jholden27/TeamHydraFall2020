@@ -123,12 +123,14 @@ public class Player {
 
 		// move using map class method
 		map.enterRoom(moveID);
+		
+		//change current room
+		setCurrentRoom(moveID);
 
-		// Change current room location to where player moved (only if there is no
-		// puzzle to solve)
-		if (map.getRoom(moveID).getPuzzles().isEmpty() || map.getRoom(moveID).getPuzzles().get(0).isSolved()) {
-			setCurrentRoom(moveID);
-		}
+		// if room has a puzzle, they need to choose to solve or ignore
+		//if (map.getRoom(moveID).getPuzzles().isEmpty() || map.getRoom(moveID).getPuzzles().get(0).isSolved()) {
+	
+		//}
 	}
 
 	// Explore current room
@@ -318,10 +320,14 @@ public class Player {
 						// if current health is 50 or above, then health becomes maxed
 						if (getCurrentHP() >= 50) {
 							setCurrentHP(getMaxHP());
+							//item removed from inventory
+							inventory.remove(i);
 						}
 						// if current health is <50, then item numeric value is added to current health
 						else {
 							setCurrentHP(getCurrentHP() + inventory.get(i).getItemNumericValue());
+							//item removed from inventory
+							inventory.remove(i);
 						}
 
 					}
@@ -338,27 +344,27 @@ public class Player {
 						// if current sp is 25 or above, then sp becomes maxed (50sp)
 						if (getSp() >= 25) {
 							setSp(50);
+							//item removed from inventory
+							inventory.remove(i);
 						}
 						// if current sp is <25, then 25 is added to current sp
 						else {
 							setSp(getSp() + inventory.get(i).getItemNumericValue());
+							//item removed from inventory
+							inventory.remove(i);
 						}
 
 					}
 
 				}
-				// if neither, then they can't consume this item
-				else {
-					System.out.println("This item can not be used this way.");
-				}
 
 			}
 			// item name wasn't found in inventory
-			else if (inventory.get(i).getItemName()
-					.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
-					&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
-				System.out.println("There is no item with that name in your inventory.");
-			}
+			//else if (inventory.get(i).getItemName()
+				//	.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
+				//	&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
+				//System.out.println("There is no item with that name in your inventory.");
+			//}
 
 		}
 
@@ -514,7 +520,7 @@ public class Player {
 	}
 
 	// puzzle solving
-	public void solvePuzzle(String answer) {
+	public void answerPuzzle(String answer) {
 		// as long as there is a puzzle in the room and it hasn't been solved
 		if (!(currentRoom.getPuzzles().isEmpty()) && !(currentRoom.getPuzzles().get(0).isSolved())) {
 			// if the player answers correctly
@@ -627,5 +633,20 @@ public class Player {
 		// System.out.println(itemNames);
 
 	}
+	
+	public static void ignorePuzzle() {
+		// player sent back to previous room
+		move(previousRoom.getRoomID());
+	}
+	
+	//solve puzzle: the puzzle description and answer choices are displayed
+		public void solvePuzzle() {
+			Puzzles puzzle = currentRoom.getPuzzles().get(0);
+			System.out.println(puzzle.getDescription());
+			for(int i = 0; i <= puzzle.getChoices().size() -1; i++) {
+				System.out.println((i + 1) + ". " + puzzle.getChoices().get(i));
+			}
+			
+		}
 
 }
