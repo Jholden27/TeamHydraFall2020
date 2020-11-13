@@ -119,7 +119,7 @@ public class Player {
 	// Moving rooms
 	public static void move(String moveID) {
 		// set previous room to current room
-		 setPreviousRoom(currentRoom.getRoomID());
+		setPreviousRoom(currentRoom.getRoomID());
 
 		// move using map class method
 		map.enterRoom(moveID);
@@ -533,6 +533,10 @@ public class Player {
 				currentRoom.getPuzzles().clear();
 				// player is allowed to move to that room
 				move(currentRoom.getRoomID());
+			}
+			// if player chooses to ignore puzzle
+			else if (answer.equalsIgnoreCase("ignore")) {
+				ignorePuzzle();
 			}
 			// if the player answers wrong
 			else {
