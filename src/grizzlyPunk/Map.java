@@ -224,6 +224,9 @@ public class Map {
 		}
 		// a normal room or puzzle is solved
 		else {
+			// Room name is displayed
+			System.out.println(map.get(id).getRoomName());
+			System.out.println();
 			// Room description is displayed
 			System.out.println(map.get(id).getRoomDesc());
 			System.out.println();

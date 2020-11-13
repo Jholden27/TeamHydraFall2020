@@ -105,8 +105,8 @@ public class Player {
 		return previousRoom;
 	}
 
-	public void setPreviousRoom(Rooms previousRoom) {
-		this.previousRoom = previousRoom;
+	public static void setPreviousRoom(String id) {
+		previousRoom = map.getRoom(id);
 	}
 
 	@Override
@@ -119,18 +119,19 @@ public class Player {
 	// Moving rooms
 	public static void move(String moveID) {
 		// set previous room to current room
-		// setPreviousRoom(currentRoom);
+		 setPreviousRoom(currentRoom.getRoomID());
 
 		// move using map class method
 		map.enterRoom(moveID);
-		
-		//change current room
+
+		// change current room
 		setCurrentRoom(moveID);
 
 		// if room has a puzzle, they need to choose to solve or ignore
-		//if (map.getRoom(moveID).getPuzzles().isEmpty() || map.getRoom(moveID).getPuzzles().get(0).isSolved()) {
-	
-		//}
+		// if (map.getRoom(moveID).getPuzzles().isEmpty() ||
+		// map.getRoom(moveID).getPuzzles().get(0).isSolved()) {
+
+		// }
 	}
 
 	// Explore current room
@@ -251,8 +252,7 @@ public class Player {
 					ap = (weapon.getItemNumericValue());
 					System.out.println(weapon.getItemName() + " is now equipped.");
 					equippedWeapon = weapon.getItemName();
-				}
-				else {
+				} else {
 					System.out.println("This item can't be equipped.");
 				}
 			}
@@ -268,35 +268,34 @@ public class Player {
 				equipping = inventory.get(i);
 				// for armor
 				if (equipping.getItemID().equalsIgnoreCase("Itm3") && armor1 == false) {
-					//set equipped
+					// set equipped
 					equipping.setEquipped(true);
 					armor1 = true;
-					//change sp
+					// change sp
 					sp = (getSp() + equipping.getItemNumericValue());
 					System.out.println(equipping.getItemName() + " is now equipped.");
 				}
 				if (equipping.getItemID().equalsIgnoreCase("Itm4") && armor2 == false) {
-					//set equipped
+					// set equipped
 					equipping.setEquipped(true);
 					armor2 = true;
-					//change sp
+					// change sp
 					sp = (getSp() + equipping.getItemNumericValue());
 					System.out.println(equipping.getItemName() + " is now equipped.");
 				}
-				
+
 				// for flashlight
 				if (equipping.getItemID().equalsIgnoreCase("Itm8")) {
-					//set equipped
+					// set equipped
 					equipping.setEquipped(true);
 					System.out.println(equipping.getItemName() + " is now equipped.");
 				}
 				// for grappling hook
 				if (equipping.getItemID().equalsIgnoreCase("Itm9")) {
-					//set equipped
+					// set equipped
 					equipping.setEquipped(true);
 					System.out.println(equipping.getItemName() + " is now equipped.");
-				}
-				else {
+				} else {
 					System.out.println("This item can't be equipped.");
 				}
 			}
@@ -320,13 +319,13 @@ public class Player {
 						// if current health is 50 or above, then health becomes maxed
 						if (getCurrentHP() >= 50) {
 							setCurrentHP(getMaxHP());
-							//item removed from inventory
+							// item removed from inventory
 							inventory.remove(i);
 						}
 						// if current health is <50, then item numeric value is added to current health
 						else {
 							setCurrentHP(getCurrentHP() + inventory.get(i).getItemNumericValue());
-							//item removed from inventory
+							// item removed from inventory
 							inventory.remove(i);
 						}
 
@@ -344,13 +343,13 @@ public class Player {
 						// if current sp is 25 or above, then sp becomes maxed (50sp)
 						if (getSp() >= 25) {
 							setSp(50);
-							//item removed from inventory
+							// item removed from inventory
 							inventory.remove(i);
 						}
 						// if current sp is <25, then 25 is added to current sp
 						else {
 							setSp(getSp() + inventory.get(i).getItemNumericValue());
-							//item removed from inventory
+							// item removed from inventory
 							inventory.remove(i);
 						}
 
@@ -360,11 +359,11 @@ public class Player {
 
 			}
 			// item name wasn't found in inventory
-			//else if (inventory.get(i).getItemName()
-				//	.equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
-				//	&& !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
-				//System.out.println("There is no item with that name in your inventory.");
-			//}
+			// else if (inventory.get(i).getItemName()
+			// .equalsIgnoreCase((inventory.get(inventory.size() - 1).getItemName()))
+			// && !(inventory.get(i).getItemName().equalsIgnoreCase(itemName))) {
+			// System.out.println("There is no item with that name in your inventory.");
+			// }
 
 		}
 
@@ -424,25 +423,24 @@ public class Player {
 			int healthLeft = monsterHP - (getAp() * 3);
 			System.out.println();
 			System.out.println("You attack the " + monster.getMonsterName() + " dealing " + (getAp() * 3) + " damage!");
-			if(healthLeft > 0) {
+			if (healthLeft > 0) {
 				System.out.println(monster.getMonsterName() + " has " + healthLeft + " health remaining.");
 			}
 			monster.setMonsterHP(healthLeft);
 			// if monster has died
 			if (healthLeft <= 0) {
 				System.out.println("The monster has been defeated, you can now continue with your journey.");
-				//if monster has inventory
-				if(!(monster.getInventory().isEmpty())) {
+				// if monster has inventory
+				if (!(monster.getInventory().isEmpty())) {
 					// monster drop added to inventory
-					//inventory.add(monster.getInventory().get(0));
+					// inventory.add(monster.getInventory().get(0));
 					System.out.println(monster.getInventory() + " added to your inventory.");
 					// removed from monster inventory
 					monster.getInventory().clear();
 				}
-				//monster is taken out of the room
+				// monster is taken out of the room
 				currentRoom.getMonsters().clear();
-			}
-			else
+			} else
 				// monster attacks after
 				takeDamage();
 		}
@@ -456,18 +454,17 @@ public class Player {
 			// if monster has died
 			if (healthLeft <= 0) {
 				System.out.println("The monster has been defeated, you can now continue with your journey.");
-				//if monster has inventory
-				if(!(monster.getInventory().isEmpty())) {
+				// if monster has inventory
+				if (!(monster.getInventory().isEmpty())) {
 					// monster drop added to inventory
-					//inventory.add(monster.getInventory().get(0));
+					// inventory.add(monster.getInventory().get(0));
 					System.out.println(monster.getInventory() + " added to your inventory.");
 					// removed from monster inventory
 					monster.getInventory().clear();
 				}
-				//monster is taken out of the room
+				// monster is taken out of the room
 				currentRoom.getMonsters().clear();
-			}
-			else
+			} else
 				// monster attacks after
 				takeDamage();
 			// System.out.println(monsterHP);
@@ -485,15 +482,17 @@ public class Player {
 		if (getSp() > 0) {
 			if (monsterDP < getSp()) {
 				sp = (getSp() - monsterDP);
-				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + monsterDP + " damage to your shield!");
+				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + monsterDP
+						+ " damage to your shield!");
 			} else {
 				// hp = dp - sp
 				currentHP = (getCurrentHP() - (monsterDP - getSp()));
-				if(getSp() > 0)
-				{
-					System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + getSp() + " damage to your shield!");
+				if (getSp() > 0) {
+					System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + getSp()
+							+ " damage to your shield!");
 				}
-				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + (monsterDP - getSp()) + " damage to your health!");
+				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + (monsterDP - getSp())
+						+ " damage to your health!");
 				// set SP to 0
 				sp = (0);
 			}
@@ -502,12 +501,14 @@ public class Player {
 		else {
 			if (getCurrentHP() > 0) {
 				currentHP = (getCurrentHP() - monsterDP);
-				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + monsterDP + " damage to your health!");
+				System.out.println("The " + monster.getMonsterName() + " attacks you, dealing " + monsterDP
+						+ " damage to your health!");
 			}
 			// player dies
 			if (getCurrentHP() <= 0) {
 				System.out.println("");
-				System.out.println("You have passed out. Zap! A portal opens below you as you see the ground quickly approaching. You land with a thud in a pile of rocks and rusted metal...Again.");
+				System.out.println(
+						"You have passed out. Zap! A portal opens below you as you see the ground quickly approaching. You land with a thud in a pile of rocks and rusted metal...Again.");
 				// monster health reset
 				monster.setMonsterHP(monsterMaxHP);
 				// player health set to 50
@@ -635,20 +636,20 @@ public class Player {
 		// System.out.println(itemNames);
 
 	}
-	
+
 	public static void ignorePuzzle() {
 		// player sent back to previous room
 		move(previousRoom.getRoomID());
 	}
-	
-	//solve puzzle: the puzzle description and answer choices are displayed
-		public void solvePuzzle() {
-			Puzzles puzzle = currentRoom.getPuzzles().get(0);
-			System.out.println(puzzle.getDescription());
-			for(int i = 0; i <= puzzle.getChoices().size() -1; i++) {
-				System.out.println((i + 1) + ". " + puzzle.getChoices().get(i));
-			}
-			
+
+	// solve puzzle: the puzzle description and answer choices are displayed
+	public void solvePuzzle() {
+		Puzzles puzzle = currentRoom.getPuzzles().get(0);
+		System.out.println(puzzle.getDescription());
+		for (int i = 0; i <= puzzle.getChoices().size() - 1; i++) {
+			System.out.println((i + 1) + ". " + puzzle.getChoices().get(i));
 		}
+
+	}
 
 }
