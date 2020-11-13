@@ -528,6 +528,8 @@ public class Player {
 				System.out.println("That is correct!!");
 				// set that the puzzle has been solved
 				currentRoom.getPuzzles().get(0).setSolved(true);
+				// room is removed from room
+				currentRoom.getPuzzles().clear();
 				// player is allowed to move to that room
 				move(currentRoom.getRoomID());
 			}
