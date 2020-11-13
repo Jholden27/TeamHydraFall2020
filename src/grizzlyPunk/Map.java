@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Map {
-	private static HashMap<String, Rooms> map = new HashMap<>(); // String = roomID
+	static boolean answerTime;
+	static HashMap<String, Rooms> map = new HashMap<>(); // String = roomID
 
 	// Read from ROOMS.txt to create the map
 	public static void createMap() {
@@ -219,17 +220,29 @@ public class Map {
 		// the room has a puzzle they have to solve before entering
 		if (!(map.get(id).getPuzzles().isEmpty()) && !(map.get(id).getPuzzles().get(0).isSolved())) {
 			// tell player there is a puzzle they need to solve
-			System.out.println("There seems to be a riddle or something, that's preventing the door from opening.");
-			System.out.println("You may choose to solve or ignore.");
+			if(answerTime == false)
+			{
+				System.out.println("There's a keypad that's preventing the door from opening.");
+				System.out.println("You may choose to solve the riddle or ignore.");
+				Player.setLockedRoom(id);
+				Player.solvePuzzle(Player.lockedRoom);
+			}
+			
+			if (GUI.txtTypeInputHere.getText() != null && answerTime == true)
+			{
+				Player.answerPuzzle(GUI.txtTypeInputHere.getText());
+			}
+			answerTime = true;
 		}
 		// a normal room or puzzle is solved
 		else {
-			// Room name is displayed
-			System.out.println(map.get(id).getRoomName());
-			System.out.println();
 			// Room description is displayed
+			Player.setCurrentRoom(id);
+			System.out.println();
+			System.out.println(map.get(id).getRoomName());
 			System.out.println(map.get(id).getRoomDesc());
 			System.out.println();
+			answerTime = false;
 			// If there is a monster alive in the room
 			if (!(map.get(id).getMonsters().isEmpty()) && (map.get(id).getMonsters().get(0).getMonsterHP() != 0)) {
 				// Monster description is displayed

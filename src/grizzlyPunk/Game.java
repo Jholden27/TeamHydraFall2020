@@ -41,7 +41,6 @@ public class Game {
 			//So the player can collect memories
 			player.collectingMemory();
 			
-			//player.ignorePuzzle();
 			//PrintStream oldOut = System.out;
 			
 

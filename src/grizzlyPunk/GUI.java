@@ -33,6 +33,8 @@ import javax.swing.border.MatteBorder;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JTree;
+import javax.swing.ListModel;
+
 import java.awt.Insets;
 import java.awt.Point;
 import java.io.FileWriter;
@@ -50,6 +52,8 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.DebugGraphics;
+import javax.swing.DefaultListModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -87,7 +91,7 @@ public class GUI {
 	private JList list;
 	private JList goList;
 	public static JTextArea console = new JTextArea();
-	private JTextField txtTypeInputHere;
+	static JTextField txtTypeInputHere;
 	private JTextField textFieldAP;
 	
 	
@@ -313,7 +317,6 @@ public class GUI {
 		
 		//JList goList = new JList();
 		goList = new JList(Player.getCurrentRoom().roomConnections.toArray());
-		//goList = new JList(Player.getCurrentRoom().getRoomConnections().toArray());
 		goList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -409,8 +412,6 @@ public class GUI {
 		explore1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Player.explore();
-				Player.getCurrentRoom().getPuzzles().toString();
-				//Puzzles.solvePuzzle();
 			}
 		});
 		mnNewMenu_2.add(explore1);
@@ -426,6 +427,7 @@ public class GUI {
 			}
 		});
 		mnNewMenu_2.add(explore2);
+		
 		
 		Component horizontalStrut_1_1_1 = Box.createHorizontalStrut(120);
 		toolBar.add(horizontalStrut_1_1_1);
@@ -565,7 +567,7 @@ public class GUI {
 					//popupMenu.setBounds(0, 0, 200, 50);
 					JMenuItem equipW = new JMenuItem("Equip Weapon");
 					JMenuItem equipI = new JMenuItem("Equip Item");
-					JMenuItem lookAt = new JMenuItem("Look at Item");
+					JMenuItem use = new JMenuItem("Use Item");
 					JMenuItem itemDrop = new JMenuItem("Drop Item");
 					equipW.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
@@ -589,15 +591,18 @@ public class GUI {
 					}	
 			
 					});
-					lookAt.addActionListener(new ActionListener() {
+					use.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							System.out.println("Look at the item in position " + list.getSelectedValue());
+							System.out.println("Using the item, " + list.getSelectedValue());
+							Player.useItem(list.getSelectedValue().toString());
+							GUI.main(null);
+							frmGrizzlyPunk.dispose();
 						}	
 				
 					});
 				popupMenu.add(equipW);
 				popupMenu.add(equipI);
-				popupMenu.add(lookAt);
+				popupMenu.add(use);
 				popupMenu.add(itemDrop);
 				popupMenu.show(list, e.getPoint().x, e.getPoint().y);
 				}
